@@ -24,71 +24,86 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => {
+            form.reset('password');
+            if (!form.hasErrors()) {
+                Inertia.visit(route('home')); // Use the named route 'home'
+            }
+        },
     });
 };
 </script>
 
 <template>
+     
     <GuestLayout>
         <Head title="Log in" />
-
+                
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+            <div class="flex min-h-screen items-center justify-center bg-orange-100/10">
+            <div class="flex w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
+                <!-- Left side (form) -->
+                <div class="w-full md:w-2/3 p-8">
+                    <h2 class="text-2xl font-semibold text-center text-brown-800">Login</h2>
+                    <form @submit.prevent="submit" class="mt-4">
+                        <div class="mt-4">
+                            <InputLabel for="email" value="Email/Username" />
+                            <TextInput
+                                id="email"
+                                type="email"
+                                v-model="form.email"
+                                required
+                                class="block w-full px-4 py-2 mt-2 text-brown-700 bg-white border rounded-md focus:border-brown-500 focus:ring-brown-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                            />
+                            <InputError class="mt-2" :message="form.errors.email" />
+                        </div>
+                        <div class="mt-4">
+                            <InputLabel for="password" value="Password" />
+                            <TextInput
+                                id="password"
+                                type="password"
+                                v-model="form.password"
+                                required
+                                class="block w-full px-4 py-2 mt-2 text-brown-700 bg-white border rounded-md focus:border-brown-500 focus:ring-brown-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                            />
+                            <InputError class="mt-2" :message="form.errors.password" />
+                        </div>
+                        <div class="mt-10 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <Checkbox id="remember" v-model:checked="form.remember" />
+                                <label for="remember" class="ml-2 text-sm text-gray-700">Remember me</label>
+                            </div>
+                            <PrimaryButton type="submit" class="bg-orange-950 hover:bg-yellow-900/70"
+                            :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                                Login
+                            </PrimaryButton>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                             <Link
+                                :href="route('register')"
+                                class="text-xs text-brown-600 hover:underline"
+                            >
+                                New customer? Create Account
+                            </Link>
+                            <Link
+                                v-if="canResetPassword"
+                                :href="route('password.request')"
+                                class="text-xs text-brown-600 hover:underline"
+                            >
+                                Forgot your password?
+                            </Link>
+                        </div>
+                    </form>
+                </div>
+                <!-- Right side (image) -->
+                <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>
             </div>
+        </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
         </form>
     </GuestLayout>
 </template>

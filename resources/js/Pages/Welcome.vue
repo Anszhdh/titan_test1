@@ -1,5 +1,9 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
     canLogin: {
@@ -28,7 +32,7 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome" />
-    <div class="bg-gray-50 text-black/50 dark:text-white/50">
+    <div class="bg-orange-100/10 text-black/50 dark:text-white/50">
         <img
             id="background"
             class="absolute -left-20 top-0 max-w-[877px]"
@@ -40,14 +44,15 @@ function handleImageError() {
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
                   <div class="lg:flex lg:items-center lg:col-span-2">
-                        <img
-                            id="logo"
-                            class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]"
-                            src="icon.png"
-                            alt="Logo"
-                        />
+                    <img
+                        id="logo"
+                        class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
+                        src="icon.png"
+                        alt="Logo"
+                        @click="navigateToHome"
+                    />
+                        
                         <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2>
-                      
                     </div>
                  
                     <div class="flex lg:col-2 items-center">
@@ -96,23 +101,60 @@ function handleImageError() {
                             src="home/cart.png"
                             alt="cart"
                         />
-                        <Link
-                                :href="route('login')"
-                                class=" ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
-                            >
-                                Login
-                            </Link>
+                        <div class="hidden sm:flex sm:items-center sm:ms-6"  v-if="$page.props.authenticated">
+                            <!-- Settings Dropdown -->
+                            <div class="ms-3 relative">
+                                <Dropdown align="right" width="48">
+                                    <template #trigger>
+                                        <span class="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                {{ $page.props.auth.user.name }}
 
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
-                            >
-                                Register
-                            </Link>
+                                                <svg
+                                                    class="ms-2 -me-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <template #content>
+                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('logout')" method="post" as="button">
+                                            Log Out
+                                        </DropdownLink>
+                                    </template>
+                                </Dropdown>
+                            </div>
+                        </div>
+                        <Link
+                        v-if="!$page.props.authenticated"
+                        :href="route('login')"
+                        class="ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                    >
+                        Login
+                    </Link>
+
+                    <Link
+                        v-if="!$page.props.authenticated && canRegister"
+                        :href="route('register')"
+                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                    >
+                        Register
+                    </Link>
                     </div>
                 </header>
-
                 <main class="mt-6">
                     <div class="grid gap-6 lg:grid-cols- lg:gap-8">
                         <!-- <a class="flex items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] dark:bg-white dark:ring-white"> -->
@@ -199,3 +241,5 @@ function handleImageError() {
         </div>
     </div>
 </template>
+
+
