@@ -21,6 +21,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'address' => $request->user()->address,
         ]);
     }
 
@@ -38,6 +39,34 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit');
+    }
+
+        public function updateBilling(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'address_line_1' => ['nullable', 'string', 'max:255'],
+            'address_line_2' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:255'],
+            'phone_number' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $user = $request->user();
+
+        // Update address information
+        $addressData = $request->only([
+            'address_line_1',
+            'address_line_2',
+            'city',
+            'state',
+            'postal_code',
+            'phone_number'
+        ]);
+
+        $user->address()->updateOrCreate(['user_id' => $user->id], $addressData);
+
+        return Redirect::route('profile.edit')->with('status', 'billing-updated');
     }
 
     /**

@@ -27,7 +27,7 @@ const submit = () => {
         onFinish: () => {
             form.reset('password');
             if (!form.hasErrors()) {
-                Inertia.visit(route('home')); // Use the named route 'home'
+                Inertia.visit(route('/')); // Use the named route 'home'
             }
         },
     });
@@ -49,9 +49,8 @@ const submit = () => {
                 <!-- Left side (form) -->
                 <div class="w-full md:w-2/3 p-8">
                     <h2 class="text-2xl font-semibold text-center text-brown-800">Login</h2>
-                    <form @submit.prevent="submit" class="mt-4">
                         <div class="mt-4">
-                            <InputLabel for="email" value="Email/Username" />
+                            <InputLabel for="email" value="Email" />
                             <TextInput
                                 id="email"
                                 type="email"
@@ -97,7 +96,6 @@ const submit = () => {
                                 Forgot your password?
                             </Link>
                         </div>
-                    </form>
                 </div>
                 <!-- Right side (image) -->
                 <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>

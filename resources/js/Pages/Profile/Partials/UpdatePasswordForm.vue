@@ -89,7 +89,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton :disabled="form.processing" class="bg-yellow-950 hover:bg-yellow-950/50">Save</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
