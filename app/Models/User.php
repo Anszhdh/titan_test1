@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\CustomerAddress;
+use App\Models\Cart;
 
 class User extends Authenticatable
 {
@@ -50,5 +51,9 @@ class User extends Authenticatable
     public function address()
     {
         return $this->hasOne(CustomerAddress::class);
+    }
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

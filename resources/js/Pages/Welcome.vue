@@ -95,12 +95,14 @@ function handleImageError() {
                             src="home/search.png"
                             alt="search"
                         />
-                        <img
-                            id="cart"
-                            class="h-6 ml-16 w-auto text-white lg:5"
-                            src="home/cart.png"
-                            alt="cart"
-                        />
+                        <a href="/cart">
+                            <img
+                                id="cart"
+                                class="h-6 ml-16 w-auto text-white lg:5"
+                                src="home/cart.png"
+                                alt="cart"
+                            />
+                        </a>
                         <div class="hidden sm:flex sm:items-center sm:ms-6 "  v-if="$page.props.authenticated">
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
