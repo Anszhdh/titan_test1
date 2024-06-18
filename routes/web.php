@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Admin
+
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/category/{category}', [ProductController::class, 'showByCategory'])->name('category.show');
