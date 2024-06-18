@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -31,7 +31,7 @@ function handleImageError() {
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Brewbox" />
     <div class="bg-orange-100/10 text-black/50 dark:text-white/50">
         <img
             id="background"
@@ -58,7 +58,7 @@ function handleImageError() {
                     <div class="flex lg:col-2 items-center">
                        
                         <Link
-                                :href="route('register')"
+                                :href="route('products.index')"
                                 class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 Shop
@@ -175,15 +175,15 @@ function handleImageError() {
                                         <div class="pt-3 mt-12 ml-10 sm:pt-5 lg:pt-0">
                                             <Link
                                                 v-if="canRegister"
-                                                :href="route('register')"
-                                                class="inline-block font-light rounded-xl px-6 py-3 font-sans bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-yellow-900/70 hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-yellow-950/80 dark:hover:bg-yellow-950/20 dark:focus-visible:ring-white"
+                                                :href="route('products.index')"
+                                                class="inline-block font-light rounded-xl px-6 py-3 font-sans bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-white hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-yellow-950/80 dark:hover:bg-yellow-950/20 dark:focus-visible:ring-white"
                                             >
                                                 Browse Product
                                             </Link>
                                             <Link
                                                 v-if="canRegister"
                                                 :href="route('register')"
-                                                class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-orange-950/10 text-white ring-1 ring-transparent transition hover:text-white/70 hover:bg-yellow-950 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white"
+                                                class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-orange-950/10 text-black ring-1 ring-transparent transition hover:text-white/70 hover:bg-yellow-950 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white"
                                             >
                                                 Login / Signup
                                             </Link>

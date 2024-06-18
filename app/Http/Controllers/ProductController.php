@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use App\Http\Controllers\CheckoutController;
 
 class ProductController extends Controller
 {

@@ -1,6 +1,6 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/inertia-vue3';
 
 
 
@@ -24,7 +24,7 @@ import { Link } from '@inertiajs/vue3';
                                 <div class="flex lg:col-2 items-center">
                                 
                                     <Link
-                                            :href="route('register')"
+                                            :href="route('products.index')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Shop
@@ -61,12 +61,14 @@ import { Link } from '@inertiajs/vue3';
                                         src="home/search.png"
                                         alt="search"
                                     />
+                                    <a href="/cart">
                                     <img
                                         id="cart"
                                         class="h-6 ml-16 w-auto text-white lg:5"
                                         src="home/cart.png"
                                         alt="cart"
                                     />
+                                    </a>
                                     <Link
                                             :href="route('login')"
                                             class=" ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"

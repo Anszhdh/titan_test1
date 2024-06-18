@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/inertia-vue3';
+
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -23,7 +23,7 @@ const showingNavigationDropdown = ref(false);
                                     <img
                                     id="logo"
                                     class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
-                                    src="icon.png"
+                                    src="/icon.png"
                                     alt="Logo"
                                     />
                                     <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2>
@@ -33,7 +33,7 @@ const showingNavigationDropdown = ref(false);
                                 <div class="flex lg:col-3 items-center">
                                 
                                     <Link
-                                            :href="route('register')"
+                                            :href="route('products.index')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Shop
@@ -70,12 +70,14 @@ const showingNavigationDropdown = ref(false);
                                         src="home/search.png"
                                         alt="search"
                                     />
+                                    <a href="/cart">
                                     <img
                                         id="cart"
                                         class="h-6 ml-16 w-auto text-white lg:5"
-                                        src="home/cart.png"
+                                        src="/home/cart.png"
                                         alt="cart"
                                     />
+                                    </a>
                                     <div class="hidden sm:flex sm:items-center sm:ms-6" >
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">

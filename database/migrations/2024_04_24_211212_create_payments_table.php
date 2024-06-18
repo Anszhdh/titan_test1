@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('total_amount',10);
             $table->string('status',45);
             $table->string('type',45);
+            $table->string('payment_path')->nullable();
             $table->timestamps();
         });
     }

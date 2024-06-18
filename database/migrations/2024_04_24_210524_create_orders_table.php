@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->decimal('price',20,2);
             $table->decimal('total_price',20,2);
-            $table->integer('quantity');
             $table->string('status',200);
             $table->foreignIdfor(\App\Models\User::class, 'user_id');
             $table->timestamps();

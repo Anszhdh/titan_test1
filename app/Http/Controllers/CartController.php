@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CartController extends Controller

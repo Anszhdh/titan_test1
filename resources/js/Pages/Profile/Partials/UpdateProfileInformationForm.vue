@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 
 defineProps({
     mustVerifyEmail: {
@@ -13,7 +13,12 @@ defineProps({
         type: String,
     },
 });
-
+const page = usePage();
+const { data, setData, post } = useForm({
+  name: page.props.auth.user.name,
+  email: page.props.auth.user.email,
+  birthday: page.props.auth.user.birthday,
+});
 const user = usePage().props.auth.user;
 
 const form = useForm({
