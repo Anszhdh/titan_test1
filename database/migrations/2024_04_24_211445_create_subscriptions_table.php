@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdfor(\App\Models\User::class, 'user_id');
             $table->string( 'image', 2000)->nullable();
+            $table->string('type');
             $table->longtext( 'description')->nullable();
             $table->decimal('price',10,2);
             $table->timestamps();

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController; 
+use App\Http\Controllers\SubscriptionController; 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -50,5 +51,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/payment', [CheckoutController::class, 'submitPayment'])->name('checkout.submitPayment');
     Route::get('/checkout/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 });
+
+
+//subscription page
+Route::get('/subscription', function () {
+    return Inertia::render('Subscription/SubscriptionIndex');
+})->name('subscription.main');
+Route::get('/subscription/step1', [SubscriptionController::class, 'step1'])->name('subscription.step1');
+Route::post('/subscription/step2', [SubscriptionController::class, 'step2'])->name('subscription.step2');
+Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->name('subscription.step3');
+Route::post('/subscription/step4', [SubscriptionController::class, 'step4'])->name('subscription.step4');
+Route::post('/subscription/step5', [SubscriptionController::class, 'step5'])->name('subscription.step5');
+Route::post('/subscription/step6', [SubscriptionController::class, 'step6'])->name('subscription.step6');
+Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
 
 require __DIR__.'/auth.php';
