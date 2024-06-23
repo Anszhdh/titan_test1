@@ -62,7 +62,6 @@ Route::post('/subscription/step2', [SubscriptionController::class, 'step2'])->na
 Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->name('subscription.step3');
 Route::post('/subscription/step4', [SubscriptionController::class, 'step4'])->name('subscription.step4');
 Route::post('/subscription/step5', [SubscriptionController::class, 'step5'])->name('subscription.step5');
-Route::post('/subscription/step6', [SubscriptionController::class, 'step6'])->name('subscription.step6');
 Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
 
 require __DIR__.'/auth.php';
