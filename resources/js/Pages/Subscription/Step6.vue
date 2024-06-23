@@ -6,10 +6,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 const selectedOptions = ref([]);
 const options = [
-    { id: 17, label: 'Whole beans', image: '/substep/step6/whole.png' },
-    { id: 18, label: 'Coarse grind (for French press)', image: '/substep/step6/coarse.png' },
-    { id: 19, label: 'Medium grind (for drip coffee makers)', image: '/substep/step6/medium.png' },
-    { id: 20, label: 'Fine grind (for espresso)', image: '/substep/step6/fine.png' }
+    { id: 17, label: 'Whole beans', image: '/substep/step6/whole.jpg' },
+    { id: 18, label: 'Coarse grind (for French press)', image: '/substep/step6/coarse.jpg' },
+    { id: 19, label: 'Medium grind (for drip coffee makers)', image: '/substep/step6/medium.jpg' },
+    { id: 20, label: 'Fine grind (for espresso)', image: '/substep/step6/fine.jpg' }
 ];
 
 function toggleOption(optionId) {
@@ -36,7 +36,7 @@ function nextStep() {
                     :class="{'border-2 border-brown-500': selectedOptions.includes(option.id)}" 
                     class="cursor-pointer p-4 border rounded-lg"
                 >
-                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded-full mb-2 center">
+                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover mb-2 center">
                     <p>{{ option.label }}</p>
                 </div>
             </div>

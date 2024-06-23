@@ -6,7 +6,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 const selectedOptions = ref([]);
 const options = [
-    { id: 9, label: 'Light Roast', image: '/substep/step3/Light.png' },
+    { id: 9, label: 'Light Roast', image: '/substep/step3/Light.jpg' },
     { id: 10, label: 'Medium Roast', image: '/substep/step3/Medium.png' },
     { id: 11, label: 'Dark Roast', image: '/substep/step3/Dark.png' },
     { id: 12, label: 'Espresso Roast', image: '/substep/step3/Espresso.png' }
@@ -37,7 +37,7 @@ function nextStep() {
                     :class="{'border-2 border-brown-500': selectedOptions.includes(option.id)}" 
                     class="cursor-pointer p-4 border rounded-lg"
                 >
-                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded-full mb-2 center">
+                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded mb-2 center">
                     <p>{{ option.label }}</p>
                 </div>
             </div>

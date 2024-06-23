@@ -8,7 +8,7 @@ const selectedOptions = ref([]);
 const options = [
     { id: 13, label: 'Drip Coffee Maker', image: '/substep/step4/drip.png' },
     { id: 14, label: 'French Press', image: '/substep/step4/french.png' },
-    { id: 15, label: 'Espresso Machine', image: '/substep/step4/espresso.png' },
+    { id: 15, label: 'Espresso Machine', image: '/substep/step4/espresso.jpeg' },
     { id: 16, label: 'Pour Over', image: '/substep/step4/pour.png' }
 ];
 
@@ -37,7 +37,7 @@ function nextStep() {
                     :class="{'border-2 border-brown-500': selectedOptions.includes(option.id)}" 
                     class="cursor-pointer p-4 border rounded-lg"
                 >
-                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded-full mb-2 center">
+                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover mb-2 center">
                     <p>{{ option.label }}</p>
                 </div>
             </div>

@@ -6,10 +6,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 const selectedOptions = ref([]);
 const options = [
-    { id: 5, label: 'Nutty Flavor', image: '/substep/step2/nutty.png' },
-    { id: 6, label: 'Fruity Flavor', image: '/substep/step2/fruity.png' },
-    { id: 7, label: 'Chocolatey Flavor', image: '/substep/step2/choc.png' },
-    { id: 8, label: 'Spicy Flavor', image: '/substep/step2/spicy.png' }
+    { id: 5, label: 'Nutty Flavor', image: '/substep/step2/nutty.jpg' },
+    { id: 6, label: 'Fruity Flavor', image: '/substep/step2/fruity.jpg' },
+    { id: 7, label: 'Chocolatey Flavor', image: '/substep/step2/choc.jpg' },
+    { id: 8, label: 'Spicy Flavor', image: '/substep/step2/spicy.jpeg' }
 ];
 
 function toggleOption(optionId) {
@@ -37,7 +37,7 @@ function nextStep() {
                     :class="{'border-2 border-brown-500': selectedOptions.includes(option.id)}" 
                     class="cursor-pointer p-4 border rounded-lg"
                 >
-                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded-full mb-2 center">
+                    <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover  mb-2 center">
                     <p>{{ option.label }}</p>
                 </div>
             </div>
