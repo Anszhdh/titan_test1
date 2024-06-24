@@ -181,7 +181,7 @@ function handleImageError() {
                                                 Browse Product
                                             </Link>
                                             <Link
-                                                v-if="canRegister"
+                                                v-if="!$page.props.authenticated"
                                                 :href="route('register')"
                                                 class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-orange-950/10 text-black ring-1 ring-transparent transition hover:text-white/70 hover:bg-yellow-950 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white"
                                             >

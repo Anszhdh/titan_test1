@@ -5,7 +5,6 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Inertia } from '@inertiajs/inertia';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
@@ -25,31 +24,24 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => {
-            form.reset('password');
-            if (!form.hasErrors()) {
-                Inertia.visit(route('/')); // Use the named route 'home'
-            }
-        },
+        onFinish: () => form.reset('password'),
     });
 };
 </script>
 
 <template>
-     
     <GuestLayout>
         <Head title="Log in" />
-                
+        
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
             <div class="flex min-h-screen items-center justify-center bg-orange-100/10">
-            <div class="flex w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
-                <!-- Left side (form) -->
-                <div class="w-full md:w-2/3 p-8">
-                    <h2 class="text-2xl font-semibold text-center text-brown-800">Login</h2>
+                <div class="flex w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="w-full md:w-2/3 p-8">
+                        <h2 class="text-2xl font-semibold text-center text-brown-800">Login</h2>
                         <div class="mt-4">
                             <InputLabel for="email" value="Email" />
                             <TextInput
@@ -77,32 +69,18 @@ const submit = () => {
                                 <Checkbox id="remember" v-model:checked="form.remember" />
                                 <label for="remember" class="ml-2 text-sm text-gray-700">Remember me</label>
                             </div>
-                            <PrimaryButton type="submit" class="bg-orange-950 hover:bg-yellow-900/70"
-                            :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            <PrimaryButton type="submit" class="bg-orange-950 hover:bg-yellow-900/70" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                 Login
                             </PrimaryButton>
                         </div>
                         <div class="mt-4 flex justify-between items-center">
-                             <Link
-                                :href="route('register')"
-                                class="text-xs text-brown-600 hover:underline"
-                            >
-                                New customer? Create Account
-                            </Link>
-                            <Link
-                                v-if="canResetPassword"
-                                :href="route('password.request')"
-                                class="text-xs text-brown-600 hover:underline"
-                            >
-                                Forgot your password?
-                            </Link>
+                            <Link :href="route('register')" class="text-xs text-brown-600 hover:underline">New customer? Create Account</Link>
+                            <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs text-brown-600 hover:underline">Forgot your password?</Link>
                         </div>
+                    </div>
+                    <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>
                 </div>
-                <!-- Right side (image) -->
-                <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>
             </div>
-        </div>
-
         </form>
     </GuestLayout>
 </template>
