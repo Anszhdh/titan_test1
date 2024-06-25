@@ -13,9 +13,7 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('dashboard');
+
 // Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,9 +23,36 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-});
+// Route::middleware(['auth', 'admin'])->group(function () {
+//     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+// });
+Route::get('admin/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('dashboard');
+Route::get('admin/notifications', function () {
+    return Inertia::render('Notifications');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('notifications');
+Route::get('admin/order-centre', function () {
+    return Inertia::render('ordercentre');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('order-centre');
+Route::get('admin/product-centre', function () {
+    return Inertia::render('productcentre');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('product-centre');
+Route::get('admin/subscription-centre', function () {
+    return Inertia::render('subscriptioncentre');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('subscription-centre');
+Route::get('admin/subscription-product', function () {
+    return Inertia::render('subscriptionproduct');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('subscription-product');
+Route::get('admin/sales-report', function () {
+    return Inertia::render('salesreport');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('sales-report');
+Route::get('admin/billings-report', function () {
+    return Inertia::render('billingreport');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('billings-report');
+Route::get('admin/settings', function () {
+    return Inertia::render('settings');
+})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('settings');
 
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');

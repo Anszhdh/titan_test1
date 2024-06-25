@@ -7,6 +7,7 @@ import SalesChart from '@/Graph/Chart.vue';  // Adjust the import path as necess
 <template>
     <AdminLayout>
         <Head title="Dashboard" />
+
         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Dashboard</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -22,6 +23,7 @@ import SalesChart from '@/Graph/Chart.vue';  // Adjust the import path as necess
                 <h3 class="text-gray-600">Today sessions</h3>
                 <p class="text-2xl font-semibold">240 <span class="text-green-600">(50%)</span></p>
             </div>
+            
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
