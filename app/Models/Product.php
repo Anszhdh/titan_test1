@@ -5,13 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
+use App\Models\ProductVariation;
 use App\Models\ProductCategory;
 
 
 class Product extends Model
 {
     use HasFactory;
-    
+    protected $fillable = [
+        'name',
+        'description',
+        'base_price',
+        'price',
+        'category_id',
+        'image',
+        'sku',
+        'quantity',
+        'variation',
+        // Add other fillable fields here
+    ];
+
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class);
+    }
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
@@ -25,7 +42,7 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        return asset('product/' . $this->attributes['image']);
+        return asset('storage/product/' . $this->attributes['image']);
     }
 
 }

@@ -35,9 +35,18 @@ Route::get('admin/notifications', function () {
 Route::get('admin/order-centre', function () {
     return Inertia::render('ordercentre');
 })->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('order-centre');
-Route::get('admin/product-centre', function () {
-    return Inertia::render('productcentre');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('product-centre');
+
+//product centre
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/product-centre', [ProductController::class, 'adminIndex'])->name('product-centre');
+    Route::get('admin/product-centre/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('admin/product-centre', [ProductController::class, 'store'])->name('product-centre.store');
+    Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('admin/product-centre/{product}', [ProductController::class, 'update'])->name('product-centre.update');
+    Route::delete('admin/product-centre/{product}', [ProductController::class, 'destroy'])->name('product-centre.destroy');
+});
+
+
 Route::get('admin/subscription-centre', function () {
     return Inertia::render('subscriptioncentre');
 })->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('subscription-centre');

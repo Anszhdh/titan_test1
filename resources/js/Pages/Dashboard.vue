@@ -26,7 +26,7 @@ import SalesChart from '@/Graph/Chart.vue';  // Adjust the import path as necess
             
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-10 rounded-lg shadow-md">
             <h3 class="text-gray-600 mb-4">Sales Analytic</h3>
             <SalesChart />
         </div>

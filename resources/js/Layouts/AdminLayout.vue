@@ -24,43 +24,43 @@ const currentRoute = ref(url);
             </div>
             <nav>
                 <Link :href="route('dashboard')" class="block py-2.5 px-4 rounded transition duration-200"
-                      :class="{'bg-yellow-950/10 text-yellow-900': currentRoute.value === route('dashboard').url, 'hover:bg-gray-200 hover:text-gray-700': currentRoute.value !== route('dashboard').url}">
+                      :class="{'bg-yellow-950/10 text-yellow-900': currentRoute.value === route('dashboard').url, 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute.value !== route('dashboard').url}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </Link>
                 <a :href="route('notifications')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('notifications'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('notifications')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('notifications'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('notifications')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-bell"></i> Notifications
                 </a>
                 <a :href="route('order-centre')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('order-centre'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('order-centre')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('order-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('order-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-shopping-cart"></i> Order Centre
                 </a>
                <a :href="route('product-centre')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('product-centre'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('product-centre')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('product-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('product-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-box-open"></i> Product Centre
                 </a>
                 
                <a :href="route('subscription-centre')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('subscription-centre'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> Subscription Centre
                 </a> 
                 <a :href="route('subscription-product')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('subscription-product'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('subscription-product')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-product'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-product')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> Subscription Product
                 </a>
               
                 <a :href="route('sales-report')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('sales-report'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('sales-report')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('sales-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('sales-report')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-chart-bar"></i> Sales Performance
                 </a>
                 <a :href="route('billings-report')" 
-                   :class="{'bg-gray-200 text-gray-700': currentRoute === route('billings-report'), 'hover:bg-gray-200 hover:text-gray-700': currentRoute !== route('billings-report')}"
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('billings-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('billings-report')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-file-invoice-dollar"></i> Billings
                 </a>
@@ -77,7 +77,7 @@ const currentRoute = ref(url);
                 <div class="flex items-center">
                     <img src="/path/to/admin/profile.jpg" alt="Admin Profile" class="w-10 h-10 rounded-full mr-3">
                     <div>
-                        <div class="text-gray-800 font-medium">{{ $page.props.auth.user.name }}</div>
+                        <div class="text-white-800 font-medium">{{ $page.props.auth.user.name }}</div>
                         <div class="text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
                     </div>
                     <Dropdown align="right" width="48" class="ml-auto">
@@ -118,7 +118,7 @@ const currentRoute = ref(url);
                             <span class="inline-flex rounded-md">
                                 <button
                                     type="button"
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-orange-100/5 hover:text-orange-950/50 focus:outline-none transition ease-in-out duration-150"
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-orange-100/5 hover:text-orange-950/50 focus:outline-none transition ease-in-out duration-150"
                                 >
                                     {{ $page.props.auth.user.name }}
                                     <svg
