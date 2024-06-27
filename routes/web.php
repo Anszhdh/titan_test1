@@ -7,7 +7,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController; 
 use App\Http\Controllers\SubscriptionController; 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Notification;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,12 +31,17 @@ Route::middleware('auth')->group(function () {
 Route::get('admin/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('dashboard');
-Route::get('admin/notifications', function () {
-    return Inertia::render('Notifications');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('notifications');
-Route::get('admin/order-centre', function () {
-    return Inertia::render('ordercentre');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('order-centre');
+
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/notifications', [NotificationController::class, 'Index'])->name('notifications');
+
+});
+
+
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/order-centre', [OrderController::class, 'Index'])->name('order-centre');
+
+});
 
 //product centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
@@ -46,7 +53,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::delete('admin/product-centre/{product}', [ProductController::class, 'destroy'])->name('product-centre.destroy');
 });
 
-
+//subscription centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('admin/subscription-centre', [SubscriptionController::class, 'adminIndex'])->name('subscription-centre');
 
