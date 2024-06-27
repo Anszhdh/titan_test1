@@ -47,12 +47,12 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 });
 
 
-Route::get('admin/subscription-centre', function () {
-    return Inertia::render('subscriptioncentre');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('subscription-centre');
-Route::get('admin/subscription-product', function () {
-    return Inertia::render('subscriptionproduct');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('subscription-product');
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/subscription-centre', [SubscriptionController::class, 'adminIndex'])->name('subscription-centre');
+
+});
+
+
 Route::get('admin/sales-report', function () {
     return Inertia::render('salesreport');
 })->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('sales-report');

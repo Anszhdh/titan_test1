@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -106,5 +107,16 @@ class SubscriptionController extends Controller
         }
 
         return $recommendations;
+    }
+
+
+
+    public function adminIndex()
+    {
+        $subscriptions = Subscription::with('user')->get();
+        
+        return Inertia::render('Admin/SubscriptionCentre', [
+            'subscriptions' => $subscriptions,
+        ]);
     }
 }

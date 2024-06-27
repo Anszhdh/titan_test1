@@ -48,11 +48,7 @@ const currentRoute = ref(url);
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> Subscription Centre
                 </a> 
-                <a :href="route('subscription-product')" 
-                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-product'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-product')}"
-                   class="block py-2.5 px-4 rounded transition duration-200">
-                    <i class="fas fa-calendar-check"></i> Subscription Product
-                </a>
+             
               
                 <a :href="route('sales-report')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('sales-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('sales-report')}"
@@ -75,7 +71,7 @@ const currentRoute = ref(url);
                 </a>
 
                 <div class="flex items-center">
-                    <img src="/path/to/admin/profile.jpg" alt="Admin Profile" class="w-10 h-10 rounded-full mr-3">
+                    <img src="/storage/admin.jpg" alt="Admin Profile" class="w-10 h-10 rounded-full mr-3">
                     <div>
                         <div class="text-white-800 font-medium">{{ $page.props.auth.user.name }}</div>
                         <div class="text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
