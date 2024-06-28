@@ -20,33 +20,33 @@ const todayOrder= computed(() => {
     <AdminLayout>
         <Head title="Order Centre" />
     <div class="p-6 bg-white border-b border-gray-200">
-        <h1 class="text-2xl font-semibold">Order Centre</h1>
-        <div class="mt-4">
-            <div class="flex justify-between mb-6">
-                <div class="bg-gray-100 p-4 rounded shadow">
+        <h1 class="text-2xl font-semibold text-yellow-950">Order Centre</h1>
+        <div class="mt-10">
+            <div class="flex justify-between mb-10">
+                <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
                     <div class="text-xl font-bold">{{ order.length }}</div>
                     <div>Total Order</div>
                 </div>
-                <div class="bg-gray-100 p-4 rounded shadow">
+                <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
                     <div class="text-xl font-bold">{{ todayOrder }}</div>
                     <div>New Order</div>
                 </div>
-                <div class="bg-gray-100 p-4 rounded shadow">
+                <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
                     <div class="text-xl font-bold">{{ todayOrder }}</div>
                     <div>Pending Order</div>
                 </div> 
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200">
-                    <thead>
+                    <thead class="bg-[#dad8d7]">
                         <tr>
-                          <th class="py-2 px-4 border-b">Name</th>
-                           <th class="py-2 px-4 border-b">Payment Type </th>
-                           <th class="py-2 px-4 border-b">Amount</th>
-                            <th class="py-2 px-4 border-b">Status</th>
-                            <th class="py-2 px-4 border-b">Date</th> 
-                            <th class="py-2 px-4 border-b">References</th> 
-                            <th class="py-2 px-4 border-b">Action</th> 
+                          <th class="py-2 px-4 border-b text-center">Name</th>
+                           <th class="py-2 px-4 border-b text-center">Payment Type </th>
+                           <th class="py-2 px-4 border-b text-center">Amount</th>
+                            <th class="py-2 px-4 border-b text-center">Status</th>
+                            <th class="py-2 px-4 border-b text-center">Date</th> 
+                            <th class="py-2 px-4 border-b text-center">References</th> 
+                            <th class="py-2 px-4 border-b text-center">Action</th> 
                         </tr>
                     </thead>
                     <tbody>

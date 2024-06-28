@@ -95,7 +95,7 @@ const currentRoute = ref(url);
 
         <!-- Content Area -->
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="flex justify-between items-center bg-yellow-950/10 py-4 px-6">
+            <header class="flex justify-between items-center bg-[#614d3b] py-4 px-6">
                 <div class="flex items-center">
                     <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 focus:outline-none lg:hidden">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -114,7 +114,7 @@ const currentRoute = ref(url);
                             <span class="inline-flex rounded-md">
                                 <button
                                     type="button"
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-orange-100/5 hover:text-orange-950/50 focus:outline-none transition ease-in-out duration-150"
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white  hover:text-stone-200 focus:outline-none transition ease-in-out duration-150"
                                 >
                                     {{ $page.props.auth.user.name }}
                                     <svg
@@ -140,7 +140,7 @@ const currentRoute = ref(url);
                 </div>
             </header>
 
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-[#fdfdfd]">
                 <div class="py-6 px-6">
                     <slot />
                 </div>
