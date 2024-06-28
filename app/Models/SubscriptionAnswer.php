@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionAnswer extends Model
 {
-    protected $fillable = [
-        'subscription_id',
-        'question_id',
-        'answer',
-    ];
+    protected $fillable = ['subscription_id', 'question_id', 'answer'];
 
     public function subscription()
     {

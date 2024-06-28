@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRecommendation extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'recommendation_id',
-    ];
+    protected $fillable = ['user_id', 'recommendation_id'];
 
     public function user()
     {

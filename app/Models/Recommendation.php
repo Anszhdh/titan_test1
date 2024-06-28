@@ -6,17 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recommendation extends Model
 {
-    protected $fillable = [
-        'product_id',
-    ];
+    protected $fillable = ['product_id'];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function subscriptions()
+    public function userRecommendations()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasMany(UserRecommendation::class);
     }
 }

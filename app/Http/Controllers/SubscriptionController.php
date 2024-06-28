@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Subscription;
+use App\Models\Recommendation;
+use App\Models\UserRecommendation;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -50,64 +52,90 @@ class SubscriptionController extends Controller
     }
 
     public function recommendation(Request $request)
-    {
-        $data = $request->session()->get('subscription', []);
-        $data['step5'] = $request->input('step5');
-        $request->session()->put('subscription', $data);
+{
+    $data = $request->session()->get('subscription', []);
+    $data['step5'] = $request->input('step5');
+    $request->session()->put('subscription', $data);
 
-        // Generate recommendations based on the collected data
-        $recommendations = $this->generateRecommendations($data);
+    // Generate recommendations based on the collected data
+    $recommendations = $this->generateRecommendations($data);
 
-        return Inertia::render('Subscription/Recommendation', [
-            'recommendations' => $recommendations
+    // Save recommendations to the database
+    foreach ($recommendations as $rec) {
+        $recommendation = Recommendation::create(['product_id' => $rec['product_id']]);
+        UserRecommendation::create([
+            'user_id' => auth()->id(),
+            'recommendation_id' => $recommendation->id
         ]);
     }
 
+    return Inertia::render('Subscription/Recommendation', [
+        'recommendations' => $recommendations
+    ]);
+}
+
+
     private function generateRecommendations($data)
-    {
-        $recommendations = [];
+{
+    $recommendations = [];
+    
+    $q1 = $data['step1'][0] ?? null;
+    $q2 = $data['step2'][0] ?? null;
+    $q3 = $data['step3'][0] ?? null;
+    $q4 = $data['step4'][0] ?? null;
+    $q5 = $data['step5'][0] ?? null;
 
-        $q1 = $data['step1'][0] ?? null;
-        $q2 = $data['step2'][0] ?? null;
-        $q3 = $data['step3'][0] ?? null;
-        $q4 = $data['step4'][0] ?? null;
-        $q5 = $data['step5'][0] ?? null;
+    $userInputKey = "$q1-$q2-$q3-$q4-$q5";
 
-        // Sample logic using IDs instead of labels
-        if ($q1 == 2 && $q2 == 6 && $q3 == 13 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Ethiopian Yirgacheffe', 'description' => 'Ethiopian Yirgacheffe with nutty flavor and light roast'];
-        } elseif ($q1 == 1 && $q2 == 7 && $q3 == 10 && $q4 == 14 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Decaf Colombian', 'description' => 'Decaf Colombian with fruity flavor and medium roast'];
-        } elseif ($q1 == 3 && $q2 == 8 && $q3 == 12 && $q4 == 16 && $q5 == 21) {
-            $recommendations[] = ['name' => 'Dark Roast Espresso', 'description' => 'Dark Roast Espresso with chocolatey flavor'];
-        } elseif ($q1 == 4 && $q2 == 9 && $q3 == 12 && $q4 == 16 && $q5 == 21) {
-            $recommendations[] = ['name' => 'Spicy Espresso Blend', 'description' => 'Spicy Espresso Blend'];
-        } elseif ($q1 == 3 && $q2 == 7 && $q3 == 10 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Medium Roast Mocha Java', 'description' => 'Medium Roast Mocha Java'];
-        } elseif ($q1 == 1 && $q2 == 8 && $q3 == 10 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Dark Roast Hazelnut', 'description' => 'Dark Roast Hazelnut'];
-        } elseif ($q1 == 2 && $q2 == 6 && $q3 == 13 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Light Roast Tropical Blend', 'description' => 'Light Roast Tropical Blend'];
-        } elseif ($q1 == 3 && $q2 == 7 && $q3 == 10 && $q4 == 14 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Decaf Chocolate Blend', 'description' => 'Decaf Chocolate Blend'];
-        } elseif ($q1 == 4 && $q2 == 8 && $q3 == 12 && $q4 == 16 && $q5 == 21) {
-            $recommendations[] = ['name' => 'Spicy Dark Espresso', 'description' => 'Spicy Dark Espresso'];
-        } elseif ($q1 == 2 && $q2 == 6 && $q3 == 13 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Light Roast Fruit Blend', 'description' => 'Light Roast Fruit Blend'];
-        } elseif ($q1 == 5 && $q2 == 7 && $q3 == 10 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Vietnamese Coffee', 'description' => 'Vietnamese Coffee'];
-        } elseif ($q1 == 5 && $q2 == 8 && $q3 == 11 && $q4 == 16 && $q5 == 19) {
-            $recommendations[] = ['name' => 'Indonesian Coffee', 'description' => 'Indonesian Coffee'];
-        } elseif ($q1 == 5 && $q2 == 8 && $q3 == 12 && $q4 == 17 && $q5 == 21) {
-            $recommendations[] = ['name' => 'Robusta Coffee', 'description' => 'Robusta Coffee'];
-        } elseif ($q1 == 5 && $q2 == 7 && $q3 == 13 && $q4 == 16 && $q5 == 20) {
-            $recommendations[] = ['name' => 'Arabica Coffee', 'description' => 'Arabica Coffee'];
-        } else {
-            $recommendations[] = ['name' => 'House Blend', 'description' => 'Our special House Blend'];
-        }
+    $recommendationMap = [
+        '2-6-13-16-20' => ['product_id' => 1, 'name' => 'Ethiopian Yirgacheffe', 'description' => 'Ethiopian Yirgacheffe with nutty flavor and light roast'],
+        '1-7-10-14-20' => ['product_id' => 2, 'name' => 'Decaf Colombian', 'description' => 'Decaf Colombian with fruity flavor and medium roast'],
+        '3-8-12-16-21' => ['product_id' => 3, 'name' => 'Dark Roast Espresso', 'description' => 'Dark Roast Espresso with chocolatey flavor'],
+        '4-9-12-16-21' => ['product_id' => 4, 'name' => 'Spicy Espresso Blend', 'description' => 'Spicy Espresso Blend'],
+        '3-7-10-16-20' => ['product_id' => 5, 'name' => 'Medium Roast Mocha Java', 'description' => 'Medium Roast Mocha Java'],
+        '1-8-10-16-20' => ['product_id' => 6, 'name' => 'Dark Roast Hazelnut', 'description' => 'Dark Roast Hazelnut'],
+        '5-7-10-16-20' => ['product_id' => 7, 'name' => 'Vietnamese Coffee', 'description' => 'Vietnamese Coffee'],
+        '5-8-11-16-19' => ['product_id' => 8, 'name' => 'Indonesian Coffee', 'description' => 'Indonesian Coffee'],
+        '5-8-12-17-21' => ['product_id' => 9, 'name' => 'Robusta Coffee', 'description' => 'Robusta Coffee'],
+        '5-7-13-16-20' => ['product_id' => 10, 'name' => 'Arabica Coffee', 'description' => 'Arabica Coffee'],
+    ];
 
-        return $recommendations;
+    if (isset($recommendationMap[$userInputKey])) {
+        $recommendations[] = $recommendationMap[$userInputKey];
+    } else {
+        // If no exact match is found, find the closest match or return a default product
+        $closestMatch = $this->findClosestMatch($userInputKey, $recommendationMap);
+        $recommendations[] = $closestMatch ?: ['name' => 'House Blend', 'description' => 'Our special House Blend'];
     }
+
+    return $recommendations;
+}
+
+private function findClosestMatch($userInputKey, $recommendationMap)
+{
+    // Split the user input key into an array of criteria
+    $userInputArray = explode('-', $userInputKey);
+    
+    $closestMatch = null;
+    $maxMatches = -1;
+
+    foreach ($recommendationMap as $key => $value) {
+        // Split the recommendation key into an array of criteria
+        $keyArray = explode('-', $key);
+        
+        // Count the number of matching criteria
+        $matches = count(array_intersect($userInputArray, $keyArray));
+        
+        // Update the closest match if this one has more matches
+        if ($matches > $maxMatches) {
+            $maxMatches = $matches;
+            $closestMatch = $value;
+        }
+    }
+
+    return $closestMatch;
+}
+
 
 
 

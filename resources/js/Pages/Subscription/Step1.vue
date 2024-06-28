@@ -29,7 +29,6 @@ function nextStep() {
     <AuthenticatedLayout>
         <div class="container mx-auto px-4 py-8 bg-orange-100/5">
             <h2 class="text-center text-2xl font-bold mb-4">Do you prefer your coffee to have a:</h2>
-            <!-- <p class="text-center text-gray-500 mb-8">You can select more than one option</p> -->
             <div class="grid grid-cols-4 gap-4">
                 <div v-for="option in options" :key="option.id" class="text-center">
                     <div 

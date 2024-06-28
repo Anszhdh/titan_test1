@@ -20,7 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile/billing', [ProfileController::class, 'updateBilling'])->name('profile.updateBilling');
+    Route::patch('/profile', [ProfileController::class, 'updateBilling'])->name('profile.updateBilling');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -96,8 +96,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 });
 
-
-//subscription page
+//subscribtion
 Route::get('/subscription', function () {
     return Inertia::render('Subscription/SubscriptionIndex');
 })->name('subscription.main');
@@ -106,6 +105,9 @@ Route::post('/subscription/step2', [SubscriptionController::class, 'step2'])->na
 Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->name('subscription.step3');
 Route::post('/subscription/step4', [SubscriptionController::class, 'step4'])->name('subscription.step4');
 Route::post('/subscription/step5', [SubscriptionController::class, 'step5'])->name('subscription.step5');
+Route::get('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
 Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
+Route::post('/subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+
 
 require __DIR__.'/auth.php';
