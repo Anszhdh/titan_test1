@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Subscription;
 use App\Models\Recommendation;
+use App\Models\Product;
 use App\Models\UserRecommendation;
 use Illuminate\Http\Request;
 
@@ -52,29 +53,33 @@ class SubscriptionController extends Controller
     }
 
     public function recommendation(Request $request)
-{
-    $data = $request->session()->get('subscription', []);
-    $data['step5'] = $request->input('step5');
-    $request->session()->put('subscription', $data);
-
-    // Generate recommendations based on the collected data
-    $recommendations = $this->generateRecommendations($data);
-
-    // Save recommendations to the database
-    foreach ($recommendations as $rec) {
-        $recommendation = Recommendation::create(['product_id' => $rec['product_id']]);
-        UserRecommendation::create([
-            'user_id' => auth()->id(),
-            'recommendation_id' => $recommendation->id
+    {
+        $data = $request->session()->get('subscription', []);
+        $data['step5'] = $request->input('step5');
+        $request->session()->put('subscription', $data);
+    
+        // Generate recommendations based on the collected data
+        $recommendations = $this->generateRecommendations($data);
+    
+        // Save recommendations to the database
+        foreach ($recommendations as $rec) {
+            $recommendation = Recommendation::create(['product_id' => $rec['product_id']]);
+            UserRecommendation::create([
+                'user_id' => auth()->id(),
+                'recommendation_id' => $recommendation->id
+            ]);
+        }
+    
+        // Fetch product details from the database
+        $productIds = array_column($recommendations, 'product_id');
+        $products = Product::whereIn('id', $productIds)->get();
+    
+        return Inertia::render('Subscription/Recommendation', [
+            'recommendations' => $recommendations,
+            'products' => $products,
         ]);
     }
-
-    return Inertia::render('Subscription/Recommendation', [
-        'recommendations' => $recommendations
-    ]);
-}
-
-
+    
     private function generateRecommendations($data)
 {
     $recommendations = [];
