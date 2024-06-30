@@ -4,7 +4,8 @@ import { Head, usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import Modal from '@/References/OrderReceipt.vue'; // Adjust the import path as necessary
+import Modal from '@/References/OrderReceipt.vue'; 
+
 
 const { props } = usePage();
 const orders = ref(props.value.orders);
@@ -80,6 +81,31 @@ const cancelOrderAction = async () => {
     }
 };
 
+const editingOrder = ref(null);
+const showEditModal = ref(false);
+
+const openEditModal = (order) => {
+  console.log('Opening edit modal for order:', order); // Debugging line
+  editingOrder.value = order;
+  showEditModal.value = true;
+};
+
+const closeEditModal = () => {
+  showEditModal.value = false;
+  editingOrder.value = null;
+};
+
+const deleteOrder = async (orderId) => {
+    if (confirm('Are you sure you want to delete this order?')) {
+        try {
+            await axios.delete(`/admin/orders/${orderId}`);
+            Inertia.visit(window.location.href); // Refresh the page
+        } catch (error) {
+            console.error('Error deleting order:', error);
+        }
+    }
+};
+
 </script>
 
 <template>
@@ -138,9 +164,20 @@ const cancelOrderAction = async () => {
                                             </svg>
                                         </span>
                                     </template>
+                                    <template v-else-if="order.status === 'Confirmed'">
+                                        <button 
+                                            @click="openEditModal(order)" 
+                                            class="bg-green-500 text-white px-2 py-1 mr-4 rounded">
+                                            Edit
+                                        </button>
+                                        <button 
+                                            @click="deleteOrder(order.id)" 
+                                            class="bg-red-500 text-white px-2 py-1 rounded">
+                                            Delete
+                                        </button>
+                                    </template>
                                     <template v-else>
-                                        <button class="bg-green-500 text-white px-2 py-1 mr-4 rounded">Edit</button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                                        <!-- Add any additional actions or text if needed for 'Cancelled' status -->
                                     </template>
                                 </td>
                             </tr>
@@ -151,6 +188,12 @@ const cancelOrderAction = async () => {
         </div>
         <!-- Modal Component -->
         <Modal :visible="showModal" :image-src="selectedImage" @close="closeModal" />
+     <!-- Include OrderShipping Modal -->
+            <OrderShipping
+            v-if="showEditModal"
+            :order="editingOrder"
+            @close="closeEditModal"
+        />
         <!-- Confirmation Dialog -->
         <div v-if="confirmingOrder" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-white p-4 rounded-lg shadow-lg">

@@ -47,6 +47,8 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::get('admin/order-centre', [OrderController::class, 'index'])->name('order-centre');
     Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
+    Route::put('/admin/orders/{order}/update-shipping', [OrderController::class, 'updateShipping'])->name('orders.updateShipping');
+    Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 });
 
 

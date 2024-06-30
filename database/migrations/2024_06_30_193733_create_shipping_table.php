@@ -9,13 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('shipping', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->string('shipping_type');
+            $table->string('tracking_number')->nullable();
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
