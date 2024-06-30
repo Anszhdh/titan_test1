@@ -40,11 +40,17 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 
 });
 
+//admin order
+// routes/web.php or routes/api.php
 
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::get('admin/order-centre', [OrderController::class, 'Index'])->name('order-centre');
-
+    Route::get('admin/order-centre', [OrderController::class, 'index'])->name('order-centre');
+    Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
 });
+
+
+
 
 //product centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
