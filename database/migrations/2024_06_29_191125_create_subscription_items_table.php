@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('subscription_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdfor(\App\Models\User::class, 'user_id');
-            $table->string('type');
-            $table->decimal('price',10,2);
+            $table->foreignId('subscription_id')->references('id')->on('subscriptions');
+            $table->foreignId('product_id')->references('id')->on('products');
+            $table->decimal('unit_price');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('subscription_items');
     }
 };

@@ -10,7 +10,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Notification;
+use App\Http\Controllers\SubscriptionCartController;
+use App\Http\Controllers\SubscriptionCheckoutController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Subscription;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -97,9 +100,22 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //subscribtion
+
 Route::get('/subscription', function () {
+    $hasActiveSubscription = Subscription::where('user_id', auth()->id())
+        ->where('status', 'active')
+        ->exists();
+
+    if ($hasActiveSubscription) {
+        return Inertia::render('Subscription/SubscriptionIndex', [
+            'error' => 'You already have an existing subscription. Please go to your profile to manage subscription.'
+        ]);
+    }
+
     return Inertia::render('Subscription/SubscriptionIndex');
 })->name('subscription.main');
+
+
 Route::get('/subscription/step1', [SubscriptionController::class, 'step1'])->name('subscription.step1');
 Route::post('/subscription/step2', [SubscriptionController::class, 'step2'])->name('subscription.step2');
 Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->name('subscription.step3');
@@ -109,5 +125,13 @@ Route::get('/subscription/recommendation', [SubscriptionController::class, 'reco
 Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
 Route::post('/subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
 
+//subscription cart
+Route::post('/subscription-cart/add', [SubscriptionCartController::class, 'add'])->name('subscart.add');
+Route::get('/subscription-cart', [SubscriptionCartController::class, 'index'])->name('subscart.index');
+Route::get('/api/latest-product', function () {
+    return session('latest_product');
+});
+Route::get('/subscription-checkout', [SubscriptionCartController::class, 'checkoutForm'])->name('checkout.form');
+Route::post('/subscription-checkout', [SubscriptionCartController::class, 'processCheckout'])->name('checkout.process');
 
 require __DIR__.'/auth.php';

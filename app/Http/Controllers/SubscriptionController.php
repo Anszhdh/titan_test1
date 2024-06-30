@@ -13,6 +13,7 @@ class SubscriptionController extends Controller
 {
     public function step1()
     {
+        
         return Inertia::render('Subscription/Step1');
     }
 
@@ -61,15 +62,21 @@ class SubscriptionController extends Controller
         // Generate recommendations based on the collected data
         $recommendations = $this->generateRecommendations($data);
     
-        // Save recommendations to the database
+        // Save recommendations to the database and collect recommendation IDs
+        $recommendationIds = [];
         foreach ($recommendations as $rec) {
             $recommendation = Recommendation::create(['product_id' => $rec['product_id']]);
             UserRecommendation::create([
                 'user_id' => auth()->id(),
                 'recommendation_id' => $recommendation->id
             ]);
+            $rec['recommendation_id'] = $recommendation->id;
+            $recommendationIds[] = $recommendation->id;
         }
     
+        // Store user_id in session for use in SubscriptionCartController
+        $request->session()->put('user_id', auth()->id());
+        $request->session()->put('recommendation_ids', $recommendationIds);
         // Fetch product details from the database
         $productIds = array_column($recommendations, 'product_id');
         $products = Product::whereIn('id', $productIds)->get();
@@ -79,6 +86,7 @@ class SubscriptionController extends Controller
             'products' => $products,
         ]);
     }
+    
     
     private function generateRecommendations($data)
 {

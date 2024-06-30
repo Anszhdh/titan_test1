@@ -39,7 +39,7 @@ async function addToCart(productId) {
                     <h2 class="text-xl font-bold mt-2">{{ product.name }}</h2>
                     <p>{{ product.description }}</p>
                     <p class="text-lg font-semibold">RM {{ product.price }}</p>
-                    <button class="mt-2 bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-yellow-900/70 hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-yellow-950/80 dark:hover:bg-yellow-950/20 py-2 px-4 rounded-xl" @click="addToCart(product.id)">Add to Cart</button>
+                    <button class="mt-2 bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-white hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white dark:hover:bg-yellow-950/20 py-2 px-4 rounded-xl" @click="addToCart(product.id)">Add to Cart</button>
                 </div>
             </div>
             <div v-if="!authenticated" class="mt-4">

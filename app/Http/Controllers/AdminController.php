@@ -11,4 +11,12 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/Dashboard');
     }
+
+    public function confirmPayment($subscriptionId)
+    {
+        $subscription = Subscription::findOrFail($subscriptionId);
+        $subscription->update(['payment_ver' => true]);
+
+        return redirect()->back()->with('success', 'Payment confirmed.');
+    }
 }

@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\SubscriptionItem;
+use App\Models\SubscriptionPayment;
+use App\Models\User;
+use App\Models\Recommendation;
 
 class Subscription extends Model
 {
@@ -27,6 +31,15 @@ class Subscription extends Model
     public function recommendation()
     {
         return $this->belongsTo(Recommendation::class);
+    }
+    public function subscriptionItem()
+    {
+        return $this->hasMany(SubscriptionItem::class);
+    }
+
+    public function subscriptionPayment()
+    {
+        return $this->hasMany(SubscriptionPayment::class);
     }
 
     public function subscriptionAnswers()

@@ -1,6 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
+
+const { props } = usePage();
+const errorMessage = props.error || ''; // Initialize errorMessage with props.error or empty string
+
+const isDisabled = errorMessage !== '';
 </script>
 
 <template>
@@ -39,10 +44,17 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                 </div>
                 <div class="mt-12 text-center">
                     <Link
-                        :href="route('subscription.step1')"
-                        class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-[#6b4f33] text-white ring-1 ring-transparent transition hover:text-white/70 hover:bg-[#5a402b] focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white">
+                        :href="isDisabled ? null : route('subscription.step1')" 
+                        class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-[#6b4f33] text-white ring-1 ring-transparent transition hover:text-white/70 hover:bg-[#5a402b] focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white"
+                        :class="{ 'opacity-50 cursor-not-allowed': isDisabled }" 
+                    >
                         Get Started
                     </Link>
+                </div>
+                <!-- Error message box -->
+                <div v-if="errorMessage" class="mt-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error:</strong>
+                    <span class="block sm:inline">{{ errorMessage }}</span>
                 </div>
             </div>
         </div>
