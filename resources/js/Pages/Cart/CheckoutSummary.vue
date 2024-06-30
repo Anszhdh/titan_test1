@@ -1,82 +1,42 @@
-<script>
+<script setup>
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-export default {
-  components: {
-    AuthenticatedLayout,
-  },
-  props: {
-    cart: Array,
-    address: Object,
-    totalPrice: Number,
-  },
-  data() {
-    return {
-      addressForm: {
-        address_line_1: this.address ? this.address.address_line_1 : '',
-        address_line_2: this.address ? this.address.address_line_2 : '',
-        city: this.address ? this.address.city : '',
-        state: this.address ? this.address.state : '',
-        postal_code: this.address ? this.address.postal_code : '',
-        phone_number: this.address ? this.address.phone_number : '',
-      },
-      paymentType: null,
-    };
-  },
-  methods: {
-    submitAddress() {
-      Inertia.post('/checkout/address', this.addressForm, {
-        onSuccess: () => {
-          alert('Address updated successfully');
-        },
-        onError: (errors) => {
-          console.error('Address update failed:', errors);
-          alert('Error: Unable to update address.');
-        }
-      });
-    },
-    editAddress() {
-      // Redirect or show address form for editing
-      // Example: Inertia visit or redirect to edit address route
-    },
-    proceedToPayment() {
-      if (!this.paymentType) {
-        alert('Please select a payment type.');
-        return;
-      }
+const props = defineProps({
+  cart: Array,
+  address: Object,
+  totalPrice: Number,
+  shippingPrice: Number,
+  finalTotal: Number,
+});
 
-      const paymentData = {
-        addressData: {
-          address_line_1: this.addressForm.address_line_1,
-          address_line_2: this.addressForm.address_line_2,
-          city: this.addressForm.city,
-          state: this.addressForm.state,
-          postal_code: this.addressForm.postal_code,
-          phone_number: this.addressForm.phone_number,
-        },
-        paymentType: this.paymentType,
-        totalPrice: this.totalPrice,
-        cart: this.cart.map(item => ({
-          product_id: item.product.id,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-      };
+const addressForm = ref({
+  address_line_1: props.address.address_line_1 || '',
+  address_line_2: props.address.address_line_2 || '',
+  city: props.address.city || '',
+  state: props.address.state || '',
+  postal_code: props.address.postal_code || '',
+  phone_number: props.address.phone_number || '',
+});
 
-      Inertia.visit(route('checkout.payment'), {
-        data: paymentData,
-      });
-    },
-  },
-};
+function submitAddress() {
+  Inertia.post('/checkout/address', addressForm.value);
+}
+
+function editAddress() {
+  // Function to toggle edit address mode
+}
+
+function proceedToPayment() {
+  Inertia.visit('/checkout/payment');
+}
 </script>
 
 <template>
   <AuthenticatedLayout>
     <div class="container mx-auto px-4">
-      <h1 class="text-2xl font-bold mb-4">Checkout Summary</h1>
+      <h1 class="text-2xl font-bold mb-4 text-center">Checkout Summary</h1>
       <div v-if="cart.length > 0" class="bg-white shadow-md rounded-lg p-6">
         <table class="w-full mb-4">
           <thead>
@@ -94,23 +54,25 @@ export default {
                   <img :src="item.product.image_url" class="w-20 h-20 object-cover mr-4" :alt="item.product.name">
                   <div>
                     <p class="font-bold">{{ item.product.name }}</p>
-                    <p>{{ item.product.description }}</p> <!-- Optionally show description below -->
+                    <p>{{ item.product.description }}</p>
                   </div>
                 </div>
               </td>
               <td class="py-4">{{ item.quantity }}</td>
               <td class="py-4">RM {{ item.price }}</td>
-              <td class="py-4">RM {{ (item.price * item.quantity).toFixed(2) }}</td>
+              <td class="py-4">RM {{ (item.price * item.quantity) }}</td>
             </tr>
           </tbody>
         </table>
-        <div class="mt-4">
-          <p class="text-lg font-bold">Total: RM {{ totalPrice.toFixed(2) }}</p>
+        <div class="mt-4 text-right mr-10">
+            <p class="text-lg font-bold">Subtotal: RM {{ totalPrice.toFixed(2) }}</p>
+            <p class="text-md text-yellow-950">+ RM {{ shippingPrice.toFixed(2) }} (Shipping)</p>
+            <p class="text-lg font-bold mt-5">Total: RM {{ finalTotal.toFixed(2) }}</p>
         </div>
         <hr class="my-4 border-gray-300">
         <!-- Address Section -->
         <div class="pt-4">
-          <h2 class="text-xl font-bold mb-6">Shipping Address</h2>
+          <h2 class="text-xl font-bold mb-6 text-center">Shipping Address</h2>
           <div v-if="!address.id">
             <!-- Display Address Form if no address -->
             <form @submit.prevent="submitAddress">
@@ -143,38 +105,17 @@ export default {
           </div>
           <div v-else>
             <!-- Display Existing Address with Edit Option -->
-            <p class="font-bold">{{ address.address_line_1 }}</p>
-            <p>{{ address.address_line_2 }}</p>
-            <p>{{ address.city }}, </p>
-            <p> {{ address.postal_code }}</p>
-            <p>{{ address.state }}</p>
-            <p>Phone: {{ address.phone_number }}</p>
+            <p class="text-lg">{{ address.address_line_1 }}</p>
+            <p class="text-lg">{{ address.address_line_2 }}</p>
+            <p class="text-lg">{{ address.city }}, </p>
+            <p class="text-lg"> {{ address.postal_code }}</p>
+            <p class="text-lg">{{ address.state }}</p>
+            <p class="text-lg">Phone: {{ address.phone_number }}</p>
             <button @click="editAddress" class="text-blue-500 mt-2">Edit Address</button>
           </div>
         </div>
-        <hr class="my-4 border-gray-300">
-        <!-- Payment Method Section -->
-        <div class="mt-8">
-          <h2 class="text-xl font-bold mb-2">Payment Type</h2>
-          <div class="mt-8">
-            <label>
-              <input type="radio" v-model="paymentType" value="bank_transfer"> Bank Transfer
-            </label>
-            <label>
-              <input type="radio" v-model="paymentType" value="qr_transfer"> QR Transfer
-            </label>
-          </div>
-          <div class="mt-8" v-if="paymentType === 'bank_transfer'">
-            <!-- Bank Transfer Image -->
-            <img src="/payment/banktrans.jpg" alt="Bank Transfer Details" class="w-80 h-auto">
-            <p class="mt-4">**proceed to payment to upload payment proof</p>
-          </div>
-          <div class="mt-4" v-else-if="paymentType === 'qr_transfer'">
-            <!-- QR Code Image -->
-            <img src="/payment/qrcode.jpg" alt="QR Code" class="w-80 h-auto">
-            <p class="mt-4">**proceed to payment to upload payment proof</p>
-          </div>
-          <button @click="proceedToPayment" class="bg-yellow-950 hover:text-white hover:bg-yellow-950/80 text-white py-2 px-4 rounded-xl mt-8">Proceed to Payment</button>
+        <div class="mt-8 ">
+          <button @click="proceedToPayment" class="bg-yellow-950  hover:text-white hover:bg-yellow-950/80 text-white py-2 px-4 rounded-xl mt-8">Proceed to Payment</button>
         </div>
       </div>
       <div v-else>

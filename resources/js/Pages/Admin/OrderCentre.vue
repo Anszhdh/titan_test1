@@ -4,15 +4,15 @@ import { Head, usePage } from '@inertiajs/inertia-vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 const { props } = usePage();
+const orders = ref(props.value.orders);
 
-const order = ref(props.value.order);
-
-const pastOrder = computed(() => {
-    return order.value.filter(sub => sub.status === 'past').length;
+const todayOrder = computed(() => {
+    const today = new Date().toDateString();
+    return orders.value.filter(order => new Date(order.start_date).toDateString() === today).length;
 });
 
-const todayOrder= computed(() => {
-    return order.value.filter(sub => new Date(sub.start_date).toDateString() === new Date().toDateString()).length;
+const pendingOrder = computed(() => {
+    return orders.value.filter(order => order.status === 'pending').length;
 });
 </script>
 
@@ -24,20 +24,20 @@ const todayOrder= computed(() => {
         <div class="mt-10">
             <div class="flex justify-between mb-10">
                 <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
-                    <div class="text-xl font-bold">{{ order.length }}</div>
-                    <div>Total Order</div>
+                    <div class="text-xl font-bold">{{ orders.length }}</div>
+                    <div>Total Orders</div>
                 </div>
                 <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
                     <div class="text-xl font-bold">{{ todayOrder }}</div>
-                    <div>New Order</div>
+                    <div>New Orders</div>
                 </div>
                 <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
-                    <div class="text-xl font-bold">{{ todayOrder }}</div>
-                    <div>Pending Order</div>
+                    <div class="text-xl font-bold">{{ pendingOrder }}</div>
+                    <div>Pending Orders</div>
                 </div> 
             </div>
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-200">
+                <table class="min-w-full bg-white border border-gray-200 text-center">
                     <thead class="bg-[#dad8d7]">
                         <tr>
                           <th class="py-2 px-4 border-b text-center">Name</th>
@@ -50,15 +50,15 @@ const todayOrder= computed(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="order in order" :key="order.id">
+                        <tr v-for="order in orders" :key="order.id">
                             <td class="py-2 px-4 border-b">{{ order.user.name }}</td>
-                            <td class="py-2 px-4 border-b">{{ order.payment.type }}</td>
+                            <td class="py-2 px-4 border-b">{{ order.payment.payment_method}}</td>
                             <td class="py-2 px-4 border-b">{{ order.total_price }}</td>
                             <td class="py-2 px-4 border-b">{{ order.status }}</td>
-                            <td class="py-2 px-4 border-b">{{ order.created_at }}</td>
-                            <td class="py-2 px-4 border-b">{{ order.receipt_path }}</td>
+                            <td class="py-2 px-4 border-b">{{ new Date(order.created_at).toLocaleDateString() }}</td>
+                            <td class="py-2 px-4 border-b">{{ order.payment.payment_proof }}</td>
                             <td class="py-2 px-4 border-b">
-                                <button class="bg-green-500 text-white px-2 py-1 rounded">Edit</button>
+                                <button class="bg-green-500 text-white px-2 py-1 mr-4 rounded">Edit</button>
                                 <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
                             </td>
                         </tr>

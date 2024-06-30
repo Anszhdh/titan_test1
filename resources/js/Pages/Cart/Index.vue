@@ -23,7 +23,7 @@ function removeFromCart(id) {
 }
 
 function proceedToCheckout() {
-  Inertia.visit('checkout/summary');
+  Inertia.visit('/checkout/summary');
 }
 </script>
 <template>

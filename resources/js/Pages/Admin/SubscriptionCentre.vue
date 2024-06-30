@@ -49,6 +49,7 @@ const formatDate = (dateString) => {
                 <table class="min-w-full bg-white border border-gray-200">
                     <thead class="bg-[#dad8d7] text-black">
                         <tr>
+                            <!-- <th class="py-2 px-4 border-b text-center">#</th> -->
                             <th class="py-2 px-4 border-b text-center">Name</th>
                             <th class="py-2 px-4 border-b text-center">Subscription Type</th>
                             <th class="py-2 px-4 border-b text-center">Subscription Start</th>
@@ -60,6 +61,7 @@ const formatDate = (dateString) => {
                     </thead>
                     <tbody>
                         <tr v-for="subscription in subscriptions" :key="subscription.id" class="text-center align-middle">
+                             <!-- <td class="py-2 px-4 border-b text-sm text-gray-900">{{ index + 1 }}</td> -->
                             <td class="py-2 px-4 border-b">{{ subscription.user.name }}</td>
                             <td class="py-2 px-4 border-b">{{ subscription.type }}</td>
                             <td class="py-2 px-4 border-b">{{ formatDate(subscription.start_date)}}</td>

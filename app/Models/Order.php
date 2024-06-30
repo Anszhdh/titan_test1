@@ -11,9 +11,22 @@ class Order extends Model
 {
     use HasFactory;
 
+    public function index()
+    {
+        $orders = Order::with(['user', 'payment'])->get();
+
+        return Inertia::render('Admin/OrderCentre', [
+            'orders' => $orders,
+        ]);
+    }
     protected $fillable = [
         'user_id', 'price', 'total_price', 'status', 'receipt_path'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function orderItem()
     {

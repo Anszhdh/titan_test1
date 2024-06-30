@@ -87,16 +87,11 @@ Route::middleware(['auth'])->group(function () {
 
 // Checkout
 Route::middleware(['auth'])->group(function () {
-    Route::post('/checkout/process', [CheckoutController::class, 'processPayment'])->name('checkout.process');
     Route::get('/checkout/summary', [CheckoutController::class, 'showSummary'])->name('checkout.summary');
-    Route::post('/checkout/address', [CheckoutController::class, 'submitAddress'])->name('checkout.address'); // New route
-    Route::get('/checkout/payment', function () {
-        return inertia('Cart/Payment'); // Replace with your actual rendering logic if needed
-    })->name('checkout.payment');
-    
-    // POST route to handle submission of payment proof
-    Route::post('/checkout/payment', [CheckoutController::class, 'submitPayment'])->name('checkout.submitPayment');
-    Route::get('/checkout/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::post('/checkout/address', [CheckoutController::class, 'submitAddress'])->name('checkout.address');
+    Route::get('/checkout/payment', [CheckoutController::class, 'showPaymentPage'])->name('checkout.payment');
+    Route::post('/checkout/process', [CheckoutController::class, 'processPayment'])->name('checkout.process');
+    Route::get('/checkout/success', [CheckoutController::class, 'showSuccessPage'])->name('checkout.success');
 });
 
 //subscribtion

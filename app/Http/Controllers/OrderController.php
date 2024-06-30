@@ -9,10 +9,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $order = Order::with('user')->get();
-        
+        $orders = Order::with(['user', 'payment'])->get();
+
         return Inertia::render('Admin/OrderCentre', [
-            'order' => $order,
+            'orders' => $orders,
         ]);
     }
 }
