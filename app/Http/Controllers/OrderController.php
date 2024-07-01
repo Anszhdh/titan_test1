@@ -14,10 +14,11 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['user', 'payment'])->get();
+        $orders = Order::with(['user', 'payment', 'shipping'])->get();
 
         return Inertia::render('Admin/OrderCentre', [
             'orders' => $orders,
+            'flash' => session('success') ? ['success' => session('success')] : null,
         ]);
     }
 
@@ -49,12 +50,16 @@ class OrderController extends Controller
             'tracking_number' => 'required|string',
         ]);
     
-        $order->update([
-            'shipping_type' => $request->shipping_type,
-            'tracking_number' => $request->tracking_number,
-        ]);
+        // Find the shipping information for the order or create a new one
+        $shipping = Shipping::updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'shipping_type' => $request->shipping_type,
+                'tracking_number' => $request->tracking_number,
+            ]
+        );
     
-        return redirect()->route('admin.orders.index')->with('success', 'Shipping information updated.');
+        return redirect()->route('order-centre')->with('success', 'Shipping information updated.');
     }
     
     public function destroy(Order $order)

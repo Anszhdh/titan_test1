@@ -52,4 +52,8 @@ class Order extends Model
     {
         return $this->belongsTo(CustomerAddress::class, 'address_id');
     }
+    public function shipping()
+    {
+        return $this->hasOne(Shipping::class);
+    }
 }

@@ -5,7 +5,7 @@ import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import Modal from '@/References/OrderReceipt.vue'; 
-
+import OrderShipping from '@/References/OrderShipping.vue';
 
 const { props } = usePage();
 const orders = ref(props.value.orders);
@@ -21,6 +21,11 @@ const pendingOrder = computed(() => {
 
 const showModal = ref(false);
 const selectedImage = ref('');
+const flashMessage = ref(props.value.flash?.success || '');
+
+if (props.value.flash && props.value.flash.success) {
+  flashMessage.value = props.value.flash.success;
+}
 
 const openModal = (image) => {
     selectedImage.value = image;
@@ -112,6 +117,9 @@ const deleteOrder = async (orderId) => {
     <AdminLayout>
         <Head title="Order Centre" />
         <div class="p-6 bg-white border-b border-gray-200">
+            <div v-if="flashMessage" class="alert alert-success">
+            {{ flashMessage }}
+            </div>
             <h1 class="text-2xl font-semibold text-yellow-950">Order Centre</h1>
             <div class="mt-10">
                 <div class="flex justify-between mb-10">
@@ -189,10 +197,11 @@ const deleteOrder = async (orderId) => {
         <!-- Modal Component -->
         <Modal :visible="showModal" :image-src="selectedImage" @close="closeModal" />
      <!-- Include OrderShipping Modal -->
-            <OrderShipping
-            v-if="showEditModal"
-            :order="editingOrder"
-            @close="closeEditModal"
+        <OrderShipping
+        v-if="showEditModal"
+        :order="editingOrder"
+        @close="closeEditModal"
+        @shipping-updated="refreshShippingTable"
         />
         <!-- Confirmation Dialog -->
         <div v-if="confirmingOrder" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
