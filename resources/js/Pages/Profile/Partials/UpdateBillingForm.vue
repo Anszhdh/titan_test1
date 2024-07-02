@@ -18,12 +18,12 @@ const props = defineProps({
 
 // Initialize the form state using the address prop
 const form = useForm({
-    address_line_1: props.address.address_line_1 || '',
-    address_line_2: props.address.address_line_2 || '',
-    city: props.address.city || '',
-    state: props.address.state || '',
-    postal_code: props.address.postal_code || '',
-    phone_number: props.address.phone_number || '',
+    address_line_1: props.address?.address_line_1 || '',
+    address_line_2: props.address?.address_line_2 || '',
+    city: props.address?.city || '',
+    state: props.address?.state || '',
+    postal_code: props.address?.postal_code || '',
+    phone_number: props.address?.phone_number || '',
 });
 
 

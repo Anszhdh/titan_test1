@@ -2,12 +2,11 @@
 
 namespace App\Notifications;
 
-namespace App\Notifications;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Order;
 
 class NewOrderNotification extends Notification
 {
@@ -15,7 +14,7 @@ class NewOrderNotification extends Notification
 
     protected $order;
 
-    public function __construct($order)
+    public function __construct(Order $order)
     {
         $this->order = $order;
     }
@@ -38,6 +37,15 @@ class NewOrderNotification extends Notification
         return [
             'order_id' => $this->order->id,
             'order_amount' => $this->order->amount,
+        ];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'order_id' => $this->order->id,
+            'order_amount' => $this->order->amount,
+            'message' => 'A new order has been placed.',
         ];
     }
 }

@@ -18,14 +18,14 @@ const chartData = ref({
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   datasets: [
     {
-      label: 'Subscription 2024',
-      data: [10, 20, 30, 45, 54, 59, 70, 80, 85, 95, 110, 120],
+      label: 'Order 2024',
+      data: [10, 20, 30, 45, 54, 59, 70, 90, 100, 120, 110, 120],
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1,
     },
     {
-      label: 'Subscription 2023',
-      data: [0, 10, 20, 25, 15, 20, 50, 55, 60, 66, 69, 70],
+      label: 'Order 2023',
+      data: [0, 11, 20, 25, 3, 10, 30, 10, 50, 56, 69, 70],
       borderColor: 'rgb(54, 162, 235)',
       tension: 0.1,
     },

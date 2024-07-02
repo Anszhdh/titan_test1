@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Subscription; // Adjust based on your model setup
 
-class SubscriptionController extends Controller
+class SubscriptionGraphController extends Controller
 {
     public function getSalesData()
     {
@@ -15,6 +15,12 @@ class SubscriptionController extends Controller
                                  ->groupBy('month')
                                  ->get();
 
+        return response()->json($salesData);
+    }
+
+    public function fetchSales()
+    {
+        $salesData = Subscription::select('date', 'amount')->get(); // Example query
         return response()->json($salesData);
     }
 }

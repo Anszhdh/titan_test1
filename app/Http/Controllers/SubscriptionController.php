@@ -187,7 +187,7 @@ private function findClosestMatch($userInputKey, $recommendationMap)
         try {
             DB::transaction(function () use ($subscription) {
                 // Update subscription payments status
-                $subscription->subscriptionPayments()->update(['status' => 'Confirmed']);
+                $subscription->payments()->update(['status' => 'Confirmed']);
     
                 // Update subscription payment_ver field
                 $subscription->update(['payment_ver' => 1]);
@@ -207,7 +207,7 @@ private function findClosestMatch($userInputKey, $recommendationMap)
 
         DB::transaction(function () use ($subscription) {
             // Update SubscriptionPayment status to 'Cancelled'
-            $subscription->subscriptionPayments()->update(['status' => 'Cancelled']);
+            $subscription->payments()->update(['status' => 'Cancelled']);
 
             // Update Subscription status to 'Inactive'
             $subscription->update(['status' => 'Inactive']);
@@ -238,7 +238,7 @@ private function findClosestMatch($userInputKey, $recommendationMap)
     {
         try {
             // Delete all related payments
-            $subscription->subscriptionPayments()->delete();
+            $subscription->payments()->delete();
             
             // Delete the subscription itself
             $subscription->delete();

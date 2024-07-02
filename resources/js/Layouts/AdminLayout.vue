@@ -50,16 +50,16 @@ const currentRoute = ref(url);
                 </a> 
              
               
-                <a :href="route('sales-report')" 
+                <!-- <a :href="route('sales-report')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('sales-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('sales-report')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-chart-bar"></i> Sales Performance
-                </a>
-                <a :href="route('billings-report')" 
+                </a> -->
+                <!-- <a :href="route('billings-report')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('billings-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('billings-report')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-file-invoice-dollar"></i> Billings
-                </a>
+                </a> -->
             </nav>
 
            <!-- Settings Link and Admin Profile Section at the Bottom -->

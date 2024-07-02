@@ -5,13 +5,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController; 
+use App\Http\Controllers\SalesController; 
 use App\Http\Controllers\SubscriptionController; 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Notification;
 use App\Http\Controllers\SubscriptionCartController;
 use App\Http\Controllers\SubscriptionCheckoutController;
+use App\Http\Controllers\Api\SubscriptionGraphController;
+use App\Http\Controllers\Api\OrderGraphController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Subscription;
 use Inertia\Inertia;
@@ -41,6 +45,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::get('admin/notifications', [NotificationController::class, 'Index'])->name('notifications');
 
 });
+
 
 //admin order
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
@@ -152,8 +157,18 @@ Route::get('/subscription/success', [SubscriptionCartController::class, 'showSuc
 
 
 //graph
-Route::get('/subscriptions/sales', 'App\Http\Controllers\Api\SubscriptionController@getSalesData');
-Route::get('/orders/sales', 'App\Http\Controllers\Api\OrderController@getSalesData');
+Route::middleware('auth:api')->group(function () {
+    Route::get('/subscriptions/sales', 'App\Http\Controllers\SubscriptionGraphController@fetchSales');
+    Route::get('/orders/sales', 'App\Http\Controllers\OrderGraphController@fetchSales');
+});
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/todays-sales', [SalesController::class, 'todaysSales']);
+    Route::get('/subscription-total', [SalesController::class, 'subscriptionTotal']);
+    Route::get('/order-total', [SalesController::class, 'orderTotal']);
+    Route::get('/this-month-subscription-sales', [SalesController::class, 'thisMonthSubscriptionSales']);
+});
 
 
 require __DIR__.'/auth.php';

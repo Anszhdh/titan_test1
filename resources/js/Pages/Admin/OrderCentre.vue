@@ -118,6 +118,10 @@ const formatDate = (dateString) => {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
 };
+const formatPaymentType = (type) => {
+  // Replace underscores with spaces and capitalize each word
+  return type.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
 
 </script>
 
@@ -160,7 +164,7 @@ const formatDate = (dateString) => {
                         <tbody>
                             <tr v-for="order in orders" :key="order.id">
                                 <td class="py-2 px-4 border-b">{{ order.user.name }}</td>
-                                <td class="py-2 px-4 border-b">{{ order.payment.type }}</td>
+                                <td class="py-2 px-4 border-b">{{ formatPaymentType(order.payment.type) }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.total_price }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.status }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatDate(order.created_at) }}</td>
@@ -193,7 +197,11 @@ const formatDate = (dateString) => {
                                         </button>
                                     </template>
                                     <template v-else>
-                                        <!-- Add any additional actions or text if needed for 'Cancelled' status -->
+                                        <button 
+                                            @click="deleteOrder(order.id)" 
+                                            class="bg-red-500 text-white px-2 py-1 rounded">
+                                            Delete
+                                        </button>
                                     </template>
                                 </td>
                             </tr>

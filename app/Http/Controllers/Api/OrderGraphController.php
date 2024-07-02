@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order; // Adjust based on your model setup
 
-class OrderController extends Controller
+class OrderGraphController extends Controller
 {
     public function getSalesData()
     {
@@ -16,4 +16,10 @@ class OrderController extends Controller
 
         return response()->json($salesData);
     }
+
+    public function fetchSales()
+{
+    $salesData = Order::select('date', 'total')->get(); // Example query
+    return response()->json($salesData);
+}
 }

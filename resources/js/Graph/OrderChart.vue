@@ -1,27 +1,18 @@
 <template>
-    <div>
-      <line-chart :chart-data="data" :options="options" />
-    </div>
-  </template>
-  
-  <script>
-  import { Line, mixins } from 'vue-chartjs';
-  
-  export default {
-    extends: Line,
-    mixins: [mixins.reactiveProp],
-    props: ['chartData'],
-    data() {
-      return {
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-        },
-      };
-    },
-    mounted() {
-      this.renderChart(this.chartData, this.options);
-    },
-  };
-  </script>
-  
+  <div>
+    <line-chart :data="chartData" :options="chartOptions" />
+  </div>
+</template>
+
+<script setup>
+import { defineProps } from 'vue';
+import { Line } from 'vue-chartjs';
+
+const props = defineProps(['chartData']);
+
+const chartData = props.chartData;
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+};
+</script>
