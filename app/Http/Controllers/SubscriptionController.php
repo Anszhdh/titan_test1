@@ -156,16 +156,21 @@ private function findClosestMatch($userInputKey, $recommendationMap)
        
         public function userSubscriptions()
         {
-            $subscriptions = Subscription::where('user_id', auth()->id())
-                ->with('payments')
-                ->with('shipping')
+            // Assuming you're fetching subscriptions for the authenticated user
+            $user = auth()->user();
+            $subscriptions = Subscription::where('user_id', $user->id)
+                ->with([ 'shipping', 'payments']) // Eager load relationships
                 ->get();
 
+            // Log the fetched subscriptions
+            \Log::info('Fetched subscriptions:', $subscriptions->toArray());
+
+
+            // Pass subscriptions to the Inertia view
             return Inertia::render('Subscription/Index', [
-                'subscriptions' => $subscriptions,
+                'subscriptions' => $subscriptions
             ]);
         }
-
         public function adminIndex()
         {
             $subscriptions = Subscription::with('user', 'shipping', 'payments')->get();

@@ -150,4 +150,10 @@ Route::get('/subscription-checkout', [SubscriptionCartController::class, 'checko
 Route::post('/subscription-checkout', [SubscriptionCartController::class, 'processCheckout'])->name('subs.checkout.process');
 Route::get('/subscription/success', [SubscriptionCartController::class, 'showSuccessPage'])->name('subscription.success');
 
+
+//graph
+Route::get('/subscriptions/sales', 'App\Http\Controllers\Api\SubscriptionController@getSalesData');
+Route::get('/orders/sales', 'App\Http\Controllers\Api\OrderController@getSalesData');
+
+
 require __DIR__.'/auth.php';
