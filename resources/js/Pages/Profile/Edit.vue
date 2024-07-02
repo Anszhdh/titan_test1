@@ -10,12 +10,17 @@ import { Inertia } from '@inertiajs/inertia';
 defineProps({
     mustVerifyEmail: {
         type: Boolean,
+        required: true,
     },
     status: {
         type: String,
+        required: true,
+    },
+    auth: {
+        type: Object, // Ensure auth is correctly defined as an object
+        required: true,
     },
 });
-
 
 </script>
 
@@ -30,7 +35,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateProfileInformationForm
+                    <UpdateProfileInformationForm :auth="auth"
                         
                     />
                 </div>

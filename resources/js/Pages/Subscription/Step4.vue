@@ -6,7 +6,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 const selectedOptions = ref([]);
 const options = [
     { id: 16, label: 'Yes', image: '/substep/step4/yes.jpg' },
-    { id: 17, label: 'No', image: '/substep/step4/no.jpg' }
+    { id: 17, label: 'No', image: '/substep/step4/no.jpeg' }
 ];
 
 function toggleOption(optionId) {

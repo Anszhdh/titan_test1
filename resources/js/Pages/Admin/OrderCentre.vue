@@ -21,7 +21,7 @@ const pendingOrder = computed(() => {
 
 const showModal = ref(false);
 const selectedImage = ref('');
-const flashMessage = ref(props.value.flash?.success || '');
+const flashMessage = ref('');
 
 if (props.value.flash && props.value.flash.success) {
   flashMessage.value = props.value.flash.success;

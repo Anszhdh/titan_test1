@@ -43,6 +43,7 @@ class OrderController extends Controller
     
         return response()->json(['message' => 'Order cancelled successfully'], 200);
     }
+    
     public function updateShipping(Request $request, Order $order)
     {
         $request->validate([

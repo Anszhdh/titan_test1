@@ -9,8 +9,8 @@ const options = [
     { id: 11, label: 'French Press', image: '/substep/step3/french.png' },
     { id: 12, label: 'Espresso Machine', image: '/substep/step3/espresso.jpeg' },
     { id: 13, label: 'Pour Over', image: '/substep/step3/pour.png' },
-    { id: 14, label: 'Aeropress', image: '/substep/step3/aeropress.png' },
-    { id: 15, label: 'Cold Brew Maker', image: '/substep/step3/coldbrew.png' }
+    { id: 14, label: 'Aeropress', image: '/substep/step3/aeropress.jpeg' },
+    { id: 15, label: 'Cold Brew Maker', image: '/substep/step3/coldbrew.jpg' }
 ];
 
 function toggleOption(optionId) {

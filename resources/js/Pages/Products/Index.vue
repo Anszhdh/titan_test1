@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 
 const props = defineProps({
@@ -29,6 +30,7 @@ async function addToCart(productId) {
 
 <template>
     <Head title="Products" />
+    <FooterLayout>
     <AuthenticatedLayout :authenticated="authenticated">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-4 gap-4">
@@ -47,4 +49,5 @@ async function addToCart(productId) {
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>

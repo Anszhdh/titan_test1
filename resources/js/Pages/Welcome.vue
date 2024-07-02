@@ -204,41 +204,111 @@ function handleImageError() {
                             class="flex items-start gap-4  bg-yellow-950 focus-visible:ring-[#FF2D20] lg:pb-3 dark:bg-yellow-950 dark:ring-zinc-white dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
                         >
                         </a>
-                        <a class="flex flex-col items-center gap-4 rounded-lg">
-                                <div class="pt-2">
-                                    <h1 class="text-yellow-950/20 font-serif text-3xl ml-10 ">C o f f e e</h1>
-                                    <div class="mt-10 font-bold text-gray-700 rounded-full bg-white/0 flex items-center border-2 border-yellow-950/10 justify-center font-mono" style="height: 200px; width: 200px; ">
-                                        <img
-                                            id="beans"
-                                            class="h-40 w-auto text-white lg:5 "
-                                            src="home/homede.png"
-                                            alt="beans"
-                                        />
-                                       
-                                    </div>
-                                </div>
-                             
-                        </a>
-
-                        <div
-                            class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 lg:pb-10 dark:bg-white dark:ring-white"
-                        >
-                            <div
-                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
-                            >
-                                
-                            </div>
-
-                            <div class="pt-3 sm:pt-5">
-                                
-                            </div>
+                        <div class="relative flex flex-col items-center gap-4 rounded-lg">
+                    <div class="pt-2">
+                        <h1 class="text-yellow-950/20 font-serif text-3xl ml-10 ">C o f f e e</h1>
+                        <div class="mt-10 font-bold text-gray-700 rounded-full bg-white/0 flex items-center border-2 border-yellow-950/10 justify-center font-mono" style="height: 200px; width: 200px; ">
+                            <img id="beans" class="h-40 w-auto text-white lg:5" src="home/homede.png" alt="beans" />
                         </div>
                     </div>
-                </main>
 
-                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </footer>
+                    <!-- Absolute positioned features -->
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-24 flex flex-col items-center gap-2">
+                        <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
+                            <img class="h-16 w-auto" src="home/convenient.png" alt="Convenient" />
+                        </div>
+                        <span class="font-mono font-bold text-gray-700">Convenient</span>
+                    </div>
+                    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 mr-12 flex flex-col items-center gap-2">
+                        <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
+                            <img class="h-16 w-auto" src="home/premium_taste.png" alt="Premium Taste" />
+                        </div>
+                        <span class="font-mono font-bold text-gray-700">Premium Taste</span>
+                    </div>
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-12 flex flex-col items-center gap-2">
+                        <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
+                            <img class="h-16 w-auto" src="home/high_quality.png" alt="High Quality" />
+                        </div>
+                        <span class="font-mono font-bold text-gray-700">High Quality</span>
+                    </div>
+                    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 ml-12 flex flex-col items-center gap-2">
+                        <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
+                            <img class="h-16 w-auto" src="home/better_for_you.png" alt="Better For You" />
+                        </div>
+                        <span class="font-mono font-bold text-gray-700">Better For You</span>
+                    </div>
+                </div>
+                <div class="container mx-auto p-6">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Discover Our Products</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    <div v-for="product in products" :key="product.id" class="bg-white shadow-lg rounded-lg p-4">
+                        <img :src="product.image" alt="Product Image" class="w-full h-32 object-cover mb-4">
+                        <h3 class="text-lg font-semibold mb-2">{{ product.name }}</h3>
+                        <p class="text-gray-600 mb-4">RM {{ product.price }}</p>
+                        <button class="bg-brown-500 text-white py-2 px-4 rounded">Add to cart</button>
+                    </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                    <p class="mb-4">Experience freshly roasted coffee delivered to your door</p>
+                    <div class="flex justify-center items-center">
+                        <input type="email" placeholder="Enter your email" class="border py-2 px-4 rounded-l">
+                        <button class="bg-brown-500 text-white py-2 px-4 rounded-r">Sign Up</button>
+                    </div>
+                    </div>
+                </div>       
+                    </div>
+                </main>
+                <footer class="bg-white py-8 border-t border-gray-200">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center">
+                <!-- Left Section -->
+                <div class="flex flex-col lg:flex-row lg:space-x-12">
+                    <div>
+                    <h4 class="text-gray-900 font-bold mb-4">SHOP</h4>
+                    <ul class="text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900">Coffee Beans</a></li>
+                        <li><a href="#" class="hover:text-gray-900">Accessories</a></li>
+                        <li><a href="#" class="hover:text-gray-900">Instant Coffee</a></li>
+                        <li><a href="#" class="hover:text-gray-900">Subscription</a></li>
+                    </ul>
+                    </div>
+                    <div class="mt-8 lg:mt-0">
+                    <h4 class="text-gray-900 font-bold mb-4">PRIVACY</h4>
+                    <ul class="text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900">Terms of Use</a></li>
+                        <li><a href="#" class="hover:text-gray-900">Privacy Policy</a></li>
+                    </ul>
+                    </div>
+                    <div class="mt-8 lg:mt-0">
+                    <h4 class="text-gray-900 font-bold mb-4">ABOUT US</h4>
+                    <ul class="text-gray-600">
+                        <li><a href="#" class="hover:text-gray-900">About us</a></li>
+                        <li><a href="#" class="hover:text-gray-900">Contacts</a></li>
+                        <li><a href="#" class="hover:text-gray-900">FAQ</a></li>
+                    </ul>
+                    </div>
+                </div>
+                <!-- Center Section -->
+                <div class="my-8 lg:my-0">
+                    <h4 class="text-gray-900 font-bold">BREWBOX</h4>
+                </div>
+                <!-- Right Section -->
+                <div>
+                    <div class="flex items-center justify-center lg:justify-end lg:items-start">
+                    <div class="text-gray-600">
+                        <p class="mb-2">60123456789</p>
+                        <p class="mb-2">brewbox@abc.com</p>
+                        <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </footer>
             </div>
         </div>
     </div>

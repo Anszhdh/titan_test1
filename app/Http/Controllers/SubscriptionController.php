@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Subscription;
+use App\Models\SubscriptionPayment;
+use App\Models\SubscriptionShipping;
 use App\Models\Recommendation;
 use App\Models\Product;
 use App\Models\UserRecommendation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class SubscriptionController extends Controller
 {
@@ -150,14 +154,84 @@ private function findClosestMatch($userInputKey, $recommendationMap)
 }
 
 
+        public function adminIndex()
+        {
+            $subscriptions = Subscription::with('user', 'shipping', 'payments')->get();
 
-
-    public function adminIndex()
-    {
-        $subscriptions = Subscription::with('user')->get();
+            return Inertia::render('Admin/SubscriptionCentre', [
+                'subscriptions' => $subscriptions,
+            ]);
+        }
         
-        return Inertia::render('Admin/SubscriptionCentre', [
-            'subscriptions' => $subscriptions,
-        ]);
+    public function confirmSubscription(Subscription $subscription)
+    {
+        \Log::info('Confirm Subscription API called');
+    
+        try {
+            DB::transaction(function () use ($subscription) {
+                // Update subscription payments status
+                $subscription->subscriptionPayments()->update(['status' => 'Confirmed']);
+    
+                // Update subscription payment_ver field
+                $subscription->update(['payment_ver' => 1]);
+            });
+    
+            return response()->json(['message' => 'Subscription confirmed successfully'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error confirming subscription: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to confirm subscription'], 500);
+        }
     }
+    
+
+    public function cancelSubscription(Subscription $subscription)
+    {
+        \Log::info('Cancel Subscription API called');
+
+        DB::transaction(function () use ($subscription) {
+            // Update SubscriptionPayment status to 'Cancelled'
+            $subscription->subscriptionPayments()->update(['status' => 'Cancelled']);
+
+            // Update Subscription status to 'Inactive'
+            $subscription->update(['status' => 'Inactive']);
+        });
+
+        return response()->json(['message' => 'Subscription cancelled successfully'], 200);
+    }
+
+    public function updateShipping(Request $request, Subscription $subscription)
+    {
+        $request->validate([
+            'shipping_type' => 'required|string',
+            'tracking_number' => 'required|string',
+        ]);
+    
+        // Find the shipping information for the order or create a new one
+        $shipping = SubscriptionShipping::updateOrCreate(
+            ['subscription_id' => $subscription->id],
+            [
+                'shipping_type' => $request->shipping_type,
+                'tracking_number' => $request->tracking_number,
+            ]
+        );
+    
+        return redirect()->route('subscription-centre')->with('success', 'Shipping information updated.');
+    }
+    public function destroy(Subscription $subscription)
+    {
+        try {
+            // Delete all related payments
+            $subscription->subscriptionPayments()->delete();
+            
+            // Delete the subscription itself
+            $subscription->delete();
+    
+            return response()->json(['message' => 'Subscription and related records deleted successfully'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Failed to delete subscription: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete subscription and related records'], 500);
+        }
+    }
+    
+
 }

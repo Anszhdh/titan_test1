@@ -75,7 +75,7 @@ const submit = () => {
                         </div>
                         <div class="mt-4 flex justify-between items-center">
                             <Link :href="route('register')" class="text-xs text-brown-600 hover:underline">New customer? Create Account</Link>
-                            <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs text-brown-600 hover:underline">Forgot your password?</Link>
+                            <!-- <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs text-brown-600 hover:underline">Forgot your password?</Link> -->
                         </div>
                     </div>
                     <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>

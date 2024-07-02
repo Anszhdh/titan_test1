@@ -67,7 +67,10 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 //subscription centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('admin/subscription-centre', [SubscriptionController::class, 'adminIndex'])->name('subscription-centre');
-
+    Route::post('/admin/subscriptions/{subscription}/confirm', [SubscriptionController::class, 'confirmSubscription']);
+    Route::post('/admin/subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancelSubscription']);
+    Route::put('/admin/subscriptions/{subscription}/update-shipping', [subscriptionController::class, 'updateShipping'])->name('subscriptions.updateShipping');
+    Route::delete('/admin/subscriptions/{subscription}', [subscriptionController::class, 'destroy'])->name('subscriptions.destroy');
 });
 
 
@@ -125,7 +128,6 @@ Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->na
 Route::post('/subscription/step4', [SubscriptionController::class, 'step4'])->name('subscription.step4');
 Route::post('/subscription/step5', [SubscriptionController::class, 'step5'])->name('subscription.step5');
 Route::get('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
-Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
 Route::post('/subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
 
 //subscription cart
@@ -135,6 +137,6 @@ Route::get('/api/latest-product', function () {
     return session('latest_product');
 });
 Route::get('/subscription-checkout', [SubscriptionCartController::class, 'checkoutForm'])->name('checkout.form');
-Route::post('/subscription-checkout', [SubscriptionCartController::class, 'processCheckout'])->name('checkout.process');
+Route::post('/subscription-checkout', [SubscriptionCartController::class, 'processCheckout'])->name('subs.checkout.process');
 
 require __DIR__.'/auth.php';

@@ -13,6 +13,12 @@ class ProfileUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
+            public function authorize()
+            {
+                return true; // Ensure that authorization is correctly set based on your requirements
+            }
+
+            
             public function rules(): array
         {
             return [

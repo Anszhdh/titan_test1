@@ -21,6 +21,7 @@ class Subscription extends Model
         'start_date',
         'end_date',
         'status',
+        'payment_ver',
     ];
 
     public function user()
@@ -37,7 +38,7 @@ class Subscription extends Model
         return $this->hasMany(SubscriptionItem::class);
     }
 
-    public function subscriptionPayment()
+    public function payments()
     {
         return $this->hasMany(SubscriptionPayment::class);
     }
@@ -45,5 +46,9 @@ class Subscription extends Model
     public function subscriptionAnswers()
     {
         return $this->hasMany(SubscriptionAnswer::class);
+    }
+    public function shipping()
+    {
+        return $this->hasOne(SubscriptionShipping::class);
     }
 }

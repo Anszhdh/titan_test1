@@ -21,34 +21,37 @@ class ProfileController extends Controller
      */
 
 
-     public function edit(Request $request): Response
+     public function edit(Request $request)
      {
-         $user = auth()->user();
+         $user = $request->user();
      
          return Inertia::render('Profile/Edit', [
-             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+             'mustVerifyEmail' => $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
              'status' => session('status'),
-             'auth' => ['user' => $user->only('name', 'email', 'birthday')],
+             'auth' => $user ? [
+                 'user' => $user->only('id', 'name', 'email', 'birthday', 'email_verified_at'),
+             ] : null,
          ]);
      }
-    
-
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+        public function update(ProfileUpdateRequest $request): RedirectResponse
+        {
+            $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $user->update($request->validated());
+
+            // If email has changed, reset verification status
+            if ($request->user()->isDirty('email')) {
+                $request->user()->email_verified_at = null;
+            }
+
+            $request->user()->save();
+
+            return Redirect::route('profile.edit')->with('status', 'profile-updated');
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit');
-    }
-
+        
         public function updateBilling(Request $request): RedirectResponse
     {
         $request->validate([
