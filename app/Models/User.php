@@ -49,6 +49,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // User.php (User model)
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function address()
     {
         return $this->hasOne(CustomerAddress::class);

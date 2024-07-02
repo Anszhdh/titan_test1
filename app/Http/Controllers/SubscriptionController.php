@@ -154,7 +154,17 @@ private function findClosestMatch($userInputKey, $recommendationMap)
 }
 
        
+        public function userSubscriptions()
+        {
+            $subscriptions = Subscription::where('user_id', auth()->id())
+                ->with('payments')
+                ->with('shipping')
+                ->get();
 
+            return Inertia::render('Subscription/Index', [
+                'subscriptions' => $subscriptions,
+            ]);
+        }
 
         public function adminIndex()
         {

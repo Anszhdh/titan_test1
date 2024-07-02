@@ -3,16 +3,54 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Shipping;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class OrderController extends Controller
 {
+
+
+   // OrderController.php
+
     public function index()
+    {
+        $userId = auth()->id();
+        $orders = Order::where('user_id', $userId)
+                    ->with(['orderItems.product'])
+                    ->get();
+
+        return Inertia::render('Orders/Index', [
+            'orders' => $orders,
+        ]);
+    }
+
+    public function userOrders()
+    {
+        $user = auth()->user();
+        $orders = Order::where('user_id', $user->id)
+            ->with(['orderItems.product', 'payment', 'shipping'])
+            ->get();
+    
+            \Log::info('Orders fetched:', $orders->toArray());
+
+    
+        return Inertia::render('Orders/Index', [
+            'orders' => $orders,
+        ]);
+    }
+    
+    
+    
+    
+
+
+    public function adminIndex()
     {
         $orders = Order::with(['user', 'payment', 'shipping'])->get();
 

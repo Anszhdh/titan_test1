@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 
 //admin order
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::get('admin/order-centre', [OrderController::class, 'index'])->name('order-centre');
+    Route::get('admin/order-centre', [OrderController::class, 'adminIndex'])->name('order-centre');
     Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
     Route::put('/admin/orders/{order}/update-shipping', [OrderController::class, 'updateShipping'])->name('orders.updateShipping');
@@ -53,11 +53,15 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 
 
 //order display
-Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
+});
 
 //subscription display
-Route::get('/subscriptions', [OrderController::class, 'userSubscriptions'])->name('user.subscriptions');
+Route::middleware('auth')->group(function () {
+    Route::get('/subscriptions', [SubscriptionController::class, 'userSubscriptions'])->name('user.subscriptions');
+});
+
 
 //product centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
