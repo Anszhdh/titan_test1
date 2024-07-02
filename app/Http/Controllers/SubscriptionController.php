@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\UserRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class SubscriptionController extends Controller
@@ -251,4 +252,26 @@ private function findClosestMatch($userInputKey, $recommendationMap)
     }
     
 
+    public function generatePdf()
+    {
+        try {
+            $subscriptions = Subscription::all(); // Fetch all subscriptions
+    
+            // Pass data to the view
+            $data = [
+                'subscriptions' => $subscriptions,
+            ];
+    
+            // Load the view and generate PDF
+            $pdf = PDF::loadView('Subscriptionpdf', $data);
+    
+            // Download the PDF file
+            return $pdf->download('subscriptions.pdf');
+    
+        } catch (\Exception $e) {
+            \Log::error('Error generating PDF: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to generate PDF'], 500);
+        }
+    }
+    
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CheckoutController; 
 use App\Http\Controllers\SalesController; 
 use App\Http\Controllers\SubscriptionController; 
@@ -54,6 +55,9 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
     Route::put('/admin/orders/{order}/update-shipping', [OrderController::class, 'updateShipping'])->name('orders.updateShipping');
     Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/admin/orders/report', [OrderController::class, 'generateReport']);
+    Route::get('/admin/orders/{orderId}/invoice', [OrderController::class, 'generateInvoice'])->name('admin.orders.invoice');
+
 });
 
 
@@ -85,6 +89,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::post('/admin/subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancelSubscription']);
     Route::put('/admin/subscriptions/{subscription}/update-shipping', [subscriptionController::class, 'updateShipping'])->name('subscriptions.updateShipping');
     Route::delete('/admin/subscriptions/{subscription}', [subscriptionController::class, 'destroy'])->name('subscriptions.destroy');
+    Route::get('/admin/subscriptions/pdf', [SubscriptionController::class, 'generatePdf'])->name('subscriptions.pdf');
 });
 
 
@@ -168,6 +173,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/subscription-total', [SalesController::class, 'subscriptionTotal']);
     Route::get('/order-total', [SalesController::class, 'orderTotal']);
     Route::get('/this-month-subscription-sales', [SalesController::class, 'thisMonthSubscriptionSales']);
+});
+
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
 });
 
 

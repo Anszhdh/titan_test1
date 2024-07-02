@@ -125,8 +125,22 @@ const deleteSubscription = async (subscriptionId) => {
         }
     }
 };
-
-
+const generatePDF = async () => {
+    try {
+        const response = await axios.get('/admin/subscriptions/pdf', {
+            responseType: 'blob' // Ensure response type is blob for file download
+        });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'subscriptions.pdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+    }
+}
 </script>
 
 <template>
@@ -149,6 +163,9 @@ const deleteSubscription = async (subscriptionId) => {
                         <div>Pending Subscriptions</div>
                     </div>
                 </div>
+                <div class="mb-4">
+        <button @click="generatePDF" class="bg-blue-500 text-white px-4 py-2 rounded">Download PDF</button>
+    </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200">
                         <thead class="bg-[#dad8d7] text-black">
@@ -170,13 +187,15 @@ const deleteSubscription = async (subscriptionId) => {
                                 <td class="py-2 px-4 border-b">{{ formatDate(subscription.start_date) }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatDate(subscription.end_date) }}</td>
                                 <td class="py-2 px-4 border-b">RM {{ subscription.price }}</td>
-                                <td class="py-2 px-4 border-b">
+                                <td class="py-2 px-4 border-b items-center ">
                                     <button 
                                         @click="openModal(subscription.payments.length > 0 ? subscription.payments[0].payment_proof_url : null)" 
-                                        class="text-blue-500 underline"
+                                        class="flex items-center space-x-1 text-blue-500 underline"
                                         :disabled="!subscription.payments.length || !subscription.payments[0].payment_proof_url">
-                                        View Receipt
+                                        <!-- Replace this with your actual SVG icon markup -->
+                                        <img src="/receipt.png" alt="View Receipt Icon" class="h-6 w-6 inline-block">
                                     </button>
+                                 
                                 </td>
                                 <td class="py-2 px-4 border-b">{{ subscription.status }}</td>
                                 <td class="py-2 px-4 border-b">

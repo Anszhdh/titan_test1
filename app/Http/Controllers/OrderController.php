@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 
 
 class OrderController extends Controller
@@ -119,5 +121,26 @@ class OrderController extends Controller
         // Handle any errors if necessary
         return redirect()->route('order-centre')->with('error', 'Failed to delete order.');
     }
+    }
+
+    public function generateReport()
+    {
+        $orders = Order::with('user', 'payment')->get();
+        $pdf = PDF::loadView('Orderspdf', ['orders' => $orders]);
+
+        return $pdf->download('orders_report.pdf');
+    }
+    public function generateInvoice($orderId)
+    {
+        Log::info('Generating invoice for order ID: ' . $orderId);
+    
+        $order = Order::findOrFail($orderId);
+        Log::debug('Order details:', $order->toArray());
+    
+        // Generate PDF content using a view
+        $pdf = PDF::loadView('invoicepdf', compact('order'));
+    
+        // Optionally, you can save the PDF or download it directly
+        return $pdf->download('invoice_' . $order->id . '.pdf');
     }
 }

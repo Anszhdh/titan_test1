@@ -48,7 +48,11 @@ const currentRoute = ref(url);
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> Subscription Centre
                 </a> 
-             
+                <a :href="route('admin.users.index')" 
+                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
+                   class="block py-2.5 px-4 rounded transition duration-200">
+                    <i class="fas fa-calendar-check"></i> User Management
+                </a> 
               
                 <!-- <a :href="route('sales-report')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('sales-report'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('sales-report')}"

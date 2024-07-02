@@ -123,6 +123,46 @@ const formatPaymentType = (type) => {
   return type.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };
 
+const downloadReport = () => {
+    axios.get('/admin/orders/report', { responseType: 'blob' })
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'orders_report.pdf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => {
+            console.error('Error downloading the report:', error);
+        });
+};
+
+const receiptIconUrl = computed(() => {
+    // Assuming you have a route or endpoint to fetch the icon URL
+    return '/receipt.png'; // Replace with your actual dynamic URL
+});
+const invoiceIconUrl = computed(() => {
+    // Assuming you have a route or endpoint to fetch the icon URL
+    return '/invoice.png'; // Replace with your actual dynamic URL
+});
+
+
+const downloadInvoice = async (orderId) => {
+    try {
+        const result = await axios.get(`/admin/orders/${orderId}/invoice`, { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([result.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `invoice_${orderId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading invoice:', error);
+    }
+};
 </script>
 
 <template>
@@ -148,6 +188,7 @@ const formatPaymentType = (type) => {
                         <div>Pending Orders</div>
                     </div>
                 </div>
+                <button @click="downloadReport" class="bg-blue-500 text-white px-4 py-2 rounded mb-6">Download PDF</button>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200 text-center">
                         <thead class="bg-[#dad8d7]">
@@ -169,7 +210,12 @@ const formatPaymentType = (type) => {
                                 <td class="py-2 px-4 border-b">{{ order.status }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatDate(order.created_at) }}</td>
                                 <td class="py-2 px-4 border-b">
-                                    <button @click="openModal(order.payment.payment_proof_url)" class="text-blue-500 underline">View Receipt</button>
+                                    <a :href="order.payment.payment_proof_url" target="_blank" title="View Receipt">
+                                        <img :src="receiptIconUrl" alt="View Receipt" class="h-6 w-6 inline-block">
+                                    </a>
+                                    <button @click="downloadInvoice(order.id)" class="text-blue-500 underline" title="Download Invoice" v-if="order.status === 'Confirmed'">
+                                        <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
+                                    </button>
                                 </td>
                                 <td class="py-2 px-4 border-b">
                                     <template v-if="order.status === 'Pending'">
