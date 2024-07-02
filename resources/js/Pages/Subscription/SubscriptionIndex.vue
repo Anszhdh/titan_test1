@@ -1,6 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
+
 
 const { props } = usePage();
 const errorMessage = props.error || ''; // Initialize errorMessage with props.error or empty string
@@ -10,6 +12,7 @@ const isDisabled = errorMessage !== '';
 
 <template>
     <Head title="Start Subscription" />
+    <FooterLayout>
     <AuthenticatedLayout>
         <div class="min-h-screen bg-[#fffffe] flex flex-col items-center py-12">
             <div class="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
@@ -59,4 +62,5 @@ const isDisabled = errorMessage !== '';
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>

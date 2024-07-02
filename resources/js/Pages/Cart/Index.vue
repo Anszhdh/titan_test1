@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 const props = defineProps({
   cart: Array
@@ -28,6 +29,7 @@ function proceedToCheckout() {
 </script>
 <template>
   <Head title="Cart" />
+<FooterLayout>
   <AuthenticatedLayout>
     <div class="container mx-auto px-4">
     <h1 class="text-2xl font-bold mb-4">My Cart</h1>
@@ -74,4 +76,5 @@ function proceedToCheckout() {
     </div>
   </div>
   </AuthenticatedLayout>
+</FooterLayout>
 </template>

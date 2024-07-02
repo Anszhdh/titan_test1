@@ -17,7 +17,7 @@ use App\Models\Subscription;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 // Profile
 Route::middleware('auth')->group(function () {
@@ -127,7 +127,8 @@ Route::post('/subscription/step2', [SubscriptionController::class, 'step2'])->na
 Route::post('/subscription/step3', [SubscriptionController::class, 'step3'])->name('subscription.step3');
 Route::post('/subscription/step4', [SubscriptionController::class, 'step4'])->name('subscription.step4');
 Route::post('/subscription/step5', [SubscriptionController::class, 'step5'])->name('subscription.step5');
-Route::get('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
+Route::post('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation');
+Route::get('/subscription/recommendation', [SubscriptionController::class, 'recommendation'])->name('subscription.recommendation.cart');
 Route::post('/subscription/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
 
 //subscription cart
@@ -138,5 +139,6 @@ Route::get('/api/latest-product', function () {
 });
 Route::get('/subscription-checkout', [SubscriptionCartController::class, 'checkoutForm'])->name('checkout.form');
 Route::post('/subscription-checkout', [SubscriptionCartController::class, 'processCheckout'])->name('subs.checkout.process');
+Route::get('/subscription/success', [SubscriptionCartController::class, 'showSuccessPage'])->name('subscription.success');
 
 require __DIR__.'/auth.php';

@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import LoadingScreen from '@/Components/Loading.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
+
 
 const selectedOption = ref(null); // Assuming single selection
 const options = [
@@ -29,6 +31,7 @@ function nextStep() {
 </script>
 
 <template>
+    <FooterLayout>
     <AuthenticatedLayout>
         <div v-if="loading">
             <LoadingScreen />
@@ -52,6 +55,7 @@ function nextStep() {
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>
 
 <style scoped>

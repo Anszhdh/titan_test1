@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 
 const paymentMethod = ref('');
@@ -25,6 +26,7 @@ const processCheckout = () => {
 </script>
 
 <template>
+<FooterLayout>
     <AuthenticatedLayout>
         <div class="flex  justify-center min-h-screen">
             <div class="w-full max-w-5xl px-6 py-8 bg-orange-100/5 rounded-lg shadow-lg">
@@ -56,6 +58,7 @@ const processCheckout = () => {
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>
 
 

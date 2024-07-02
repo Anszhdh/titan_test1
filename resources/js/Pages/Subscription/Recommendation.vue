@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
+
 
 const { props } = usePage();
 const recommendations = ref(props.value.recommendations);
@@ -28,6 +30,7 @@ const subscribe = (product, recommendation) => {
 </script>
 
 <template>
+    <FooterLayout>
     <AuthenticatedLayout>
         <div class="container mx-auto px-4 py-8 bg-orange-100/5">
             <h2 class="text-center text-xl font-bold mb-2">Your Coffee Recommendation</h2>
@@ -57,4 +60,5 @@ const subscribe = (product, recommendation) => {
             </div>
         </div>
     </AuthenticatedLayout>
+    </FooterLayout>
 </template>

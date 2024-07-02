@@ -18,7 +18,7 @@ const showingNavigationDropdown = ref(false);
                 <!-- Primary Navigation Menu -->
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
-                            <div class="lg:flex lg:items-center lg:col-span-3">
+                            <div class="lg:flex lg:items-center lg:col-span-4">
                                 <a href="/" class="flex items-center">
                                     <img
                                     id="logo"
@@ -64,12 +64,12 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Contact
                                         </Link>
-                                    <img
-                                        id="search"
-                                        class="h-6 ml-16 w-auto text-white lg:5"
-                                        src="home/search.png"
-                                        alt="search"
-                                    />
+                                        <!-- <img
+                                            id="search"
+                                            class="h-6 ml-16 w-auto text-white lg:5"
+                                            src="home/search.png"
+                                            alt="search"
+                                        /> -->
                                     <a href="/cart">
                                     <img
                                         id="cart"

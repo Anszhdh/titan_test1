@@ -55,4 +55,7 @@ class SubscriptionCheckoutController extends Controller
 
         return redirect()->route('subscriptions.index')->with('success', 'Payment submitted for verification.');
     }
+
+  
+
 }

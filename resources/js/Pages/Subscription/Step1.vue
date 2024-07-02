@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
+
 
 const selectedOptions = ref([]);
 const options = [
@@ -26,6 +28,7 @@ function nextStep() {
 </script>
 
 <template>
+    <FooterLayout>
     <AuthenticatedLayout>
         <div class="container mx-auto px-4 py-8 bg-orange-100/5">
             <h2 class="text-center text-2xl font-bold mb-4">Do you prefer your coffee to have a:</h2>
@@ -46,6 +49,7 @@ function nextStep() {
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>
 
 <style scoped>

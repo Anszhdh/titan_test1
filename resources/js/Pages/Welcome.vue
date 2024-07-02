@@ -20,6 +20,10 @@ defineProps({
         type: String,
         required: true,
     },
+    products: { // Define the products prop
+        type: Array,
+        required: true,
+    }
 });
 
 function handleImageError() {
@@ -43,7 +47,7 @@ function handleImageError() {
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
-                  <div class="lg:flex lg:items-center lg:col-span-2">
+                  <div class="lg:flex lg:items-center lg:col-span-3">
                     <img
                         id="logo"
                         class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
@@ -89,12 +93,12 @@ function handleImageError() {
                             >
                                 Contact
                             </Link>
-                        <img
+                        <!-- <img
                             id="search"
                             class="h-6 ml-16 w-auto text-white lg:5"
                             src="home/search.png"
                             alt="search"
-                        />
+                        /> -->
                         <a href="/cart">
                             <img
                                 id="cart"
@@ -213,47 +217,54 @@ function handleImageError() {
                     </div>
 
                     <!-- Absolute positioned features -->
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-24 flex flex-col items-center gap-2">
+                    <div class="absolute top-0 left-0 transform -translate-x-1/2 mt-10 ml-60 flex flex-col items-center gap-2">
                         <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
-                            <img class="h-16 w-auto" src="home/convenient.png" alt="Convenient" />
+                            <img class="h-14 w-auto" src="/home/convenient.png" alt="Convenient" />
                         </div>
                         <span class="font-mono font-bold text-gray-700">Convenient</span>
                     </div>
-                    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 mr-12 flex flex-col items-center gap-2">
+                    <div class="absolute bottom-0 right-0 transform -translate-y-1/2 mb-10 mr-40 flex flex-col items-center gap-2">
                         <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
-                            <img class="h-16 w-auto" src="home/premium_taste.png" alt="Premium Taste" />
+                            <img class="h-16 w-auto" src="/home/premium.png" alt="Premium Taste" />
                         </div>
                         <span class="font-mono font-bold text-gray-700">Premium Taste</span>
                     </div>
-                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-12 flex flex-col items-center gap-2">
+                    <div class="absolute top-0 left-0  transform -translate-x-1/2 mt-60 ml-60  items-center gap-2">
                         <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
-                            <img class="h-16 w-auto" src="home/high_quality.png" alt="High Quality" />
+                            <img class="h-16 w-auto" src="/home/quality.png" alt="High Quality" />
                         </div>
                         <span class="font-mono font-bold text-gray-700">High Quality</span>
                     </div>
-                    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 ml-12 flex flex-col items-center gap-2">
+                    <div class="absolute top-0 right-0 transform -translate-y-1/2 mr-40 mt-80 flex flex-col items-center gap-2">
                         <div class="bg-white/0 flex items-center justify-center border-2 border-yellow-950/10 rounded-full" style="height: 100px; width: 100px;">
-                            <img class="h-16 w-auto" src="home/better_for_you.png" alt="Better For You" />
+                            <img class="h-16 w-auto" src="/home/right.png" alt="Better For You" />
                         </div>
                         <span class="font-mono font-bold text-gray-700">Better For You</span>
                     </div>
                 </div>
-                <div class="container mx-auto p-6">
-                    <h2 class="text-2xl font-bold mb-6 text-center">Discover Our Products</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="container mx-auto mt-20 p-6">
+                    <h2 class="text-2xl font-bold text-yellow-950 mt-20 mb-10 text-center ">Discover Our Products</h2>
+                    <div class="flex justify-center">
+                    <router-link :to="{ name: 'products.index' }">
+                        <button class="bg-yellow-950 hover:bg-yellow-950/70 text-white font-bold py-3 px-4 rounded-xl">
+                            Browse Products
+                        </button>
+                    </router-link>
+                </div>
+                    <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <div v-for="product in products" :key="product.id" class="bg-white shadow-lg rounded-lg p-4">
                         <img :src="product.image" alt="Product Image" class="w-full h-32 object-cover mb-4">
                         <h3 class="text-lg font-semibold mb-2">{{ product.name }}</h3>
                         <p class="text-gray-600 mb-4">RM {{ product.price }}</p>
                         <button class="bg-brown-500 text-white py-2 px-4 rounded">Add to cart</button>
                     </div>
-                    </div>
+                    </div> -->
                     <div class="mt-8 text-center">
                     <p class="mb-4">Experience freshly roasted coffee delivered to your door</p>
-                    <div class="flex justify-center items-center">
+                    <!-- <div class="flex justify-center items-center">
                         <input type="email" placeholder="Enter your email" class="border py-2 px-4 rounded-l">
                         <button class="bg-brown-500 text-white py-2 px-4 rounded-r">Sign Up</button>
-                    </div>
+                    </div> -->
                     </div>
                 </div>       
                     </div>

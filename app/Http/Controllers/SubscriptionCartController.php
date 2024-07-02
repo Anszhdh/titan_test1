@@ -145,7 +145,7 @@ class SubscriptionCartController extends Controller
         'payment_path' => $paymentPath,
     ]);
 
-    return redirect()->route('subscription.main')->with('success', 'Subscription successfully created. Waiting for admin approval.');
+    return redirect()->route('subscription.success')->with('success', 'Subscription successfully created. Waiting for admin approval.');
 }
 
     private function getDuration($frequency)
@@ -161,5 +161,8 @@ class SubscriptionCartController extends Controller
                 return 30;
         }
     }
-    
+    public function showSuccessPage()
+    {
+        return Inertia::render('Subscription/Cart/Success');
+    }
 }

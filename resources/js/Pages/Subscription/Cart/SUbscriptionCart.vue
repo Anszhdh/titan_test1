@@ -1,4 +1,30 @@
+
+<script setup>
+import { ref } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { usePage} from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
+
+
+
+const { props } = usePage();
+const productDetails = ref(props.value.productDetails);
+const customerAddress = ref(props.value.customerAddress);
+
+const goToCheckout = () => {
+    Inertia.visit('/subscription-checkout', {
+        data: {
+            productId: productDetails.value.id,
+            recommendationId: productDetails.value.recommendation_id
+        }
+    });
+};
+
+</script>
+
 <template>
+    <FooterLayout>
     <AuthenticatedLayout>
         <div class="container mx-auto px-4 py-8">
             <div class="flex flex-col md:flex-row">
@@ -67,26 +93,6 @@
             </div>
         </div>
     </AuthenticatedLayout>
+    </FooterLayout>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { usePage} from '@inertiajs/inertia-vue3';
-import { Inertia } from '@inertiajs/inertia';
-
-
-const { props } = usePage();
-const productDetails = ref(props.value.productDetails);
-const customerAddress = ref(props.value.customerAddress);
-
-const goToCheckout = () => {
-    Inertia.visit('/subscription-checkout', {
-        data: {
-            productId: productDetails.value.id,
-            recommendationId: productDetails.value.recommendation_id
-        }
-    });
-};
-
-</script>
