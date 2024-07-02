@@ -32,7 +32,7 @@ async function addToCart(productId) {
     <Head title="Products" />
     <FooterLayout>
     <AuthenticatedLayout :authenticated="authenticated">
-        <div class="container mx-auto px-4">
+        <div class="container mx-auto mt-20 px-4">
             <div class="grid grid-cols-4 gap-4">
                 <div v-for="product in products" :key="product.id" class="border rounded shadow p-4">
                     <div class="w-full h-48 bg-white">

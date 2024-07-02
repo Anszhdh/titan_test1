@@ -24,4 +24,19 @@ class HomeController extends Controller
             'phpVersion' => PHP_VERSION,
         ]);
     }
+
+    public function about()
+    {
+        return Inertia::render('About');
+    }
+
+    public function contact()
+    {
+        return Inertia::render('Contact');
+    }
+
+    public function discover()
+    {
+        return Inertia::render('Discover');
+    }
 }

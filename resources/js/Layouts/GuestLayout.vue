@@ -36,21 +36,21 @@ import { Link } from '@inertiajs/inertia-vue3';
                                             Subscription
                                         </Link>
                                     <Link
-                                            :href="route('register')"
+                                            :href="route('discover')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Discover
                                         </Link>
                                     
                                     <Link
-                                            :href="route('register')"
+                                            :href="route('about')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             About
                                     </Link>
                                 
                                     <Link
-                                            :href="route('register')"
+                                            :href="route('contact')"
                                             class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Contact

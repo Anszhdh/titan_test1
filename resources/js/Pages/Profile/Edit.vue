@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateBillingForm from './Partials/UpdateBillingForm.vue';
@@ -26,7 +27,7 @@ defineProps({
 
 <template>
     <Head title="Profile" />
-
+<FooterLayout>
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-white leading-tight">My Account</h2>
@@ -54,4 +55,5 @@ defineProps({
             </div>
         </div>
     </AuthenticatedLayout>
+</FooterLayout>
 </template>

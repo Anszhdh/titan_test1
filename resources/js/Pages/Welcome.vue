@@ -74,21 +74,21 @@ function handleImageError() {
                                 Subscription
                             </Link>
                         <Link
-                                :href="route('register')"
+                                :href="route('discover')"
                                 class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 Discover
                             </Link>
                         
                         <Link
-                                :href="route('register')"
+                                :href="route('about')"
                                 class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 About
                          </Link>
                        
                         <Link
-                                :href="route('register')"
+                                :href="route('contact')"
                                 class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 Contact
@@ -243,13 +243,13 @@ function handleImageError() {
                     </div>
                 </div>
                 <div class="container mx-auto mt-20 p-6">
-                    <h2 class="text-2xl font-bold text-yellow-950 mt-20 mb-10 text-center ">Discover Our Products</h2>
+                    <h2 class="text-2xl font-bold text-yellow-950 mt-20  text-center ">Discover Our Products</h2>
                     <div class="flex justify-center">
-                    <router-link :to="{ name: 'products.index' }">
+                    <!-- <router-link :to="{ name: 'products.index' }">
                         <button class="bg-yellow-950 hover:bg-yellow-950/70 text-white font-bold py-3 px-4 rounded-xl">
                             Browse Products
                         </button>
-                    </router-link>
+                    </router-link> -->
                 </div>
                     <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <div v-for="product in products" :key="product.id" class="bg-white shadow-lg rounded-lg p-4">
