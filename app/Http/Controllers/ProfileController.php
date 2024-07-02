@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\CustomerAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -26,32 +27,32 @@ class ProfileController extends Controller
          $user = $request->user();
      
          return Inertia::render('Profile/Edit', [
-             'mustVerifyEmail' => $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
-             'status' => session('status'),
-             'auth' => $user ? [
-                 'user' => $user->only('id', 'name', 'email', 'birthday', 'email_verified_at'),
-             ] : null,
-         ]);
+            'mustVerifyEmail' => $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
+            'status' => session('status'),
+            'auth' => $user ? [
+                'user' => $user->only('id', 'name', 'email', 'birthday', 'email_verified_at'),
+                'address' => $user->address ? $user->address->only('address_line_1', 'address_line_2', 'city', 'state', 'postal_code', 'phone_number') : null,
+            ] : null,
+        ]);
      }
     /**
      * Update the user's profile information.
      */
-        public function update(ProfileUpdateRequest $request): RedirectResponse
-        {
-            $user = $request->user();
-
-            $user->update($request->validated());
-
-            // If email has changed, reset verification status
-            if ($request->user()->isDirty('email')) {
-                $request->user()->email_verified_at = null;
-            }
-
-            $request->user()->save();
-
-            return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    public function updateprofile(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->update($request->validated());
+    
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
-        
+    
+        $request->user()->save();
+    
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    
         public function updateBilling(Request $request): RedirectResponse
     {
         $request->validate([

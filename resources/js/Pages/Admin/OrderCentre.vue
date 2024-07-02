@@ -12,7 +12,7 @@ const orders = ref(props.value.orders);
 
 const todayOrder = computed(() => {
     const today = new Date().toDateString();
-    return orders.value.filter(order => new Date(order.start_date).toDateString() === today).length;
+    return orders.value.filter(order => new Date(order.created_at).toDateString() === today).length;
 });
 
 const pendingOrder = computed(() => {
@@ -111,6 +111,14 @@ const deleteOrder = async (orderId) => {
     }
 };
 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+};
+
 </script>
 
 <template>
@@ -155,7 +163,7 @@ const deleteOrder = async (orderId) => {
                                 <td class="py-2 px-4 border-b">{{ order.payment.type }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.total_price }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.status }}</td>
-                                <td class="py-2 px-4 border-b">{{ new Date(order.created_at).toLocaleDateString() }}</td>
+                                <td class="py-2 px-4 border-b">{{ formatDate(order.created_at) }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <button @click="openModal(order.payment.payment_proof_url)" class="text-blue-500 underline">View Receipt</button>
                                 </td>

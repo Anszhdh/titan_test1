@@ -24,9 +24,9 @@ Route::get('/discover', [HomeController::class, 'discover'])->name('discover');
 // Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile', [ProfileController::class, 'updateBilling'])->name('profile.updateBilling');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/profile-update', [ProfileController::class, 'updateprofile'])->name('profile.update');
+    Route::patch('/profile-billing', [ProfileController::class, 'updateBilling'])->name('profile.updateBilling');
+    Route::delete('/profile-destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Admin
@@ -43,8 +43,6 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 });
 
 //admin order
-// routes/web.php or routes/api.php
-
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('admin/order-centre', [OrderController::class, 'index'])->name('order-centre');
     Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
@@ -54,7 +52,12 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 });
 
 
+//order display
+Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
 
+
+//subscription display
+Route::get('/subscriptions', [OrderController::class, 'userSubscriptions'])->name('user.subscriptions');
 
 //product centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
