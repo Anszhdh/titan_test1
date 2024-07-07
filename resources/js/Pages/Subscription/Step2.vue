@@ -7,10 +7,10 @@ import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 const selectedOptions = ref([]);
 const options = [
-    { id: 6, label: 'Light Roast', image: '/substep/step2/Light.jpg' },
-    { id: 7, label: 'Medium Roast', image: '/substep/step2/Medium.png' },
-    { id: 8, label: 'Dark Roast', image: '/substep/step2/Dark.png' },
-    { id: 9, label: 'Espresso Roast', image: '/substep/step2/Espresso.png' }
+    { id: 'Light', label: 'Light Roast', image: '/substep/step2/Light.jpg' },
+    { id: 'Medium', label: 'Medium Roast', image: '/substep/step2/Medium.png' },
+    { id: 'Dark', label: 'Dark Roast', image: '/substep/step2/Dark.png' },
+    { id: 'Espresso', label: 'Espresso Roast', image: '/substep/step2/Espresso.png' }
 ];
 
 function toggleOption(optionId) {

@@ -60,73 +60,155 @@ class SubscriptionController extends Controller
 
     public function recommendation(Request $request)
     {
+
+
         $data = $request->session()->get('subscription', []);
         $data['step5'] = $request->input('step5');
         $request->session()->put('subscription', $data);
     
         // Generate recommendations based on the collected data
         $recommendations = $this->generateRecommendations($data);
-    
+        \Log::debug('Recommendations:', $recommendations);
         // Save recommendations to the database and collect recommendation IDs
+
         $recommendationIds = [];
         foreach ($recommendations as $rec) {
-            $recommendation = Recommendation::create(['product_id' => $rec['product_id']]);
-            UserRecommendation::create([
-                'user_id' => auth()->id(),
-                'recommendation_id' => $recommendation->id
-            ]);
-            $rec['recommendation_id'] = $recommendation->id;
-            $recommendationIds[] = $recommendation->id;
+            // Check if the recommendation has a valid product id
+            if ($rec['id']) {
+                $recommendation = Recommendation::create(['product_id' => $rec['id']]);
+                UserRecommendation::create([
+                    'user_id' => auth()->id(),
+                    'recommendation_id' => $recommendation->id
+                ]);
+                $recommendationIds[] = $recommendation->id;
+            }
         }
     
-        // Store user_id in session for use in SubscriptionCartController
         $request->session()->put('user_id', auth()->id());
         $request->session()->put('recommendation_ids', $recommendationIds);
-        // Fetch product details from the database
-        $productIds = array_column($recommendations, 'product_id');
-        $products = Product::whereIn('id', $productIds)->get();
     
+  
         return Inertia::render('Subscription/Recommendation', [
             'recommendations' => $recommendations,
-            'products' => $products,
+            'products' => Product::whereIn('id', collect($recommendations)->pluck('id'))->get()
         ]);
     }
     
     
     private function generateRecommendations($data)
-{
-    $recommendations = [];
+    {
+        $flavor = $data['step1'][0] ?? null;
+        $roastLevel = $data['step2'][0] ?? null;
+        $brewingMethod = $data['step3'][0] ?? null;
+        $preGround = $data['step4'] ?? null;
+        $decaf = $data['step5'] ?? null;
     
-    $q1 = $data['step1'][0] ?? null;
-    $q2 = $data['step2'][0] ?? null;
-    $q3 = $data['step3'][0] ?? null;
-    $q4 = $data['step4'][0] ?? null;
-    $q5 = $data['step5'][0] ?? null;
+        $query = Product::query();
+    
+        if ($flavor) {
+            $query->where('flavor', $flavor);
+        }
+        if ($roastLevel) {
+            $query->where('roast_level', $roastLevel);
+        }
+        if ($brewingMethod) {
+            $query->where('brewing_method', $brewingMethod);
+        }
+        if ($preGround !== null) {
+            $query->where('pre_ground', $preGround);
+        }
+        if ($decaf !== null) {
+            $query->where('decaf', $decaf);
+        }
+    
+        // Attempt to find an exact match first
+        $products = $query->get();
+    
+        if ($products->isEmpty()) {
+            // No exact match found, relax criteria
+            // Remove one criteria at a time and search again
+            $query = Product::query();
+    
+            if ($flavor) {
+                $query->where('flavor', $flavor);
+            }
+            if ($roastLevel) {
+                $query->where('roast_level', $roastLevel);
+            }
+            if ($brewingMethod) {
+                $query->where('brewing_method', $brewingMethod);
+            }
+            // Ignore pre_ground and decaf
+    
+            $products = $query->get();
+    
+            if ($products->isEmpty()) {
+                // Further relax criteria
+                $query = Product::query();
+    
+                if ($flavor) {
+                    $query->where('flavor', $flavor);
+                }
+                if ($roastLevel) {
+                    $query->where('roast_level', $roastLevel);
+                }
+                // Ignore brewing_method, pre_ground, and decaf
+    
+                $products = $query->get();
+    
+                if ($products->isEmpty()) {
+                    // Return default recommendation if no match found
+                    return [
+                        [
+                            'id' => null,
+                            'name' => 'House Blend',
+                            'description' => 'Our special House Blend'
+                        ]
+                    ];
+                }
+            }
+        }
+    
+        // Convert products to recommendation format
+        $recommendations = [];
+        foreach ($products as $product) {
+            $recommendations[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description
+            ];
+        }
+    
+        return $recommendations;
+    }
+    
 
-    $userInputKey = "$q1-$q2-$q3-$q4-$q5";
+    public function handleRecommendations(Request $request)
+{
+    $data = $request->all();
+    $recommendations = $this->generateRecommendations($data);
 
-    $recommendationMap = [
-        '2-6-13-16-18' => ['product_id' => 1, 'name' => 'Ethiopian Yirgacheffe', 'description' => 'Ethiopian Yirgacheffe with nutty flavor and light roast'],
-        '1-7-10-17-18' => ['product_id' => 2, 'name' => 'Decaf Colombian', 'description' => 'Decaf Colombian with fruity flavor and medium roast'],
-        '3-8-12-16-19' => ['product_id' => 3, 'name' => 'Dark Roast Espresso', 'description' => 'Dark Roast Espresso with chocolatey flavor'],
-        '4-9-12-16-19' => ['product_id' => 4, 'name' => 'Spicy Espresso Blend', 'description' => 'Spicy Espresso Blend'],
-        '3-7-10-16-18' => ['product_id' => 5, 'name' => 'Medium Roast Mocha Java', 'description' => 'Medium Roast Mocha Java'],
-        '1-8-10-16-18' => ['product_id' => 6, 'name' => 'Dark Roast Hazelnut', 'description' => 'Dark Roast Hazelnut'],
-        '5-7-10-16-19' => ['product_id' => 7, 'name' => 'Vietnamese Coffee', 'description' => 'Vietnamese Coffee'],
-        '5-8-11-16-19' => ['product_id' => 8, 'name' => 'Indonesian Coffee', 'description' => 'Indonesian Coffee'],
-        '5-8-12-17-19' => ['product_id' => 9, 'name' => 'Robusta Coffee', 'description' => 'Robusta Coffee'],
-        '5-7-13-16-18' => ['product_id' => 10, 'name' => 'Arabica Coffee', 'description' => 'Arabica Coffee'],
-    ];
+    $recommendationIds = [];
 
-    if (isset($recommendationMap[$userInputKey])) {
-        $recommendations[] = $recommendationMap[$userInputKey];
-    } else {
-        // If no exact match is found, find the closest match or return a default product
-        $closestMatch = $this->findClosestMatch($userInputKey, $recommendationMap);
-        $recommendations[] = $closestMatch ?: ['name' => 'House Blend', 'description' => 'Our special House Blend'];
+    foreach ($recommendations as $rec) {
+        // Check if the recommendation has a valid product id
+        if ($rec['id']) {
+            $recommendation = Recommendation::create(['product_id' => $rec['id']]);
+
+            UserRecommendation::create([
+                'user_id' => auth()->id(),
+                'recommendation_id' => $recommendation->id
+            ]);
+
+            $recommendationIds[] = $recommendation->id;
+        } else {
+            // Handle case where product_id is null or invalid
+            // You may choose to log this or create a default recommendation
+            // For now, we will skip this recommendation
+        }
     }
 
-    return $recommendations;
+    // Continue with the rest of your logic
 }
 
 private function findClosestMatch($userInputKey, $recommendationMap)

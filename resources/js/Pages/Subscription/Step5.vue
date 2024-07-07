@@ -5,17 +5,16 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import LoadingScreen from '@/Components/Loading.vue';
 import FooterLayout from '@/Layouts/FooterLayout.vue';
 
-
-const selectedOption = ref(null); // Assuming single selection
+const selectedOption = ref(null); 
 const options = [
-    { id: 18, label: 'Yes', image: '/substep/step5/yes.jpg' },
-    { id: 19, label: 'No', image: '/substep/step5/no.jpg' }
+    { id: 18, label: 'Yes', value: true, image: '/substep/step5/yes.jpg' },
+    { id: 19, label: 'No', value: false, image: '/substep/step5/no.jpg' }
 ];
 
 const loading = ref(false);
 
-function toggleOption(optionId) {
-    selectedOption.value = optionId; // Update selectedOption.value directly
+function toggleOption(option) {
+    selectedOption.value = option.value;
 }
 
 function nextStep() {
@@ -41,8 +40,8 @@ function nextStep() {
             <div class="grid grid-cols-2 gap-4">
                 <div v-for="option in options" :key="option.id" class="text-center">
                     <div 
-                        @click="toggleOption(option.id)" 
-                        :class="{'border-2 border-brown-500': selectedOption === option.id}" 
+                        @click="toggleOption(option)" 
+                        :class="{'border-2 border-brown-500': selectedOption === option.value}" 
                         class="cursor-pointer p-4 border rounded-lg"
                     >
                         <img :src="option.image" :alt="option.label" class="mx-auto w-34 h-24 object-cover rounded-xl mb-2 center">
@@ -55,7 +54,7 @@ function nextStep() {
             </div>
         </div>
     </AuthenticatedLayout>
-</FooterLayout>
+    </FooterLayout>
 </template>
 
 <style scoped>

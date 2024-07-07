@@ -7,12 +7,12 @@ import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 const selectedOptions = ref([]);
 const options = [
-    { id: 10, label: 'Drip Coffee Maker', image: '/substep/step3/drip.png' },
-    { id: 11, label: 'French Press', image: '/substep/step3/french.png' },
-    { id: 12, label: 'Espresso Machine', image: '/substep/step3/espresso.jpeg' },
-    { id: 13, label: 'Pour Over', image: '/substep/step3/pour.png' },
-    { id: 14, label: 'Aeropress', image: '/substep/step3/aeropress.jpeg' },
-    { id: 15, label: 'Cold Brew Maker', image: '/substep/step3/coldbrew.jpg' }
+    { id: 'Drip Coffee Maker', label: 'Drip Coffee Maker', image: '/substep/step3/drip.png' },
+    { id: 'French Press', label: 'French Press', image: '/substep/step3/french.png' },
+    { id: 'Espresso Machine', label: 'Espresso Machine', image: '/substep/step3/espresso.jpeg' },
+    { id: 'Pour Over', label: 'Pour Over', image: '/substep/step3/pour.png' },
+    { id: 'Aeropress', label: 'Aeropress', image: '/substep/step3/aeropress.jpeg' },
+    { id: 'Cold Brew Maker', label: 'Cold Brew Maker', image: '/substep/step3/coldbrew.jpg' }
 ];
 
 function toggleOption(optionId) {
