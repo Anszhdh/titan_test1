@@ -106,16 +106,16 @@ class SubscriptionController extends Controller
     $userInputKey = "$q1-$q2-$q3-$q4-$q5";
 
     $recommendationMap = [
-        '2-6-13-16-20' => ['product_id' => 1, 'name' => 'Ethiopian Yirgacheffe', 'description' => 'Ethiopian Yirgacheffe with nutty flavor and light roast'],
-        '1-7-10-14-20' => ['product_id' => 2, 'name' => 'Decaf Colombian', 'description' => 'Decaf Colombian with fruity flavor and medium roast'],
-        '3-8-12-16-21' => ['product_id' => 3, 'name' => 'Dark Roast Espresso', 'description' => 'Dark Roast Espresso with chocolatey flavor'],
-        '4-9-12-16-21' => ['product_id' => 4, 'name' => 'Spicy Espresso Blend', 'description' => 'Spicy Espresso Blend'],
-        '3-7-10-16-20' => ['product_id' => 5, 'name' => 'Medium Roast Mocha Java', 'description' => 'Medium Roast Mocha Java'],
-        '1-8-10-16-20' => ['product_id' => 6, 'name' => 'Dark Roast Hazelnut', 'description' => 'Dark Roast Hazelnut'],
-        '5-7-10-16-20' => ['product_id' => 7, 'name' => 'Vietnamese Coffee', 'description' => 'Vietnamese Coffee'],
+        '2-6-13-16-18' => ['product_id' => 1, 'name' => 'Ethiopian Yirgacheffe', 'description' => 'Ethiopian Yirgacheffe with nutty flavor and light roast'],
+        '1-7-10-17-18' => ['product_id' => 2, 'name' => 'Decaf Colombian', 'description' => 'Decaf Colombian with fruity flavor and medium roast'],
+        '3-8-12-16-19' => ['product_id' => 3, 'name' => 'Dark Roast Espresso', 'description' => 'Dark Roast Espresso with chocolatey flavor'],
+        '4-9-12-16-19' => ['product_id' => 4, 'name' => 'Spicy Espresso Blend', 'description' => 'Spicy Espresso Blend'],
+        '3-7-10-16-18' => ['product_id' => 5, 'name' => 'Medium Roast Mocha Java', 'description' => 'Medium Roast Mocha Java'],
+        '1-8-10-16-18' => ['product_id' => 6, 'name' => 'Dark Roast Hazelnut', 'description' => 'Dark Roast Hazelnut'],
+        '5-7-10-16-19' => ['product_id' => 7, 'name' => 'Vietnamese Coffee', 'description' => 'Vietnamese Coffee'],
         '5-8-11-16-19' => ['product_id' => 8, 'name' => 'Indonesian Coffee', 'description' => 'Indonesian Coffee'],
-        '5-8-12-17-21' => ['product_id' => 9, 'name' => 'Robusta Coffee', 'description' => 'Robusta Coffee'],
-        '5-7-13-16-20' => ['product_id' => 10, 'name' => 'Arabica Coffee', 'description' => 'Arabica Coffee'],
+        '5-8-12-17-19' => ['product_id' => 9, 'name' => 'Robusta Coffee', 'description' => 'Robusta Coffee'],
+        '5-7-13-16-18' => ['product_id' => 10, 'name' => 'Arabica Coffee', 'description' => 'Arabica Coffee'],
     ];
 
     if (isset($recommendationMap[$userInputKey])) {

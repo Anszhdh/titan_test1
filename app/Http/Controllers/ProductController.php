@@ -49,6 +49,11 @@ class ProductController extends Controller
     // Store a new product
     public function store(ProductRequest $request)
     {
+
+        \Log::info('Store request data:', $request->all());
+
+        // Dump and die to inspect the data
+        
         $data = $request->validated();
     
         if ($request->hasFile('image')) {
@@ -98,6 +103,11 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'sku' => 'nullable|string|max:50',
             'quantity' => 'required|integer|min:1',
+            'flavor' => 'required|string',
+            'roast_level' => 'required|string',
+            'brewing_method' => 'required|string',
+            'pre_ground' => 'required|boolean',
+            'decaf' => 'required|boolean',
             // Add more validation rules as needed
         ]);
 

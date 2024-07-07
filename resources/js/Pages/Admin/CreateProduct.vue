@@ -18,6 +18,11 @@ const form = useForm({
     sku: '',
     quantity: '',
     variations: [],
+    flavor: '',
+    roast_level: '',
+    brewing_method: '',
+    pre_ground: '',
+    decaf: '',
 });
 
 const addVariation = () => {
@@ -34,7 +39,22 @@ const handleImageUpload = (event) => {
 };
 
 const saveProduct = () => {
-    form.post(route('product-centre.store'));
+
+  if (form.decaf === undefined) {
+        form.decaf = 'false'; // Set default value to false
+    }
+    if (form.pre_ground === undefined) {
+        form.pre_ground = 'false'; // Set default value to false
+    }
+    console.log('Form data:', form); // Log form data to console
+    form.post(route('product-centre.store'), {
+        onSuccess: () => {
+            console.log('Form submitted successfully');
+        },
+        onError: (errors) => {
+            console.error('Form submission error:', errors);
+        }
+    });
 };
 </script>
 
@@ -80,19 +100,67 @@ const saveProduct = () => {
           </div>
         </div>
 
-        <!-- Category -->
-        <div class="p-6 bg-white shadow-md rounded-md">
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Category</h2>
-          <div class="mb-4">
-              <label for="category_id" class="block text-sm font-medium text-gray-700">Product Category</label>
-              <select v-model="form.category_id" id="category_id" class="mt-1 p-2 w-full border rounded-md">
-                  <option v-for="category in categories" :key="category.id" :value="category.id">
-                      {{ category.name }}
-                  </option>
-              </select>
-          </div>
-         </div>
-
+       <!-- Category -->
+       <div class="p-6 bg-white shadow-md rounded-md">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Category</h2>
+                <div class="mb-4">
+                    <label for="category_id" class="block text-sm font-medium text-gray-700">Product Category</label>
+                    <select v-model="form.category_id" id="category_id" class="mt-1 p-2 w-full border rounded-md">
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="flavor" class="block text-sm font-medium text-gray-700">Flavor:</label>
+                    <select v-model="form.flavor" id="flavor" name="flavor" class="mt-1 p-2 w-full border rounded-md">
+                        <option value="Fruity">Fruity</option>
+                        <option value="Nutty">Nutty</option>
+                        <option value="Chocolatey">Chocolatey</option>
+                        <option value="Spicy">Spicy</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="roast_level" class="block text-sm font-medium text-gray-700">Roast Level:</label>
+                    <select v-model="form.roast_level" id="roast_level" name="roast_level" class="mt-1 p-2 w-full border rounded-md">
+                        <option value="Light">Light</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Espresso">Espresso</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="brewing_method" class="block text-sm font-medium text-gray-700">Brewing Mehtod:</label>
+                    <select v-model="form.brewing_method" id="brewing_method" name="brewing_method" class="mt-1 p-2 w-full border rounded-md">
+                        <option value="Drip Coffee Maker">Drip Coffee Maker</option>
+                        <option value="French Press">French Press</option>
+                        <option value="Espresso Machine">Espresso Machine</option>
+                        <option value="Pour Over">Pour Over</option>
+                        <option value="Aeropress">Aeropress</option>
+                        <option value="Cold Brew Maker">Cold Brew Maker</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700">Pre-Ground:</label>
+                  <div>
+                      <input type="radio" v-model="form.pre_ground" id="pre_ground_yes" :value="true" /> 
+                      <label for="pre_ground_yes" class="mr-3">Yes</label>
+                      <input type="radio" v-model="form.pre_ground" id="pre_ground_no" :value="false" /> 
+                      <label for="pre_ground_no">No</label>
+                  </div>
+              </div>
+              <div class="mb-4">
+                  <label class="text-sm font-medium text-gray-700">Decaf:</label>
+                  <div>
+                      <input type="radio" v-model="form.decaf" id="decaf_yes" :value="true" /> 
+                      <label for="decaf_yes" class="mr-3">Yes</label>
+                      <input type="radio" v-model="form.decaf" id="decaf_no" :value="false" /> 
+                      <label for="decaf_no">No</label>
+                  </div>
+              </div>
+            </div>
+         
         <!-- Inventory -->
         <div class="p-6 bg-white shadow-md rounded-md">
           <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Inventory</h2>

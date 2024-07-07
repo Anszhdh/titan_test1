@@ -22,6 +22,11 @@ class Product extends Model
         'sku',
         'quantity',
         'variation',
+        'flavor',
+        'roast_level',
+        'brewing_method',
+        'pre_ground',
+        'decaf',
         // Add other fillable fields here
     ];
 
