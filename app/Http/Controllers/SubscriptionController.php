@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\UserRecommendation;
 use App\Notifications\AdminConfirmSubscriptionNotification;
 use App\Notifications\AdminCancelSubscriptionNotification;
+use App\Notifications\AdminShippingSubscriptionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -329,7 +330,11 @@ private function findClosestMatch($userInputKey, $recommendationMap)
                 'tracking_number' => $request->tracking_number,
             ]
         );
-    
+        
+        //notifications
+        $user = $subscription->user;
+        $user->notify(new AdminShippingSubscriptionNotification($subscription));
+
         return redirect()->route('subscription-centre')->with('success', 'Shipping information updated.');
     }
     public function destroy(Subscription $subscription)
