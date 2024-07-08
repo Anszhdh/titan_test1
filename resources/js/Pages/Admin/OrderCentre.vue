@@ -9,6 +9,10 @@ import OrderShipping from '@/References/OrderShipping.vue';
 
 const { props } = usePage();
 const orders = ref(props.value.orders);
+const searchQuery = ref('');
+const filterType = ref('');
+const filterStatus = ref('');
+const today = new Date();
 
 const todayOrder = computed(() => {
     const today = new Date().toDateString();
@@ -118,6 +122,7 @@ const formatDate = (dateString) => {
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
 };
+
 const formatPaymentType = (type) => {
   // Replace underscores with spaces and capitalize each word
   return type.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -140,14 +145,11 @@ const downloadReport = () => {
 };
 
 const receiptIconUrl = computed(() => {
-    // Assuming you have a route or endpoint to fetch the icon URL
     return '/receipt.png'; // Replace with your actual dynamic URL
 });
 const invoiceIconUrl = computed(() => {
-    // Assuming you have a route or endpoint to fetch the icon URL
     return '/invoice.png'; // Replace with your actual dynamic URL
 });
-
 
 const downloadInvoice = async (orderId) => {
     try {
@@ -162,6 +164,42 @@ const downloadInvoice = async (orderId) => {
     } catch (error) {
         console.error('Error downloading invoice:', error);
     }
+};
+
+// Computed property for filtered orders based on search query and filter type
+const filteredOrders = computed(() => {
+    let filtered = orders.value;
+
+    // Filter by search query
+    if (searchQuery.value.trim()) {
+        const searchTerm = searchQuery.value.toLowerCase();
+        filtered = filtered.filter(order => 
+            order.user.name.toLowerCase().includes(searchTerm) ||
+            order.id.toString().includes(searchTerm)
+        );
+    }
+
+    // Filter by payment type
+    if (filterType.value) {
+        filtered = filtered.filter(order => order.payment.type === filterType.value);
+    }
+
+    // Filter by status
+    if (filterStatus.value) {
+        filtered = filtered.filter(order => order.status === filterStatus.value);
+    }
+
+    return filtered;
+});
+
+// Method to clear search query
+const clearSearch = () => {
+    searchQuery.value = '';
+};
+
+// Function to apply filters
+const applyFilters = () => {
+    // Trigger computed property update
 };
 </script>
 
@@ -189,6 +227,26 @@ const downloadInvoice = async (orderId) => {
                     </div>
                 </div>
                 <button @click="downloadReport" class="bg-blue-500 text-white px-4 py-2 rounded mb-6">Download PDF</button>
+                <div class="flex justify-between mb-4">
+                    <div>
+                        <input v-model.trim="searchQuery" type="text" placeholder="Search by Name or ID" class="border border-gray-300 px-2 py-1 rounded-md">
+                        <button @click="clearSearch" class="ml-2 bg-gray-300 px-2 py-1 rounded-md">Clear</button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <p class="mr-2">Filter</p>   
+                        <select v-model="filterType" @change="applyFilters" class="px-6 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            <option value="">All Payment Types</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                            <option value="qr_code">QR Code</option>
+                        </select>
+                        <select v-model="filterStatus" @change="applyFilters" class="ml-6 px-7 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            <option value="">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-200 text-center">
                         <thead class="bg-[#dad8d7]">
@@ -204,7 +262,7 @@ const downloadInvoice = async (orderId) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="order in orders" :key="order.id">
+                            <tr v-for="order in filteredOrders" :key="order.id" class="bg-white hover:bg-gray-100">
                                 <td class="py-2 px-4 border-b">{{ order.id }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.user.name }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatPaymentType(order.payment.type) }}</td>
