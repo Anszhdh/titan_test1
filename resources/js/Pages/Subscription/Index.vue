@@ -14,6 +14,7 @@
     <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="subscription in subscriptions" :key="subscription.id" class="bg-white rounded-lg shadow-md p-4">
         <h3 class="text-lg font-semibold mb-2">{{ subscription.type }}</h3>
+        <p class="text-gray-700">Subscription ID: {{ subscription.id }}</p>
         <p class="text-gray-700">Price: ${{ subscription.price }}</p>
         
         <!-- Display payment details -->

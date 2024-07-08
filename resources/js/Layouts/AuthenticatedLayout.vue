@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
+import NotificationIcon from '@/Components/NotificationIcon.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -18,8 +19,8 @@ const showingNavigationDropdown = ref(false);
                 <!-- Primary Navigation Menu -->
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
-                            <div class="lg:flex lg:items-center lg:col-span-4">
-                                <a href="/" class="flex items-center">
+                            <div class="lg:flex lg:items-center lg:col-span-3">
+                                <a href="/" class="flex items-center ml-20">
                                     <img
                                     id="logo"
                                     class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
@@ -64,16 +65,13 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Contact
                                         </Link>
-                                        <!-- <img
-                                            id="search"
-                                            class="h-6 ml-16 w-auto text-white lg:5"
-                                            src="home/search.png"
-                                            alt="search"
-                                        /> -->
+                                    <div class="space-x-4 ml-28 mt-2">
+                                        <NotificationIcon iconColor="text-yellow-950/60" />
+                                    </div>
                                     <a href="/cart">
                                     <img
                                         id="cart"
-                                        class="h-6 ml-16 w-auto text-white lg:5"
+                                        class="h-6 ml-6 w-auto text-white lg:5"
                                         src="/home/cart.png"
                                         alt="cart"
                                     />

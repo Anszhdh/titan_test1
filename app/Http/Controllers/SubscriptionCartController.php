@@ -3,10 +3,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Notifications\UserNewSubscriptionNotification;
+use App\Notifications\AdminNewSubscriptionNotification;
 use App\Models\CustomerAddress;
 use App\Models\Product;
 use App\Models\SubscriptionPayment;
 use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Support\Str;
+
 
 
 
@@ -131,6 +136,15 @@ class SubscriptionCartController extends Controller
         'end_date' => now()->addDays($durationInDays),
         'status' => 'active',
     ]);
+
+        // Trigger the notification for the user
+        $user = auth()->user();
+        $user->notify(new UserNewSubscriptionNotification($subscription));
+        
+        $admin = User::where('role', 1)->first();
+        if ($admin) {
+            $admin->notify(new AdminNewSubscriptionNotification($subscription));
+        }
 
     // Store payment proof
     $paymentPath = $request->file('payment_file')->store('subscribtionpayments', 'public');

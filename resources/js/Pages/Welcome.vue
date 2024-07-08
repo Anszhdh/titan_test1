@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 // import NavLink from '@/Components/NavLink.vue';
 // import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import NotificationIcon from '@/Components/NotificationIcon.vue';
 
 defineProps({
     canLogin: {
@@ -47,7 +48,7 @@ function handleImageError() {
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
-                  <div class="lg:flex lg:items-center lg:col-span-3">
+                  <div class="lg:flex lg:items-center lg:col-span-2">
                     <img
                         id="logo"
                         class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
@@ -99,10 +100,13 @@ function handleImageError() {
                             src="home/search.png"
                             alt="search"
                         /> -->
+                        <div class="space-x-4 mt-2 ml-28" >
+                             <NotificationIcon iconColor="text-yellow-950/60" v-if="$page.props.authenticated"/>
+                        </div>
                         <a href="/cart">
                             <img
                                 id="cart"
-                                class="h-6 ml-16 w-auto text-white lg:5"
+                                class="h-6 ml-6 w-auto text-white lg:5"
                                 src="home/cart.png"
                                 alt="cart"
                             />
@@ -195,12 +199,13 @@ function handleImageError() {
                                         </div>
                                     </div>
                                     <div class="border border-yellow-800/20 ring-4 ring-yellow-900/20 rounded-lg p-2 ml-80">
-                                <img
-                                    id="cart"
-                                    class="h-60 w-auto rounded-lg text-white lg:5 "
-                                    src="home/cup.jpg"
-                                    alt="cart"
-                                />
+                                        
+                                    <img
+                                        id="cart"
+                                        class="h-60 w-auto rounded-lg text-white lg:5 "
+                                        src="home/cup.jpg"
+                                        alt="cart"
+                                    />
                                 </div>
                             </div>
                         </div>

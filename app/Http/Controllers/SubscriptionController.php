@@ -8,10 +8,14 @@ use App\Models\SubscriptionPayment;
 use App\Models\SubscriptionShipping;
 use App\Models\Recommendation;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\UserRecommendation;
+use App\Notifications\AdminConfirmSubscriptionNotification;
+use App\Notifications\AdminCancelSubscriptionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 
 class SubscriptionController extends Controller
@@ -275,7 +279,12 @@ private function findClosestMatch($userInputKey, $recommendationMap)
                 // Update subscription payment_ver field
                 $subscription->update(['payment_ver' => 1]);
             });
+            $user = $subscription->user; // Assuming you have a user relationship in Subscription model
+
+            // Notify the user about the confirmation
+            $user->notify(new AdminConfirmSubscriptionNotification($subscription));
     
+
             return response()->json(['message' => 'Subscription confirmed successfully'], 200);
         } catch (\Exception $e) {
             \Log::error('Error confirming subscription: ' . $e->getMessage());
@@ -295,6 +304,12 @@ private function findClosestMatch($userInputKey, $recommendationMap)
             // Update Subscription status to 'Inactive'
             $subscription->update(['status' => 'Inactive']);
         });
+
+        $user = $subscription->user; // Assuming you have a user relationship in Subscription model
+
+        // Notify the user about the confirmation
+        $user->notify(new AdminCancelSubscriptionNotification($subscription));
+
 
         return response()->json(['message' => 'Subscription cancelled successfully'], 200);
     }

@@ -4,6 +4,7 @@ import { usePage } from '@inertiajs/inertia-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
+import NotificationIcon from '@/Components/NotificationIcon.vue';
 
 const showingNavigationDropdown = ref(false);
 const sidebarOpen = ref(false);
@@ -27,11 +28,11 @@ const currentRoute = ref(url);
                       :class="{'bg-yellow-950/10 text-yellow-900': currentRoute.value === route('dashboard').url, 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute.value !== route('dashboard').url}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </Link>
-                <a :href="route('notifications')" 
+                <!-- <a :href="route('notifications')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('notifications'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('notifications')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-bell"></i> Notifications
-                </a>
+                </a> -->
                 <a :href="route('order-centre')" 
                    :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('order-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('order-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
@@ -111,8 +112,9 @@ const currentRoute = ref(url);
                          <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2> 
                     </a> -->
                 </div>
-
-                <div class="flex items-center">
+                <div class="flex items-center  space-x-4">
+                    <!-- Notification Icon -->
+                             <NotificationIcon class="mt-2"/>
                     <Dropdown align="right" width="48">
                         <template #trigger>
                             <span class="inline-flex rounded-md">
