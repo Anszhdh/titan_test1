@@ -195,7 +195,9 @@ const generatePDF = async () => {
                                         <!-- Replace this with your actual SVG icon markup -->
                                         <img src="/receipt.png" alt="View Receipt Icon" class="h-6 w-6 inline-block">
                                     </button>
-                                 
+                                    <button @click="downloadInvoice(order.id)" class="text-blue-500 underline" title="Download Invoice" v-if="subscription.payments[0].status === 'Confirmed'">
+                                        <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
+                                    </button>
                                 </td>
                                 <td class="py-2 px-4 border-b">{{ subscription.status }}</td>
                                 <td class="py-2 px-4 border-b">

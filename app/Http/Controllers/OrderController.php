@@ -39,16 +39,10 @@ class OrderController extends Controller
             ->with(['orderItems.product', 'payment', 'shipping'])
             ->get();
     
-            \Log::info('Orders fetched:', $orders->toArray());
-
-    
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
         ]);
     }
-    
-    
-    
     
 
 
@@ -64,7 +58,7 @@ class OrderController extends Controller
 
     public function confirmOrder(Order $order)
     {
-        \Log::info('Confirm Order API called');
+        // \Log::info('Confirm Order API called');
         DB::transaction(function () use ($order) {
             $order->update(['status' => 'Confirmed']);
             $order->payment->update(['status' => 'Confirmed']);
@@ -75,7 +69,7 @@ class OrderController extends Controller
     
     public function cancelOrder(Order $order)
     {
-        \Log::info('Cancel Order API called');
+        // \Log::info('Cancel Order API called');
         DB::transaction(function () use ($order) {
             $order->update(['status' => 'Cancelled']);
             $order->payment->update(['status' => 'Cancelled']);
@@ -125,22 +119,51 @@ class OrderController extends Controller
 
     public function generateReport()
     {
-        $orders = Order::with('user', 'payment')->get();
+        $orders = Order::with('user', 'payment', 'orderItems.product','shipping')->get();
         $pdf = PDF::loadView('Orderspdf', ['orders' => $orders]);
 
         return $pdf->download('orders_report.pdf');
     }
-    public function generateInvoice($orderId)
-    {
-        Log::info('Generating invoice for order ID: ' . $orderId);
-    
-        $order = Order::findOrFail($orderId);
-        Log::debug('Order details:', $order->toArray());
-    
-        // Generate PDF content using a view
-        $pdf = PDF::loadView('invoicepdf', compact('order'));
-    
-        // Optionally, you can save the PDF or download it directly
-        return $pdf->download('invoice_' . $order->id . '.pdf');
-    }
+
+        public function generateInvoice($orderId)
+        {
+            Log::info('Generating invoice for order ID: ' . $orderId);
+
+            $order = Order::with('orderItems.product')->findOrFail($orderId);
+            Log::debug('Order details:', $order->toArray());
+
+            // Log order items
+            
+            foreach ($order->orderItems as $item) {
+                Log::debug('Order Item:', $item->toArray());
+            }
+
+            // Generate PDF content using a view
+            $pdf = PDF::loadView('invoicepdf', compact('order'));
+
+            // Optionally, you can save the PDF or download it directly
+            return $pdf->download('invoice_' . $order->id . '.pdf');
+        }
+
+        
+        public function generateInvoiceUser($orderId)
+        {
+            Log::info('Generating invoice for order ID: ' . $orderId);
+
+            $order = Order::with('orderItems.product')->findOrFail($orderId);
+            Log::debug('Order details:', $order->toArray());
+
+            // Log order items
+            
+            foreach ($order->orderItems as $item) {
+                Log::debug('Order Item:', $item->toArray());
+            }
+
+            // Generate PDF content using a view
+            $pdf = PDF::loadView('invoicepdf', compact('order'));
+
+            // Optionally, you can save the PDF or download it directly
+            return $pdf->download('invoice_' . $order->id . '.pdf');
+        }
+
 }

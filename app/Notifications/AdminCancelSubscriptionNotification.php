@@ -27,7 +27,7 @@ class AdminCancelSubscriptionNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->line('Your subscription' . $this->subscription->id . 'has been canceled.')
+        ->line('Your subscription #'. $this->subscription->id . ' has been canceled.')
         ->action('View Subscription', url('/subscriptions'))
         ->line('We are sorry to see you go.');
     }
@@ -35,7 +35,7 @@ class AdminCancelSubscriptionNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Your subscription id:'  . $this->subscription->id . ' has been canceled, we are sorry.',
+            'message' => 'Your subscription #'. $this->subscription->id . ' has been canceled, we are sorry.',
             'subscription_id' => $this->subscription->id,
             'type' => 'user',
         ];

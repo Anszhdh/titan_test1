@@ -27,7 +27,7 @@ class AdminNewSubscriptionNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('A new subscription' . $this->subscription->id . 'has been created.')
+            ->line('A new subscription #'. $this->subscription->id . ' has been created.')
             ->action('View Subscription', url('/admin/subscription-centre'))
             ->line('Please review the new subscription.');
     }
@@ -35,7 +35,7 @@ class AdminNewSubscriptionNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'A new subscription' . $this->subscription->id . 'has been created.',
+            'message' => 'A new subscription #'. $this->subscription->id . ' has been created.',
             'subscription_id' => $this->subscription->id,
              'type' => 'admin',
         ];

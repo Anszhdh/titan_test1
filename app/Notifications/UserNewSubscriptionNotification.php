@@ -27,7 +27,7 @@ class UserNewSubscriptionNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Your subscription' . $this->subscription->id . 'has been successfully created.')
+            ->line('Your subscription #'. $this->subscription->id . ' has been successfully created.')
             ->action('View Subscription', url('/subscriptions'))
             ->line('Thank you for using our application!');
     }
@@ -35,7 +35,7 @@ class UserNewSubscriptionNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Your subscription' . $this->subscription->id . 'has been successfully created.',
+            'message' => 'Your subscription #'. $this->subscription->id . ' has been successfully created.',
             'subscription_id' => $this->subscription->id,
             'type' => 'user' // Type of notification
         ];

@@ -23,17 +23,16 @@
             max-width: 150px;
         }
         .logo-container {
-        background-image: url('{{ asset('icon.png') }}');
-        background-size: contain; /* Adjust size as needed */
-        width: 200px; /* Example width */
-        height: 100px; /* Example height */
-    }
+            background-image: url('{{ asset('icon.png') }}');
+            background-size: contain; /* Adjust size as needed */
+            width: 200px; /* Example width */
+            height: 100px; /* Example height */
+        }
     </style>
 </head>
 <body>
-    
     <h2>Invoice</h2>
-    
+
     @if ($order->status === 'Confirmed')
         <h3>Order Details</h3>
         <table>
@@ -56,7 +55,7 @@
                 @endforeach
             </tbody>
         </table>
-        
+
         <h3>Order Summary</h3>
         <table>
             <tbody>

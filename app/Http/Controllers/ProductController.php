@@ -50,7 +50,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
-        \Log::info('Store request data:', $request->all());
+        // \Log::info('Store request data:', $request->all());
 
         // Dump and die to inspect the data
         

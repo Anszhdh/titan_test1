@@ -59,6 +59,8 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 
 });
 
+Route::get('/orders/{orderId}/invoice', [OrderController::class, 'generateInvoiceUser'])->name('orders.invoice');
+
 
 //order display
 Route::middleware('auth')->group(function () {

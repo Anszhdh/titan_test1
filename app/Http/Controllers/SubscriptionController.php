@@ -72,7 +72,7 @@ class SubscriptionController extends Controller
     
         // Generate recommendations based on the collected data
         $recommendations = $this->generateRecommendations($data);
-        \Log::debug('Recommendations:', $recommendations);
+        // \Log::debug('Recommendations:', $recommendations);
         // Save recommendations to the database and collect recommendation IDs
 
         $recommendationIds = [];
@@ -243,21 +243,20 @@ private function findClosestMatch($userInputKey, $recommendationMap)
        
         public function userSubscriptions()
         {
-            // Assuming you're fetching subscriptions for the authenticated user
             $user = auth()->user();
             $subscriptions = Subscription::where('user_id', $user->id)
-                ->with([ 'shipping', 'payments']) // Eager load relationships
+                ->with(['shipping', 'payments', 'recommendation.product']) // Eager load relationships
                 ->get();
 
             // Log the fetched subscriptions
-            \Log::info('Fetched subscriptions:', $subscriptions->toArray());
-
+            // \Log::info('Fetched subscriptions:', $subscriptions->toArray());
 
             // Pass subscriptions to the Inertia view
             return Inertia::render('Subscription/Index', [
                 'subscriptions' => $subscriptions
             ]);
         }
+        
         public function adminIndex()
         {
             $subscriptions = Subscription::with('user', 'shipping', 'payments')->get();
@@ -269,7 +268,7 @@ private function findClosestMatch($userInputKey, $recommendationMap)
         
     public function confirmSubscription(Subscription $subscription)
     {
-        \Log::info('Confirm Subscription API called');
+        // \Log::info('Confirm Subscription API called');
     
         try {
             DB::transaction(function () use ($subscription) {
@@ -295,7 +294,7 @@ private function findClosestMatch($userInputKey, $recommendationMap)
 
     public function cancelSubscription(Subscription $subscription)
     {
-        \Log::info('Cancel Subscription API called');
+        // \Log::info('Cancel Subscription API called');
 
         DB::transaction(function () use ($subscription) {
             // Update SubscriptionPayment status to 'Cancelled'

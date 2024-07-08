@@ -1,64 +1,98 @@
 <template>
-    <FooterLayout>
-<AuthenticatedLayout>
-
-    <div class="container items-center mx-auto py-6">
-    <h1 class="text-2xl font-bold mb-4">Your Subscriptions</h1>
-
-    <!-- Check if subscriptions array is empty -->
-    <div v-if="subscriptions.length === 0" class="text-gray-600">
-      <p>No subscriptions found.</p>
-    </div>
-
-    <!-- Iterate over subscriptions array -->
-    <div v-else class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="subscription in subscriptions" :key="subscription.id" class="bg-white rounded-lg shadow-md p-4">
-        <h3 class="text-lg font-semibold mb-2">{{ subscription.type }}</h3>
-        <p class="text-gray-700">Subscription ID: {{ subscription.id }}</p>
-        <p class="text-gray-700">Price: ${{ subscription.price }}</p>
-        
-        <!-- Display payment details -->
-        <div class="mt-2">
-          <h4 class="text-sm font-semibold mb-1">Payment Details</h4>
-          <div class="flex items-center">
-            <span class="mr-2">Status:</span>
-            <span class="text-blue-500">{{ subscription.payments[0].status }}</span>
+  <FooterLayout>
+    <AuthenticatedLayout>
+      <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-6 text-center">Your Subscription</h1>
+        <div v-if="subscriptions.length === 0" class="text-center text-gray-500">No subscription found.</div>
+        <div v-else>
+          <div v-for="subscription in subscriptions" :key="subscription.id" class="border rounded-lg p-4 mb-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <h2 class="text-lg font-semibold">Monthly</h2>
+                <p class="text-black">Subscription ID: {{ subscription.id }}</p> 
+                <p class="text-gray-500">Duration: {{ subscription.duration }} days</p> 
+                <p class="text-gray-500">Started on: {{ formatDate(subscription.start_date) }}</p>
+                <p class="text-gray-500 mb-4">End on: {{ formatDate(subscription.end_date) }}</p>
+                <div>
+                    <span class="mr-2 font-bold">Payment Status:</span>
+                    <span class="text-blue-500">{{ subscription.payments[0].status }}</span>
+                </div>
+                <div>
+                    <span class="mr-2 font-bold">Subscription Status:</span>
+                    <span class="text-blue-500">{{ capitalizeFirstLetter(subscription.status) }}</span>
+                </div>
+             
+              </div>
+              <div class="flex flex-col justify-between items-end ">
+                <button @click="toggleDropdown(subscription.id)" class="text-yellow-950 flex items-center">
+                  <span>Subscription Item</span>
+                  <svg :class="{'transform rotate-180': subscription.showItems}" class="ml-2 h-5 w-5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <p class="text-lg font-bold mt-32">Total: RM {{ parseFloat(subscription.price).toFixed(2) }}</p>
+              </div>
+            </div>
+            <div v-if="subscription.showItems" class="mt-10 text-center">
+              <h3 class="font-semibold mb-2">Subscription Item:</h3>
+              <div v-if="subscription.recommendation && subscription.recommendation.product" class="mb-2">
+                <div class="flex justify-center">
+                  <img :src="subscription.recommendation.product.image_url" alt="Product Image" class="w-40 h-40 object-cover mb-2 mx-auto" />
+                </div>
+                <p>{{ subscription.recommendation.product.name }} </p>
+                <p>RM {{ parseFloat(subscription.recommendation.product.price).toFixed(2) }}</p>
+                <div>
+                    <p v-if="subscription.shipping">Shipping Status: Shipped</p>
+                    <p v-else>Shipping Status: Pending</p>
+                </div>
+              </div>
+              <p v-else class="text-gray-500">No product found for this subscription.</p>
+            </div>
           </div>
-          <div class="flex items-center">
-            <span class="mr-2">Payment Type:</span>
-            <span>{{ formatPaymentType(subscription.payments[0].type) }}</span>
-          </div>
-          <!-- <div class="flex items-center">
-            <span class="mr-2">Payment Proof:</span>
-            <a :href="subscription.payments[0].payment_proof_url" target="_blank" class="text-blue-500 underline">View Proof</a>
-          </div> -->
         </div>
       </div>
-    </div>
-  </div>
-</AuthenticatedLayout>
-</FooterLayout>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-  import FooterLayout from '@/Layouts/FooterLayout.vue';
+    </AuthenticatedLayout>
+  </FooterLayout>
+</template>
 
-  const props = defineProps({
-    subscriptions: Array,
-  })
-  
-  // Use ref() for reactive properties
-  const subscriptions = ref(props.subscriptions)
+<script setup>
+import { ref } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
-  const formatPaymentType = (type) => {
-  // Replace underscores with spaces and capitalize each word
-  return type.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const props = defineProps({
+  subscriptions: Array,
+});
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+  return `${formattedDay}/${formattedMonth}/${year}`;
 };
-  </script>
-  
-  <style scoped>
-  /* Add your custom CSS styles here */
-  </style>
-  
+
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const subscriptions = ref(props.subscriptions.map(subscription => ({
+  ...subscription,
+  showItems: false, // Add showItems property to each subscription
+})));
+
+const toggleDropdown = (subscriptionId) => {
+  const subscription = subscriptions.value.find(sub => sub.id === subscriptionId);
+  if (subscription) {
+    subscription.showItems = !subscription.showItems;
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  max-width: 800px;
+}
+</style>

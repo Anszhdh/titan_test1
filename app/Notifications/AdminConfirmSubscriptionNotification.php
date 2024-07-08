@@ -27,7 +27,7 @@ class AdminConfirmSubscriptionNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Your subscription'   . $this->subscription->id . 'has been confirmed.')
+            ->line('Your subscription #'. $this->subscription->id . ' has been confirmed.')
             ->action('View Subscription', url('/subscriptions'))
             ->line('Thank you for using our application!');
     }
@@ -35,7 +35,7 @@ class AdminConfirmSubscriptionNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Your subscription'  . $this->subscription->id . 'has been confirmed.',
+            'message' => 'Your subscription #'. $this->subscription->id . ' has been confirmed.',
             'subscription_id' => $this->subscription->id,
             'type' => 'user',
         ];
