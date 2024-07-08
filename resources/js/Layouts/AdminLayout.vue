@@ -112,7 +112,7 @@ const currentRoute = ref(url);
                          <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2> 
                     </a> -->
                 </div>
-                <div class="flex items-center  space-x-4">
+                <div class="flex items-center  space-x-4" title="Notifications">
                     <!-- Notification Icon -->
                              <NotificationIcon class="mt-2"/>
                     <Dropdown align="right" width="48">

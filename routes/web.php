@@ -47,20 +47,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
-//admin order
-Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::get('admin/order-centre', [OrderController::class, 'adminIndex'])->name('order-centre');
-    Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
-    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
-    Route::put('/admin/orders/{order}/update-shipping', [OrderController::class, 'updateShipping'])->name('orders.updateShipping');
-    Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-    Route::get('/admin/orders/report', [OrderController::class, 'generateReport']);
-    Route::get('/admin/orders/{orderId}/invoice', [OrderController::class, 'generateInvoice'])->name('admin.orders.invoice');
 
-});
 
 Route::get('/orders/{orderId}/invoice', [OrderController::class, 'generateInvoiceUser'])->name('orders.invoice');
-
+Route::get('/subscription/{subscriptionId}/invoice', [SubscriptionController::class, 'generateInvoiceUser'])->name('subscription.invoice');
 
 //order display
 Route::middleware('auth')->group(function () {
@@ -83,6 +73,18 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::delete('admin/product-centre/{product}', [ProductController::class, 'destroy'])->name('product-centre.destroy');
 });
 
+//order centre
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/order-centre', [OrderController::class, 'adminIndex'])->name('order-centre');
+    Route::post('/orders/{order}/confirm', [OrderController::class, 'confirmOrder'])->name('confirm-order');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel-order');
+    Route::put('/admin/orders/{order}/update-shipping', [OrderController::class, 'updateShipping'])->name('orders.updateShipping');
+    Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/admin/orders/report', [OrderController::class, 'generateReport']);
+    Route::get('/admin/orders/{orderId}/invoice', [OrderController::class, 'generateInvoice'])->name('admin.orders.invoice');
+
+});
+
 //subscription centre
 Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('admin/subscription-centre', [SubscriptionController::class, 'adminIndex'])->name('subscription-centre');
@@ -91,6 +93,7 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::put('/admin/subscriptions/{subscription}/update-shipping', [subscriptionController::class, 'updateShipping'])->name('subscriptions.updateShipping');
     Route::delete('/admin/subscriptions/{subscription}', [subscriptionController::class, 'destroy'])->name('subscriptions.destroy');
     Route::get('/admin/subscriptions/pdf', [SubscriptionController::class, 'generatePdf'])->name('subscriptions.pdf');
+    Route::get('/admin/subscription/{subscriptionId}/invoice', [SubscriptionController::class, 'generateInvoice'])->name('admin.subscription.invoice');
 });
 
 

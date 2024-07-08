@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 
 
 class SubscriptionController extends Controller
@@ -320,7 +322,6 @@ private function findClosestMatch($userInputKey, $recommendationMap)
             'tracking_number' => 'required|string',
         ]);
     
-        // Find the shipping information for the order or create a new one
         $shipping = SubscriptionShipping::updateOrCreate(
             ['subscription_id' => $subscription->id],
             [
@@ -368,6 +369,34 @@ private function findClosestMatch($userInputKey, $recommendationMap)
             \Log::error('Error generating PDF: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to generate PDF'], 500);
         }
+    }
+
+    public function generateInvoice($subscriptionId)
+    {
+        Log::info('Generating invoice for subscription ID: ' . $subscriptionId);
+
+        $subscription = Subscription::with('recommendation.product')->findOrFail($subscriptionId);
+   
+
+        // Generate PDF content using a view
+        $pdf = PDF::loadView('SubsInvoicepdf', compact('subscription'));
+
+        // Optionally, you can save the PDF or download it directly
+        return $pdf->download('invoice_' . $subscription->id . '.pdf');
+    }
+
+    public function generateInvoiceUser($subscriptionId)
+    {
+        Log::info('Generating invoice for subscription ID: ' . $subscriptionId);
+
+        $subscription = Subscription::with('recommendation.product')->findOrFail($subscriptionId);
+   
+
+        // Generate PDF content using a view
+        $pdf = PDF::loadView('SubsInvoicepdf', compact('subscription'));
+
+        // Optionally, you can save the PDF or download it directly
+        return $pdf->download('invoice_' . $subscription->id . '.pdf');
     }
     
 }

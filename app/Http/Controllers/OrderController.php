@@ -127,10 +127,10 @@ class OrderController extends Controller
 
         public function generateInvoice($orderId)
         {
-            Log::info('Generating invoice for order ID: ' . $orderId);
+            // Log::info('Generating invoice for order ID: ' . $orderId);
 
             $order = Order::with('orderItems.product')->findOrFail($orderId);
-            Log::debug('Order details:', $order->toArray());
+            // Log::debug('Order details:', $order->toArray());
 
             // Log order items
             
@@ -148,7 +148,7 @@ class OrderController extends Controller
         
         public function generateInvoiceUser($orderId)
         {
-            Log::info('Generating invoice for order ID: ' . $orderId);
+            // Log::info('Generating invoice for order ID: ' . $orderId);
 
             $order = Order::with('orderItems.product')->findOrFail($orderId);
             Log::debug('Order details:', $order->toArray());

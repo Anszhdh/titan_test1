@@ -42,8 +42,15 @@
                 <p>{{ subscription.recommendation.product.name }} </p>
                 <p>RM {{ parseFloat(subscription.recommendation.product.price).toFixed(2) }}</p>
                 <div>
-                    <p v-if="subscription.shipping">Shipping Status: Shipped</p>
+                    <p v-if="subscription.shipping"> <span style="font-weight: bold;">Shipping Status:</span> Shipped</p>
                     <p v-else>Shipping Status: Pending</p>
+                    <p v-if="subscription.shipping"><span style="font-weight: bold;">Courier: </span>{{ subscription.shipping.shipping_type }}</p>
+                    <p v-if="subscription.shipping"><span style="font-weight: bold;">Tracking Number:</span> {{ subscription.shipping.tracking_number }}</p>
+                </div>
+                <div class="text-right">
+                  <button @click="downloadInvoice(subscription.id)" class="text-blue-500 underline" title="Download Invoice" v-if="subscription.payments[0].status === 'Confirmed'">
+                    <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
+                  </button>
                 </div>
               </div>
               <p v-else class="text-gray-500">No product found for this subscription.</p>
@@ -56,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FooterLayout from '@/Layouts/FooterLayout.vue';
 
@@ -88,6 +95,26 @@ const toggleDropdown = (subscriptionId) => {
   if (subscription) {
     subscription.showItems = !subscription.showItems;
   }
+};
+
+const invoiceIconUrl = computed(() => {
+    // Assuming you have a route or endpoint to fetch the icon URL
+    return '/invoice.png'; // Replace with your actual dynamic URL
+});
+
+const downloadInvoice = async (subscriptionId) => {
+    try {
+        const result = await axios.get(`/subscription/${subscriptionId}/invoice`, { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([result.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `invoice_${subscriptionId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading invoice:', error);
+    }
 };
 </script>
 

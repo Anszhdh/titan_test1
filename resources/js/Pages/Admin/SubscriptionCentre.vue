@@ -141,6 +141,25 @@ const generatePDF = async () => {
         console.error('Error generating PDF:', error);
     }
 }
+
+const invoiceIconUrl = computed(() => {
+    // Assuming you have a route or endpoint to fetch the icon URL
+    return '/invoice.png'; // Replace with your actual dynamic URL
+});
+const downloadInvoice = async (subscriptionId) => {
+    try {
+        const result = await axios.get(`/admin/subscription/${subscriptionId}/invoice`, { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([result.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `invoice_${subscriptionId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading invoice:', error);
+    }
+};
 </script>
 
 <template>
@@ -170,6 +189,7 @@ const generatePDF = async () => {
                     <table class="min-w-full bg-white border border-gray-200">
                         <thead class="bg-[#dad8d7] text-black">
                             <tr>
+                                <th class="py-2 px-4 border-b text-center">ID#</th>
                                 <th class="py-2 px-4 border-b text-center">Name</th>
                                 <th class="py-2 px-4 border-b text-center">Subscription Type</th>
                                 <th class="py-2 px-4 border-b text-center">Subscription Start</th>
@@ -182,21 +202,22 @@ const generatePDF = async () => {
                         </thead>
                         <tbody>
                             <tr v-for="subscription in subscriptions" :key="subscription.id" class="text-center align-middle">
+                                <td class="py-2 px-4 border-b">{{ subscription.id }}</td>
                                 <td class="py-2 px-4 border-b">{{ subscription.user.name }}</td>
                                 <td class="py-2 px-4 border-b">{{ subscription.type }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatDate(subscription.start_date) }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatDate(subscription.end_date) }}</td>
                                 <td class="py-2 px-4 border-b">RM {{ subscription.price }}</td>
-                                <td class="py-2 px-4 border-b items-center ">
+                                <td class="py-2 px-4 border-b items-center flex space-x-4">
                                     <button 
                                         @click="openModal(subscription.payments.length > 0 ? subscription.payments[0].payment_proof_url : null)" 
-                                        class="flex items-center space-x-1 text-blue-500 underline"
-                                        :disabled="!subscription.payments.length || !subscription.payments[0].payment_proof_url">
+                                        class="flex items-center space-x-1 text-blue-500 underline" title="View Receipt"
+                                        :disabled="!subscription.payments.length || !subscription.payments[0].payment_proof_url" >
                                         <!-- Replace this with your actual SVG icon markup -->
                                         <img src="/receipt.png" alt="View Receipt Icon" class="h-6 w-6 inline-block">
                                     </button>
-                                    <button @click="downloadInvoice(order.id)" class="text-blue-500 underline" title="Download Invoice" v-if="subscription.payments[0].status === 'Confirmed'">
-                                        <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
+                                    <button @click="downloadInvoice(subscription.id)" class="text-blue-500 underline" title="Download Invoice" v-if="subscription.payments[0].status === 'Confirmed'">
+                                        <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 w-6 inline-block">
                                     </button>
                                 </td>
                                 <td class="py-2 px-4 border-b">{{ subscription.status }}</td>

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-    
 <head>
-    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}"></link>
     <style>
         /* Styles for table, th, td, etc. */
         table {
@@ -35,56 +33,58 @@
 <body>
     <h2>Invoice</h2>
 
-    @if ($order->status === 'Confirmed')
-        <h3>Order Details</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Unit Price</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($order->orderItems as $item)
-                <tr>
-                    <td>{{ $item->product->name }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>RM {{ $item->unit_price }}</td>
-                    <td>RM {{ $item->quantity * $item->unit_price }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    @if ($subscription->payments->isEmpty() || $subscription->payments->where('status', 'Confirmed')->isEmpty())
+        <p>This order is not confirmed. Invoice cannot be generated.</p>
+    @else
 
-        <h3>Order Summary</h3>
+    <h2>Product Details</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Unit Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ $subscription->recommendation->product->name }}</td>
+                <td>{{ $subscription->recommendation->product->base_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+        <h3>Subscription Details</h3>
         <table>
             <tbody>
                 <tr>
                     <td><strong>Order ID:</strong></td>
-                    <td>{{ $order->id }}</td>
+                    <td>{{ $subscription->id }}</td>
                 </tr>
                 <tr>
-                    <td><strong>Shipping</strong></td>
-                    <td>RM 8</td>
+                    <td><strong>Type:</strong></td>
+                    <td>{{ $subscription->type }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Shipping:</strong></td>
+                    <td>RM8</td>
                 </tr>
                 <tr>
                     <td><strong>Payment Method:</strong></td>
-                    <td>{{ formatPaymentMethod($order->payment->type) }}</td>
+                    <td>{{ formatPaymentMethod($subscription->payments->first()->type) }}</td>
                 </tr>
                 <tr>
                     <td><strong>Total Price:</strong></td>
-                    <td>RM {{ $order->total_price }}</td>
+                    <td>{{ $subscription->price }}</td>
                 </tr>
                 <tr>
                     <td><strong>Date:</strong></td>
-                    <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($subscription->created_at)->format('d-m-Y') }}</td>
                 </tr>
             </tbody>
         </table>
-    @else
-        <p>This order is not confirmed. Invoice cannot be generated.</p>
+
+ 
     @endif
 </body>
 </html>

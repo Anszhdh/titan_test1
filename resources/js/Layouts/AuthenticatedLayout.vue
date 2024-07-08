@@ -65,13 +65,14 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Contact
                                         </Link>
-                                    <div class="space-x-4 ml-28 mt-2">
+                                    <div class="space-x-4 ml-28 mt-2"   title="Notifications">
                                         <NotificationIcon iconColor="text-yellow-950/60" />
                                     </div>
                                     <a href="/cart">
                                     <img
                                         id="cart"
                                         class="h-6 ml-6 w-auto text-white lg:5"
+                                        title="Cart"
                                         src="/home/cart.png"
                                         alt="cart"
                                     />

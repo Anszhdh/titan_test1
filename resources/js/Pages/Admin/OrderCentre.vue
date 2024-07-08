@@ -193,6 +193,7 @@ const downloadInvoice = async (orderId) => {
                     <table class="min-w-full bg-white border border-gray-200 text-center">
                         <thead class="bg-[#dad8d7]">
                             <tr>
+                                <th class="py-2 px-4 border-b text-center">ID#</th>
                                 <th class="py-2 px-4 border-b text-center">Name</th>
                                 <th class="py-2 px-4 border-b text-center">Payment Type</th>
                                 <th class="py-2 px-4 border-b text-center">Amount</th>
@@ -204,6 +205,7 @@ const downloadInvoice = async (orderId) => {
                         </thead>
                         <tbody>
                             <tr v-for="order in orders" :key="order.id">
+                                <td class="py-2 px-4 border-b">{{ order.id }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.user.name }}</td>
                                 <td class="py-2 px-4 border-b">{{ formatPaymentType(order.payment.type) }}</td>
                                 <td class="py-2 px-4 border-b">{{ order.total_price }}</td>

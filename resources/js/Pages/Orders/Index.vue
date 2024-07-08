@@ -53,11 +53,14 @@
                 <p v-if="order.shipping"><strong>Shipping Status:</strong> Shipped</p>
                 <p v-else-if="order.status === 'Cancelled'"><strong>Shipping Status:</strong> Cancelled</p>
                 <p v-else><strong>Shipping Status:</strong> Pending</p>
+                <p v-if="order.shipping"><strong>Courier:</strong> {{ order.shipping.shipping_type }}</p>
+                <p v-if="order.shipping"><strong>Tracking Number:</strong> {{ order.shipping.tracking_number }}</p>
               </div>
               <div class="text-right">
                 <button @click="downloadInvoice(order.id)" class="text-blue-500 underline" title="Download Invoice" v-if="order.status === 'Confirmed'">
-                  <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
+                    <img :src="invoiceIconUrl" alt="Download Invoice" class="h-6 ml-5 w-6 inline-block">
                 </button>
+
               </div>
               </div>
             </div>
