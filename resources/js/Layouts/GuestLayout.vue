@@ -24,13 +24,13 @@ import { Link } from '@inertiajs/inertia-vue3';
                                 <div class="flex lg:col-2 items-center">
                                 
                                     <Link
-                                            :href="route('products.index')"
+                                            :href="isLoggedIn ? route('products.index') : route('login')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Shop
-                                        </Link>
+                                    </Link>
                                     <Link
-                                            :href="route('subscription.main')"
+                                            :href="isLoggedIn ? route('subscription.main') : route('login')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Subscription
@@ -50,7 +50,7 @@ import { Link } from '@inertiajs/inertia-vue3';
                                     </Link>
                                 
                                     <Link
-                                            :href="route('contact')"
+                                              :href="isLoggedIn ? route('contact') : route('login')"
                                             class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Contact
@@ -62,13 +62,13 @@ import { Link } from '@inertiajs/inertia-vue3';
                                         alt="search"
                                     />
                                      -->
-                                    <a href="/cart">
-                                    <img
+                                     <a :href="isLoggedIn ? '/cart' : route('login')">
+                                        <img
                                         id="cart"
                                         class="h-6 ml-16 w-auto text-white lg:5"
-                                        src="home/cart.png"
+                                        src="/home/cart.png"
                                         alt="cart"
-                                    />
+                                        />
                                     </a>
                                     <Link
                                             :href="route('login')"
@@ -86,7 +86,7 @@ import { Link } from '@inertiajs/inertia-vue3';
                             </div>
                         </header>
                      </div>
-                    <div class="min-h-screen flex flex-col sm:justify-center items-center bg-orange-100/10 ">
+                    <div class="min-h-screen  flex-col sm:justify-center items-center bg-orange-100/10 ">
                         <div
                             class="w-full sm:max  bg-white shadow-md overflow-hidden sm:rounded-lg "
                         >

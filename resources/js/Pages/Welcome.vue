@@ -63,13 +63,13 @@ function handleImageError() {
                     <div class="flex lg:col-2 items-center">
                        
                         <Link
-                                :href="route('products.index')"
+                                  :href="isLoggedIn ? route('products.index') : route('login')"
                                 class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 Shop
                             </Link>
                         <Link
-                                :href="route('subscription.main')"
+                                :href="isLoggedIn ? route('subscription.main') : route('login')"
                                 class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                             >
                                 Subscription
@@ -88,12 +88,12 @@ function handleImageError() {
                                 About
                          </Link>
                        
-                        <Link
-                                :href="route('contact')"
-                                class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
-                            >
-                                Contact
-                            </Link>
+                         <Link
+                            :href="isLoggedIn ? route('contact') : route('login')"
+                            class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                        >
+                            {{ isLoggedIn ? 'Contact' : 'Contact' }}
+                        </Link>
                         <!-- <img
                             id="search"
                             class="h-6 ml-16 w-auto text-white lg:5"
@@ -103,13 +103,12 @@ function handleImageError() {
                         <div class="space-x-4 mt-2 ml-28" title="Notifications">
                              <NotificationIcon iconColor="text-yellow-950/60" v-if="$page.props.authenticated"/>
                         </div>
-                        <a href="/cart">
+                        <a :href="isLoggedIn ? '/cart' : route('login')">
                             <img
-                                id="cart"
-                                class="h-6 ml-6 w-auto text-white lg:5"
-                                title="Cart"
-                                src="home/cart.png"
-                                alt="cart"
+                            id="cart"
+                            class="h-6 ml-16 w-auto text-white lg:5"
+                            src="/home/cart.png"
+                            alt="cart"
                             />
                         </a>
                         <div class="hidden sm:flex sm:items-center sm:ms-6" v-if="$page.props.authenticated">
