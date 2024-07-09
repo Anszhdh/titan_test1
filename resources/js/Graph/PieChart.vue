@@ -17,7 +17,7 @@ const chartData = computed(() => ({
   labels: props.chartData.map(item => item.label),
   datasets: [{
     data: props.chartData.map(item => item.value),
-    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // Example colors
+    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // Vibrant colors
   }],
 }));
 

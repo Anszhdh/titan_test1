@@ -33,7 +33,7 @@ const chartData = computed(() => ({
     {
       label: 'Total Sales',
       data: Object.values(props.salesData),
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(75, 192, 192)', // Vibrant color
       tension: 0.1,
     },
   ],
@@ -56,6 +56,7 @@ onMounted(() => {
   console.log('Sales Data:', props.salesData);
 });
 </script>
+
 
 <template>
   <Line :data="chartData" :options="chartOptions" />
