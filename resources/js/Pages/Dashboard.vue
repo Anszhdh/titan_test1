@@ -2,6 +2,7 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import SubscriptionChart from '@/Graph/Chart.vue';
+import PieChart from '@/Graph/PieChart.vue';
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
@@ -14,7 +15,8 @@ const props = defineProps({
   previousSubscriptionSales: Number,
   previousOrderSales: Number,
   previousSales: Number,
-  salesData: Object, // Ensure salesData is defined as an Object prop
+  salesData: Object, 
+  recommendationData: Array,
 });
 
 
@@ -53,7 +55,7 @@ const fetchRecentSubscribers = async () => {
 
 onMounted(fetchRecentSubscribers);
 onMounted(() => {
-  console.log('Props:', props);
+  console.log('Recommendation Data:', props.recommendationData);
 });
 </script>
 
@@ -79,10 +81,16 @@ onMounted(() => {
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-gray-600 mb-4">Brewbox Sales</h3>
-        <SubscriptionChart :salesData="salesData" />
-      </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-gray-600 mb-4">Brewbox Sales</h3>
+          <SubscriptionChart :salesData="salesData" />
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-gray-600 mb-4">Top Recommended Products</h3>
+          <PieChart :chartData="props.recommendationData" />
+        </div>
+    </div>
+    <div>
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-black mb-4">Recent Subscribers (Past 7 Days)</h3>
         <div class="max-h-80 overflow-y-auto">

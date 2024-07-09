@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Recommendation;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -18,7 +21,7 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-    
+        
         // Calculate total sales for the current month
         $totalSubscriptionSales = Subscription::sum('price');
         $totalOrderSales = Order::sum('total_price');
@@ -41,11 +44,27 @@ class AdminController extends Controller
         $previousMonthEndDate = Carbon::now()->subMonth()->endOfMonth();
     
         $previousOrderSales = Order::whereBetween('created_at', [$previousMonthStartDate, $previousMonthEndDate])->sum('total_price');
-        // Log the sales data
-        \Log::info('Sales Data: ', $salesData);
-
         $previousSubscriptionSales = Subscription::whereBetween('created_at', [$previousMonthStartDate, $previousMonthEndDate])->sum('price');
-        $previousSales = $previousOrderSales  + $previousSubscriptionSales;
+        $previousSales = $previousOrderSales + $previousSubscriptionSales;
+    
+        // Fetch top 3 recommended products
+        $topRecommendations = Recommendation::select('product_id', DB::raw('count(*) as total'))
+        ->groupBy('product_id')
+        ->orderByDesc('total')
+        ->take(3)
+        ->get();
+    
+        // Prepare data for the pie chart
+        $recommendationData = [];
+        foreach ($topRecommendations as $recommendation) {
+            $product = Product::find($recommendation->product_id);
+            if ($product) {
+                $recommendationData[] = [
+                    'label' => $product->name,
+                    'value' => $recommendation->total,
+                ];
+            }
+        }
     
         return Inertia::render('Dashboard', [
             'recentSubscriptions' => $recentSubscriptions,
@@ -56,6 +75,7 @@ class AdminController extends Controller
             'previousSubscriptionSales' => $previousSubscriptionSales,
             'salesData' => $salesData,
             'previousSales' => $previousSales,
+            'recommendationData' => $recommendationData, 
         ]);
     }
     
