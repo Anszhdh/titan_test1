@@ -24,7 +24,8 @@ const capitalizeFirstLetter = (string) => {
 const subscriptions = ref(props.subscriptions.map(subscription => ({
   ...subscription,
   showItems: false, // Add showItems property to each subscription
-})));
+}))
+ .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
 
 const toggleDropdown = (subscriptionId) => {
   const subscription = subscriptions.value.find(sub => sub.id === subscriptionId);

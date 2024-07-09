@@ -38,9 +38,9 @@ Route::middleware('auth')->group(function () {
 // Route::middleware(['auth', 'admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 // });
-Route::get('admin/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->name('dashboard');
+Route::get('admin/dashboard', [AdminController::class, 'index'])
+    ->middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])
+    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

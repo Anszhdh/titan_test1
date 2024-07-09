@@ -80,11 +80,14 @@ const props = defineProps({
   orders: Array,
 });
 
-const orders = ref(props.orders.map(order => ({
-  ...order,
-  orderItems: order.order_items, // Map order_items to orderItems
-  showDetails: false, // Add showDetails property to each order
-})));
+const orders = ref(props.orders
+  .map(order => ({
+    ...order,
+    orderItems: order.order_items, // Map order_items to orderItems
+    showDetails: false, // Add showDetails property to each order
+  }))
+  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort orders by created_at in descending order
+);
 
 const downloadInvoice = async (orderId) => {
     try {
@@ -102,7 +105,6 @@ const downloadInvoice = async (orderId) => {
 };
 
 const invoiceIconUrl = computed(() => {
-    // Assuming you have a route or endpoint to fetch the icon URL
     return '/invoice.png'; // Replace with your actual dynamic URL
 });
 

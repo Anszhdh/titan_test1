@@ -2,35 +2,34 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import SubscriptionChart from '@/Graph/Chart.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 // Mock data for demonstration
-const availableToPayout = 'RM1.1K';
-const todayRevenue = 'RM800';
-const todaySessions = 'RM300';
+const props = defineProps({
+  recentSubscriptions: Array,
+  totalSubscriptionSales: Number,
+  totalOrderSales: Number,
+  totalSales: Number,
+  previousSubscriptionSales: Number,
+  previousOrderSales: Number,
+  previousSales: Number,
+  salesData: Object, // Ensure salesData is defined as an Object prop
+});
 
-const subscriptionData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [
-    {
-      label: 'Subscriptions',
-      data: [12, 19, 3, 5, 2, 3], // Replace with actual subscription data
-      backgroundColor: '#3182CE',
-    },
-  ],
-};
 
-const ordersData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [
-    {
-      label: 'Orders',
-      data: [5, 10, 15, 20, 25, 30], // Replace with actual orders data
-      backgroundColor: '#F56565',
-    },
-  ],
-};
+const salesChange = computed(() => {
+  return ((props.totalSales - props.previousSales) / props.previousSales) * 100;
+});
+
+const subscriptionChange = computed(() => {
+  return ((props.totalSubscriptionSales - props.previousSubscriptionSales) / props.previousSubscriptionSales) * 100;
+});
+
+const orderChange = computed(() => {
+  return ((props.totalOrderSales - props.previousOrderSales) / props.previousOrderSales) * 100;
+});
+
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -53,6 +52,9 @@ const fetchRecentSubscribers = async () => {
 };
 
 onMounted(fetchRecentSubscribers);
+onMounted(() => {
+  console.log('Props:', props);
+});
 </script>
 
 <template>
@@ -64,22 +66,22 @@ onMounted(fetchRecentSubscribers);
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-gray-600">Sales</h3>
-        <p class="text-2xl font-semibold">{{ availableToPayout }}</p>
+        <p class="text-2xl font-semibold">RM {{ totalSales.toFixed(2) }} <span :class="{ 'text-green-600': salesChange > 0, 'text-red-600': salesChange < 0 }">({{ salesChange.toFixed(1) }}%)</span></p>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-gray-600">Subscription Sales</h3>
-        <p class="text-2xl font-semibold">{{ todayRevenue }} <span class="text-red-600">(-6.2%)</span></p>
+        <p class="text-2xl font-semibold">RM {{totalSubscriptionSales}} <span :class="{ 'text-green-600': subscriptionChange > 0, 'text-red-600': subscriptionChange < 0 }">({{ subscriptionChange.toFixed(1) }}%)</span></p>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-gray-600">Order Sales</h3>
-        <p class="text-2xl font-semibold">{{ todaySessions }} <span class="text-green-600">(50%)</span></p>
+        <p class="text-2xl font-semibold">RM {{totalOrderSales  }} <span :class="{ 'text-green-600': orderChange > 0, 'text-red-600': orderChange < 0 }">({{ orderChange.toFixed(1) }}%)</span></p>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-gray-600 mb-4">Subscription Sales</h3>
-        <SubscriptionChart :chartData="subscriptionData" />
+        <h3 class="text-gray-600 mb-4">Brewbox Sales</h3>
+        <SubscriptionChart :salesData="salesData" />
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-black mb-4">Recent Subscribers (Past 7 Days)</h3>

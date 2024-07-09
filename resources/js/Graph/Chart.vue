@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Line } from 'vue-chartjs';
 import {
   Chart as ChartJS,
@@ -14,23 +14,30 @@ import {
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
 
-const chartData = ref({
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+const props = defineProps({
+  salesData: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { weekday: 'short', month: 'short', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+};
+
+const chartData = computed(() => ({
+  labels: Object.keys(props.salesData).map(date => formatDate(date)),
   datasets: [
     {
-      label: 'Subscription 2024',
-      data: [10, 20, 30, 45, 54, 59, 70, 80, 85, 95, 110, 120],
+      label: 'Total Sales',
+      data: Object.values(props.salesData),
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1,
     },
-    {
-      label: 'Subscription 2023',
-      data: [0, 10, 20, 25, 15, 20, 50, 55, 60, 66, 69, 70],
-      borderColor: 'rgb(54, 162, 235)',
-      tension: 0.1,
-    },
   ],
-});
+}));
 
 const chartOptions = ref({
   responsive: true,
@@ -40,13 +47,13 @@ const chartOptions = ref({
     },
     title: {
       display: true,
-      text: 'Sales Analytic',
+      text: 'Sales Analytic (Last 7 Days)',
     },
   },
 });
 
 onMounted(() => {
-  // Any additional setup can be done here
+  console.log('Sales Data:', props.salesData);
 });
 </script>
 
