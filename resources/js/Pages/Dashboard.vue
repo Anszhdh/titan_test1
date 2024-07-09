@@ -2,7 +2,8 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import SubscriptionChart from '@/Graph/Chart.vue';
-import OrdersChart from '@/Graph/Chart1.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 // Mock data for demonstration
 const availableToPayout = 'RM1.1K';
@@ -30,6 +31,28 @@ const ordersData = {
     },
   ],
 };
+
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+};
+
+const recentSubscribers = ref([]);
+
+const fetchRecentSubscribers = async () => {
+    try {
+        const response = await axios.get('/api/recent-subscribers');
+        recentSubscribers.value = response.data;
+        console.log(recentSubscribers.value); // Log fetched data for inspection
+    } catch (error) {
+        console.error('Error fetching recent subscribers:', error);
+    }
+};
+
+onMounted(fetchRecentSubscribers);
 </script>
 
 <template>
@@ -40,7 +63,7 @@ const ordersData = {
     
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-gray-600"> Sales</h3>
+        <h3 class="text-gray-600">Sales</h3>
         <p class="text-2xl font-semibold">{{ availableToPayout }}</p>
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
@@ -59,8 +82,27 @@ const ordersData = {
         <SubscriptionChart :chartData="subscriptionData" />
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-gray-600 mb-4">Orders Sales</h3>
-        <OrdersChart :chartData="ordersData" />
+        <h3 class="text-black mb-4">Recent Subscribers (Past 7 Days)</h3>
+        <div class="max-h-80 overflow-y-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Name</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Subscription Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Start Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">End Date</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-for="subscriber in recentSubscribers" :key="subscriber.id">
+                <td class="px-6 py-4 whitespace-nowrap">{{ subscriber.user?.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ subscriber.type }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ formatDate(subscriber.start_date) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ formatDate(subscriber.end_date) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </AdminLayout>

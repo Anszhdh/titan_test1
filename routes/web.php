@@ -184,4 +184,6 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
 });
 
 
+Route::get('/api/recent-subscribers', [SubscriptionController::class, 'recentSubscribers']);
+
 require __DIR__.'/auth.php';

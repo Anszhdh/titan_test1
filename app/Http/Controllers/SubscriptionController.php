@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 
 
@@ -403,5 +404,15 @@ private function findClosestMatch($userInputKey, $recommendationMap)
         // Optionally, you can save the PDF or download it directly
         return $pdf->download('invoice_' . $subscription->id . '.pdf');
     }
-    
+
+    public function recentSubscribers()
+    {
+        $recentSubscriptions = Subscription::with('recommendation', 'user')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
+
+        return response()->json($recentSubscriptions);
+    }
+        
 }
