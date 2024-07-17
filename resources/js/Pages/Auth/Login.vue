@@ -38,7 +38,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div class="flex min-h-screen items-center justify-center bg-orange-100/10">
+            <div class="flex min-h-screen items-center justify-center bg-orange-50/10">
                 <div class="flex w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
                     <div class="w-full md:w-2/3 p-8">
                         <h2 class="text-2xl font-semibold text-center text-brown-800">Login</h2>

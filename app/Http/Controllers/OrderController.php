@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Shipping;
+use App\Models\Review;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,7 +37,9 @@ class OrderController extends Controller
     {
         $user = auth()->user();
         $orders = Order::where('user_id', $user->id)
-            ->with(['orderItems.product', 'payment', 'shipping'])
+            ->with(['orderItems.product', 'orderItems.product.reviews' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }])
             ->get();
     
         return Inertia::render('Orders/Index', [
@@ -44,8 +47,35 @@ class OrderController extends Controller
         ]);
     }
     
+    
+    
 
+    public function submitReview(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string|max:255',
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+    
+        // Create a review for the order
+        $order->reviews()->create([
+            'user_id' => auth()->id(),
+            'product_id' => $validated['product_id'],
+            'rating' => $validated['rating'],
+            'review' => $validated['review'],
+        ]);
+    
+        // Optionally, you can eager load the updated order with order items and reviews
+        $order->load(['orderItems.product', 'reviews']);
+    
+        // Return updated order data
+        return response()->json(['message' => 'Review submitted successfully', 'order' => $order]);
+    }
+    
 
+    
+    
     public function adminIndex()
     {
         $orders = Order::with(['user', 'payment', 'shipping'])->get();

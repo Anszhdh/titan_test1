@@ -52,11 +52,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/orders/{orderId}/invoice', [OrderController::class, 'generateInvoiceUser'])->name('orders.invoice');
 Route::get('/subscription/{subscriptionId}/invoice', [SubscriptionController::class, 'generateInvoiceUser'])->name('subscription.invoice');
 
-//order display
 Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
+    Route::post('/orders/{order}/review', [OrderController::class, 'submitReview'])->name('orders.review');
 });
-
 //subscription display
 Route::middleware('auth')->group(function () {
     Route::get('/subscriptions', [SubscriptionController::class, 'userSubscriptions'])->name('user.subscriptions');

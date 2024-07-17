@@ -27,17 +27,16 @@ class ProductController extends Controller
             'canRegister' => Route::has('register'),
         ]);
     }
-
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('reviews.user')->findOrFail($id);
         $product->image = asset('storage/product/' . $product->image);
-
+    
         return Inertia::render('Products/Show', [
             'product' => $product,
         ]);
     }
-
+    
     // Fetch products and categories for admin
     public function adminIndex()
     {

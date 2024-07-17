@@ -50,4 +50,9 @@ class Product extends Model
         return asset('storage/product/' . $this->attributes['image']);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
 }
