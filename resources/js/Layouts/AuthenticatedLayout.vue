@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -9,6 +9,22 @@ import { Inertia } from '@inertiajs/inertia';
 import NotificationIcon from '@/Components/NotificationIcon.vue';
 
 const showingNavigationDropdown = ref(false);
+
+const cartCount = ref(0);
+
+async function fetchCartCount() {
+    try {
+        const response = await fetch('/cart/count');
+        const data = await response.json();
+        cartCount.value = data.count;
+    } catch (error) {
+        console.error('Error fetching cart count:', error);
+    }
+}
+
+onMounted(() => {
+    fetchCartCount();
+});
 </script>
 
 
@@ -65,18 +81,25 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Contact
                                         </Link>
-                                    <div class="space-x-4 ml-28 mt-2"   title="Notifications">
-                                        <NotificationIcon iconColor="text-yellow-950/60" />
+                                        <div class="flex items-center ml-28 mt-2" title="Notifications">
+                                            <div class="space-x-4">
+                                                <NotificationIcon iconColor="text-yellow-950/60" />
+                                            </div>
+                                            <div class="relative ml-4 mb-1 flex items-center"> <!-- Ensure the container is a flexbox -->
+                                                <a href="/cart ">
+                                                <img
+                                                    id="cart"
+                                                    class="h-6 ml-6 w-auto text-white lg:5"
+                                                    title="Cart"
+                                                    src="/home/cart.png"
+                                                    alt="cart"
+                                                />
+                                                <span v-if="cartCount > 0" class="absolute top-0 right-0 left-1  inline-flex  justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                                                    {{ cartCount }}
+                                                </span>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <a href="/cart">
-                                    <img
-                                        id="cart"
-                                        class="h-6 ml-6 w-auto text-white lg:5"
-                                        title="Cart"
-                                        src="/home/cart.png"
-                                        alt="cart"
-                                    />
-                                    </a>
                                     <div class="hidden sm:flex sm:items-center sm:ms-6" >
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">

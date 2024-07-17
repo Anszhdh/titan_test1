@@ -58,8 +58,8 @@ function proceedToCheckout() {
                 <button type="submit" class="ml-2 bg-yellow-950/80 text-white py-1 px-2 rounded-lg">Update</button>
               </form>
             </td>
-            <td class="py-4">{{ item.price }}</td>
-            <td class="py-4">{{ item.price * item.quantity }}</td>
+            <td class="py-4">RM {{ item.price }}</td>
+            <td class="py-4">RM {{ (item.price * item.quantity).toFixed(2) }}</td>
             <td class="py-4">
               <button @click="removeFromCart(item.id)" class="px-2 py-1 bg-red-500 text-white rounded">Remove</button>
             </td>

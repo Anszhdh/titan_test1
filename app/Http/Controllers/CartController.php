@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,5 +62,11 @@ class CartController extends Controller
             }
         }
         return redirect()->route('cart.index');
+    }
+
+    public function count()
+    {
+        $count = Auth::user()->carts()->count(); // Assuming the relationship is defined on the User model
+        return response()->json(['count' => $count]);
     }
 }
