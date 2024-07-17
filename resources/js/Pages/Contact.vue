@@ -2,7 +2,7 @@
     <FooterLayout>
     <AuthenticatedLayout>
     <div class="container mx-auto p-8">
-        <h1 class="text-4xl font-bold mb-6">Contact Us</h1>
+        <h1 class="text-4xl font-bold mb-6 text-yellow-950">Contact Us</h1>
         <p class="text-lg mb-4">
             We would love to hear from you! Whether you have a question, feedback, or need assistance, feel free to reach out to us. 
         </p>
@@ -20,7 +20,7 @@
                 <textarea id="message" v-model="form.message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="5" required></textarea>
             </div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Send</button>
+                <button type="submit" class="bg-yellow-950 hover:bg-yellow-950/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Send</button>
             </div>
         </form>
     </div>

@@ -2,12 +2,12 @@
      <template v-if="isLoggedIn">
     <FooterLayout>
     <AuthenticatedLayout>
-    <div class="container mx-auto p-8">
-        <h1 class="text-4xl font-bold mb-6">About Brewbox</h1>
+    <div class="container mx-auto bg-orange-100/10 p-8">
+        <h1 class="text-4xl font-bold mb-6 text-yellow-950">About Brewbox</h1>
         <p class="text-lg mb-4">
             Welcome to Brewbox, your personalized subscription service for all things brewing. At Brewbox, we believe that every brew should be unique and tailored to your tastes. Our mission is to bring you the finest and most personalized brewing experience right to your doorstep.
         </p>
-        <h2 class="text-2xl font-semibold mb-4">Our Story</h2>
+        <h2 class="text-2xl font-semibold mb-4 ">Our Story</h2>
         <p class="text-lg mb-4">
             Brewbox was founded with a passion for brewing and a desire to share that passion with others. We started our journey in 2023 with a simple goal: to make high-quality, personalized brewing accessible to everyone. Since then, we have grown into a community of brew enthusiasts who are committed to exploring and celebrating the art of brewing.
         </p>

@@ -93,7 +93,7 @@ const isLoggedIn = !!props?.auth?.user;
                      </div>
                     <div class="min-h-screen  flex-col sm:justify-center items-center bg-orange-100/10 ">
                         <div
-                            class="w-full sm:max  bg-white shadow-md overflow-hidden sm:rounded-lg "
+                            class="w-full sm:max  bg-orange-100/10 shadow-md overflow-hidden sm:rounded-lg "
                         >
                             <slot />
                         </div>

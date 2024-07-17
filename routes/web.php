@@ -109,6 +109,7 @@ Route::get('admin/settings', function () {
 
 // Product
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/category/{category}', [ProductController::class, 'showByCategory'])->name('category.show');
 
 // Cart

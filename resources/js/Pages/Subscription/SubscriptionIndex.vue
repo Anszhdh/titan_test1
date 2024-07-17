@@ -16,22 +16,22 @@ const isDisabled = errorMessage !== '';
     <AuthenticatedLayout>
         <div class="min-h-screen bg-[#fffffe] flex flex-col items-center py-12">
             <div class="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
-                <h2 class="text-3xl font-bold mb-6 text-center">Coffee Subscription</h2>
+                <h2 class="text-3xl font-bold mb-6 text-center text-yellow-950">Coffee Subscription</h2>
                 <p class="text-center mb-6 text-gray-500">Experienced freshly roasted coffee delivered to your door</p>
-                <h3 class="text-2xl font-semibold mb-6 text-center">How does it work?</h3>
+                <h3 class="text-2xl font-semibold mb-6 text-center text-yellow-950">How does it work?</h3>
                 <div class="space-y-12">
                     <div class="flex items-center space-x-4">
                         <img src="/subsmain/subs1.jpg" alt="Choose Your Coffee Preferences" class="w-48 h-48 object-cover rounded-lg">
                         <img src="/subsmain/option.png" alt="optionimage" class="w-12 h-12 ">
                         <div class="flex-1">
-                            <h4 class="text-xl font-semibold">Choose Your Coffee Preferences</h4>
+                            <h4 class="text-xl font-semibold text-yellow-950">Choose Your Coffee Preferences</h4>
                             <p class="text-gray-500">Choose your coffee preferences and we generate personalized recommendations which are right for you!</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-6">
                         <img src="/subsmain/calendar.png" alt="optionimage" class="w-10 h-10 ">
                         <div class="flex-1">
-                            <h4 class="text-xl font-semibold">Select Subscription Frequency</h4>
+                            <h4 class="text-xl font-semibold text-yellow-950">Select Subscription Frequency</h4>
                             <p class="text-gray-500">Select your preferred subscription frequency: weekly, monthly, or yearly. Pause and end anytime.</p>
                         </div>
                         <img src="/subsmain/subs2.jpg" alt="Select Subscription Frequency" class="w-48 h-48 object-cover rounded-lg">
@@ -40,7 +40,7 @@ const isDisabled = errorMessage !== '';
                         <img src="/subsmain/subs3.jpg" alt="We Deliver" class="w-48 h-48 object-cover rounded-lg">
                         <img src="/subsmain/package.png" alt="optionimage" class="w-10 h-10 ">
                         <div class="flex-1">
-                            <h4 class="text-xl font-semibold">We Deliver</h4>
+                            <h4 class="text-xl font-semibold text-yellow-950">We Deliver</h4>
                             <p class="text-gray-500">We deliver your subscription box right to your doorstep.</p>
                         </div>
                     </div>

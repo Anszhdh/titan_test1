@@ -28,6 +28,16 @@ class ProductController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->image = asset('storage/product/' . $product->image);
+
+        return Inertia::render('Products/Show', [
+            'product' => $product,
+        ]);
+    }
+
     // Fetch products and categories for admin
     public function adminIndex()
     {

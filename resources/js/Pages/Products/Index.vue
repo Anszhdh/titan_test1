@@ -1,9 +1,9 @@
-<script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Inertia } from '@inertiajs/inertia';
-import FooterLayout from '@/Layouts/FooterLayout.vue';
+<!-- resources/js/Pages/Products/Index.vue -->
 
+<script setup>
+import { Head } from '@inertiajs/inertia-vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FooterLayout from '@/Layouts/FooterLayout.vue';
 
 const props = defineProps({
     products: Array,
@@ -25,29 +25,34 @@ async function addToCart(productId) {
         alert('Error: Unable to add to cart. Please try again later.');
     }
 }
-
 </script>
 
 <template>
     <Head title="Products" />
     <FooterLayout>
-    <AuthenticatedLayout :authenticated="authenticated">
-        <div class="container mx-auto mt-20 px-4">
-            <div class="grid grid-cols-4 gap-4">
-                <div v-for="product in products" :key="product.id" class="border rounded shadow p-4">
-                    <div class="w-full h-48 bg-white">
-                        <img :src="product.image" :alt="product.name" class="w-full h-full object-contain">
+        <AuthenticatedLayout :authenticated="authenticated">
+            <div class="bg-orange-100/10 min-h-screen">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-4 gap-4">
+                        <div v-for="product in products" :key="product.id" class="border rounded shadow p-4 mb-20 mt-20 bg-white">
+                            <div class="w-full h-48">
+                                <a :href="`/products/${product.id}`" target="_blank">
+                                    <img :src="product.image" :alt="product.name" class="w-full h-full object-contain">
+                                </a>
+                            </div>
+                            <h2 class="text-xl font-bold mt-2">
+                                <a :href="`/products/${product.id}`" target="_blank">{{ product.name }}</a>
+                            </h2>
+                            <p>{{ product.description }}</p>
+                            <p class="text-lg font-semibold">RM {{ product.price }}</p>
+                            <button class="mt-2 bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-white hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white dark:hover:bg-yellow-950/20 py-2 px-4 rounded-xl" @click="addToCart(product.id)">Add to Cart</button>
+                        </div>
                     </div>
-                    <h2 class="text-xl font-bold mt-2">{{ product.name }}</h2>
-                    <p>{{ product.description }}</p>
-                    <p class="text-lg font-semibold">RM {{ product.price }}</p>
-                    <button class="mt-2 bg-yellow-950 text-white ring-1 ring-transparent transition hover:text-white hover:bg-yellow-900 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white dark:hover:bg-yellow-950/20 py-2 px-4 rounded-xl" @click="addToCart(product.id)">Add to Cart</button>
+                    <div v-if="!authenticated" class="mt-4">
+                        <a href="/login" class="text-blue-500">Login</a>
+                    </div>
                 </div>
             </div>
-            <div v-if="!authenticated" class="mt-4">
-                <Link href="/login" class="text-blue-500">Login</Link>
-            </div>
-        </div>
-    </AuthenticatedLayout>
-</FooterLayout>
+        </AuthenticatedLayout>
+    </FooterLayout>
 </template>

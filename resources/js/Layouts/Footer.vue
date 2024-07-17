@@ -1,6 +1,6 @@
 <template>
-    <footer class="bg-white py-8 border-t mt-20 border-gray-200">
-      <div class="container mx-auto px-6 lg:px-8">
+    <footer class="bg-orange-100/10 py-8 border-t  border-gray-200">
+      <div class="bg-orange-100/10container mx-auto px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row justify-between items-center">
           <!-- Left Section -->
           <div class="flex flex-col lg:flex-row lg:space-x-12">
