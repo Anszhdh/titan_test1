@@ -1,9 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { User } from '@/types';
-import { usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/inertia-vue3';
 
-const user = usePage().props.user as User;
+// Assuming 'user' is coming from props and we know its shape
+const { user } = usePage().props;
 </script>
 
 <template>
