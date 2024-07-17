@@ -12,10 +12,10 @@ class UserSeeder extends Seeder
     {
         // Insert admin user
         DB::table('users')->insert([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@brewbox.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // Replace 'password' with your desired password
+            'password' => Hash::make('12345678'), // Replace 'password' with your desired password
             'role' => 1, // Assuming '1' represents the admin role
             'is_Admin'=>1,
             'created_at' => now(),

@@ -54,11 +54,13 @@
 </template>
 
 <script setup>
+  import { defineProps } from 'vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FooterLayout from '@/Layouts/FooterLayout.vue';
 
+const props = defineProps(['isLoggedIn']);
 </script>
 
 <style scoped>

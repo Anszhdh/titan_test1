@@ -1,7 +1,11 @@
 <script setup>
+import { usePage } from '@inertiajs/inertia-vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
+// Access the shared page props
+const { props } = usePage();
+const isLoggedIn = !!props?.auth?.user;
 
 
 </script>
@@ -62,14 +66,14 @@ import { Link } from '@inertiajs/inertia-vue3';
                                         alt="search"
                                     />
                                      -->
-                                     <a :href="isLoggedIn ? '/cart' : route('login')">
+                                     <!-- <a :href="isLoggedIn ? '/cart' : route('login')">
                                         <img
                                         id="cart"
                                         class="h-6 ml-16 w-auto text-white lg:5"
                                         src="/home/cart.png"
                                         alt="cart"
                                         />
-                                    </a>
+                                    </a> -->
                                     <Link
                                             :href="route('login')"
                                             class=" ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
@@ -78,6 +82,7 @@ import { Link } from '@inertiajs/inertia-vue3';
                                         </Link>
 
                                         <Link
+                                            
                                             :href="route('register')"
                                             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >

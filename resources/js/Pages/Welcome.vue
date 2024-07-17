@@ -24,6 +24,9 @@ defineProps({
     products: { // Define the products prop
         type: Array,
         required: true,
+    },
+       isLoggedIn: { // Make sure to define the isLoggedIn prop
+        type: Boolean,
     }
 });
 
@@ -101,7 +104,7 @@ function handleImageError() {
                             alt="search"
                         /> -->
                         <div class="space-x-4 mt-2 ml-28" title="Notifications">
-                             <NotificationIcon iconColor="text-yellow-950/60" v-if="$page.props.authenticated"/>
+                             <NotificationIcon iconColor="text-yellow-950/60" v-if="$page.props.isLoggedIn"/>
                         </div>
                         <a :href="isLoggedIn ? '/cart' : route('login')">
                             <img
@@ -111,7 +114,7 @@ function handleImageError() {
                             alt="cart"
                             />
                         </a>
-                        <div class="hidden sm:flex sm:items-center sm:ms-6" v-if="$page.props.authenticated">
+                        <div class="hidden sm:flex sm:items-center sm:ms-6" v-if="$page.props.isLoggedIn">
                         <!-- Settings Dropdown -->
                         <div class="ms-3 relative">
                         <Dropdown align="right" width="48">
@@ -150,7 +153,7 @@ function handleImageError() {
                         </div>
                     </div>
                                             <Link
-                        v-if="!$page.props.authenticated"
+                        v-if="!$page.props.isLoggedIn"
                         :href="route('login')"
                         class="ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                     >
@@ -158,7 +161,7 @@ function handleImageError() {
                     </Link>
 
                     <Link
-                        v-if="!$page.props.authenticated && canRegister"
+                        v-if="!$page.props.isLoggedIn && canRegister"
                         :href="route('register')"
                         class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                     >
@@ -190,7 +193,7 @@ function handleImageError() {
                                                 Browse Product
                                             </Link>
                                             <Link
-                                                v-if="!$page.props.authenticated"
+                                                v-if="!$page.props.isLoggedIn"
                                                 :href="route('register')"
                                                 class="inline-block font-light rounded-xl ml-5 px-6 py-3 font-sans border-hidden bg-orange-950/10 text-black ring-1 ring-transparent transition hover:text-white/70 hover:bg-yellow-950 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-black dark:hover:text-white/80 dark:hover:bg-yellow-950 dark:focus-visible:ring-white"
                                             >

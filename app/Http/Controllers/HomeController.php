@@ -18,7 +18,7 @@ class HomeController extends Controller
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'authenticated' => $authenticated,
+            'isLoggedIn' => $authenticated,
             'laravelVersion' => Application::VERSION,
             'products' => $products,
             'phpVersion' => PHP_VERSION,
@@ -27,16 +27,25 @@ class HomeController extends Controller
 
     public function about()
     {
-        return Inertia::render('About');
+        $authenticated = auth()->check();
+        return Inertia::render('About', [
+            'isLoggedIn' => $authenticated,
+        ]);
     }
 
     public function contact()
     {
-        return Inertia::render('Contact');
+        $authenticated = auth()->check();
+        return Inertia::render('Contact', [
+            'isLoggedIn' => $authenticated,
+        ]);
     }
 
     public function discover()
     {
-        return Inertia::render('Discover');
+        $authenticated = auth()->check();
+        return Inertia::render('Discover', [
+            'isLoggedIn' => $authenticated,
+        ]);
     }
 }
