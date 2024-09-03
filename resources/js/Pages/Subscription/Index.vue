@@ -71,7 +71,9 @@ const downloadInvoice = async (subscriptionId) => {
           <div v-for="subscription in subscriptions" :key="subscription.id" class="border rounded-lg p-4 mb-4">
             <div class="flex justify-between items-start">
               <div>
-                <h2 class="text-lg font-semibold">Monthly</h2>
+                <h2 v-if="subscription.type === 'Monthly'" class="text-lg font-semibold">Monthly</h2>
+                <h2 v-if="subscription.type === 'Weekly'" class="text-lg font-semibold">Weekly</h2>
+                <h2 v-if="subscription.type === 'Bi-Weekly'" class="text-lg font-semibold">Bi-weekly</h2>
                 <p class="text-black">Subscription ID: {{ subscription.id }}</p> 
                 <p class="text-gray-500">Duration: {{ subscription.duration }} days</p> 
                 <p class="text-gray-500">Started on: {{ formatDate(subscription.start_date) }}</p>
