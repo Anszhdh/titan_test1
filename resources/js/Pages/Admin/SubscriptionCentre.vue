@@ -21,11 +21,11 @@
     });
 
     const pendingSubscription = computed(() => {
-            return subscriptions.value.filter(sub => {
-                // Ensure sub.payments is defined and has a status property
-                return sub.payments.status === 'pending';
-            }).length;
-        });
+    return subscriptions.value.filter(sub => {
+        // Ensure sub.payments exists and check if any payment has a status of 'pending'
+        return sub.payments && sub.payments.some(payment => payment.status === 'pending');
+    }).length;
+});
 
     const showModal = ref(false);
     const selectedImage = ref(null);
@@ -213,15 +213,15 @@
             <h1 class="text-2xl font-semibold text-yellow-950">Subscription Centre</h1>
             <div class="mt-10">
                 <div class="flex justify-between mb-10">
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ filteredSubscriptions.length }}</div>
                         <div>Total Subscriptions</div>
                     </div>
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ todaySubscription }}</div>
                         <div>Today's Subscriptions</div>
                     </div>
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ pendingSubscription }}</div>
                         <div>Pending Subscriptions</div>
                     </div>

@@ -19,8 +19,10 @@ export default defineConfig({
         
     ],
     server: {
+        host: '192.168.1.12', // Use your local network IP
+        port: 5173, // Port for Vite
         hmr: {
-            host: 'localhost',
+            host: '192.168.1.12', // HMR (Hot Module Replacement) should also use your network IP
         },
-    }
+    },
 });

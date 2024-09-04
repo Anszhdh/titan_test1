@@ -213,15 +213,15 @@ const applyFilters = () => {
             <h1 class="text-2xl font-semibold text-yellow-950">Order Centre</h1>
             <div class="mt-10">
                 <div class="flex justify-between mb-10">
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ orders.length }}</div>
                         <div>Total Orders</div>
                     </div>
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ todayOrder }}</div>
                         <div>New Orders</div>
                     </div>
-                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md">
+                    <div class="bg-[#a08671]/10 p-6 rounded-xl shadow-md pl-5 pr-20">
                         <div class="text-xl font-bold">{{ pendingOrder }}</div>
                         <div>Pending Orders</div>
                     </div>

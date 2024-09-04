@@ -50,6 +50,18 @@ const fetchRecentSubscribers = async () => {
   }
 };
 
+const filteredRecentSubscribers = computed(() => {
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    return recentSubscribers.value.filter(subscriber => {
+        const startDate = new Date(subscriber.start_date);
+        return startDate >= sevenDaysAgo && startDate <= today;
+    });
+});
+
+
 onMounted(fetchRecentSubscribers);
 onMounted(() => {
   console.log('Recommendation Data:', props.recommendationData);
@@ -68,21 +80,21 @@ onMounted(() => {
         <h3 class="text-gray-800">Total Sales</h3>
         <p class="text-2xl font-semibold">
           RM {{ totalSales.toFixed(2) }}
-          <span :class="{ 'text-green-600': salesChange > 0, 'text-red-600': salesChange < 0 }">({{ salesChange.toFixed(1) }}%)</span>
+          <!-- <span :class="{ 'text-green-600': salesChange > 0, 'text-red-600': salesChange < 0 }">({{ salesChange.toFixed(1) }}%)</span> -->
         </p>
       </div>
       <div class="p-6 rounded-lg shadow-md" style="background: linear-gradient(to bottom, rgba(249, 168, 212, 0.6), rgba(244, 114, 182, 0.7));">
         <h3 class="text-gray-800">Subscription Sales</h3>
         <p class="text-2xl font-semibold">
           RM {{ totalSubscriptionSales }}
-          <span :class="{ 'text-green-600': subscriptionChange > 0, 'text-red-600': subscriptionChange < 0 }">({{ subscriptionChange.toFixed(1) }}%)</span>
+          <!-- <span :class="{ 'text-green-600': subscriptionChange > 0, 'text-red-600': subscriptionChange < 0 }">({{ subscriptionChange.toFixed(1) }}%)</span> -->
         </p>
       </div>
       <div class="p-6 rounded-lg shadow-md" style="background: linear-gradient(to bottom, rgba(147, 197, 253, 0.6), rgba(96, 165, 250, 0.7));">
         <h3 class="text-gray-800">Order Sales</h3>
         <p class="text-2xl font-semibold">
           RM {{ totalOrderSales }}
-          <span :class="{ 'text-green-600': orderChange > 0, 'text-red-600': orderChange < 0 }">({{ orderChange.toFixed(1) }}%)</span>
+          <!-- <span :class="{ 'text-green-600': orderChange > 0, 'text-red-600': orderChange < 0 }">({{ orderChange.toFixed(1) }}%)</span> -->
         </p>
       </div>
     </div>
@@ -92,7 +104,7 @@ onMounted(() => {
     <div class="grid grid-cols-1 mt-10 md:grid-cols-2 gap-4">
       <div class="bg-white p-6 rounded-lg shadow-md">
         <div class="bg-gradient-to-r from-blue-400 to-indigo-500 rounded-t-lg p-1">
-          <h3 class="text-white font-bold mb-2 mt-2">Top Recommended BrewBox Products</h3>
+          <h3 class="text-white font-bold mb-2 mt-2">BrewBox Sales Analytic</h3>
         </div>
         <SubscriptionChart :salesData="salesData" />
       </div>
@@ -118,12 +130,12 @@ onMounted(() => {
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-      <tr v-for="subscriber in recentSubscribers" :key="subscriber.id" class="hover:bg-indigo-100 transition duration-300 ease-in-out">
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subscriber.user?.name }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subscriber.type }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ formatDate(subscriber.start_date) }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ formatDate(subscriber.end_date) }}</td>
-      </tr>
+      <tr v-for="subscriber in filteredRecentSubscribers" :key="subscriber.id" class="hover:bg-indigo-100 transition duration-300 ease-in-out">
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subscriber.user?.name }}</td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subscriber.type }}</td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ formatDate(subscriber.start_date) }}</td>
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ formatDate(subscriber.end_date) }}</td>
+</tr>
     </tbody>
   </table>
 </div>

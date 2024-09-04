@@ -80,7 +80,7 @@ const downloadInvoice = async (subscriptionId) => {
                 <p class="text-gray-500 mb-4">End on: {{ formatDate(subscription.end_date) }}</p>
                 <div>
                     <span class="mr-2 font-bold">Payment Status:</span>
-                    <span class="text-blue-500">{{ subscription.payments[0].status }}</span>
+                    <span class="text-blue-500">{{ capitalizeFirstLetter(subscription.payments[0].status) }}</span>
                 </div>
                 <div>
                     <span class="mr-2 font-bold">Subscription Status:</span>

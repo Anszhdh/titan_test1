@@ -12,7 +12,10 @@ const form = useForm({
   base_price: props.value.product.base_price,
   price: props.value.product.price,
   category_id: props.value.product.category ? props.value.product.category.id : null,
-    category_name: props.value.product.category ? props.value.product.category.name : '',
+  category_name: props.value.product.category ? props.value.product.category.name : '',
+  flavor: props.value.product.flavor ? props.value.product.flavor : '',
+  roast_level: props.value.product.roast_level ? props.value.product.roast_level : '',
+  brewing_method: props.value.product.brewing_method ? props.value.product.brewing_method : '',
   image_url: props.value.product.image_url,
   sku: props.value.product.sku,
   quantity: props.value.product.quantity,
@@ -51,7 +54,7 @@ const updateProduct = () => {
         <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Media</h2>
         <div class="mb-4">
             <!-- Display existing image -->
-            <img v-if="form.image_url" :src="form.image_url" alt="Product Image" class="w-full h-auto mb-4 rounded-md" />
+            <img v-if="form.image_url" :src="form.image_url" alt="Product Image" class="w-80 h-auto mb-4 rounded-md" />
 
             <!-- Update Image input -->
             <label class="block text-sm font-medium text-gray-700">Update Image</label>
@@ -78,6 +81,24 @@ const updateProduct = () => {
                 <label class="block text-sm font-medium text-gray-700">Product Category</label>
                 <div class="mt-1 p-2 w-full border rounded-md">
                     <p>{{ `${form.category_name}` }}</p>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Flavor</label>
+                <div class="mt-1 p-2 w-full border rounded-md">
+                    <p>{{ `${form.flavor}` }}</p>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Roast Level</label>
+                <div class="mt-1 p-2 w-full border rounded-md">
+                    <p>{{ `${form.roast_level}` }}</p>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Brewing Method</label>
+                <div class="mt-1 p-2 w-full border rounded-md">
+                    <p>{{ `${form.brewing_method}` }}</p>
                 </div>
             </div>
         </div>
