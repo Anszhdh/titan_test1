@@ -95,6 +95,10 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::cla
     Route::get('/admin/subscription/{subscriptionId}/invoice', [SubscriptionController::class, 'generateInvoice'])->name('admin.subscription.invoice');
 });
 
+Route::middleware(['auth', 'verified', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
+    Route::get('admin/dealer-management', [UserController::class, 'dealerIndex'])->name('admin.dealer.management');
+});
+
 
 Route::get('admin/sales-report', function () {
     return Inertia::render('salesreport');

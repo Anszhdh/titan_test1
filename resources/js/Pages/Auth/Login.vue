@@ -69,13 +69,16 @@ const submit = () => {
                                 <Checkbox id="remember" v-model:checked="form.remember" />
                                 <label for="remember" class="ml-2 text-sm text-gray-700">Remember me</label>
                             </div>
-                            <PrimaryButton type="submit" class="bg-orange-950 hover:bg-yellow-900/70" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            <PrimaryButton type="submit" class="bg-orange-600 hover:bg-orange-600/90" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                 Login
                             </PrimaryButton>
                         </div>
                         <div class="mt-4 flex justify-between items-center">
                             <Link :href="route('register')" class="text-xs text-brown-600 hover:underline">New customer? Create Account</Link>
                             <!-- <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs text-brown-600 hover:underline">Forgot your password?</Link> -->
+                        </div>
+                        <div class="mt-2 flex justify-between items-center">
+                            <Link :href="route('register.dealer')" class="text-xs text-brown-600 hover:underline">Register as Dealer</Link>
                         </div>
                     </div>
                     <div class="hidden md:block md:w-1/3 bg-cover" style="background-image: url('home/registerl.jpg');"></div>

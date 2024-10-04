@@ -39,7 +39,7 @@ class OrderController extends Controller
         $orders = Order::where('user_id', $user->id)
             ->with(['orderItems.product', 'orderItems.product.reviews' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
-            }])
+            }, 'shipping']) // Load the shipping relationship
             ->get();
     
         return Inertia::render('Orders/Index', [
@@ -48,7 +48,7 @@ class OrderController extends Controller
     }
     
     
-    
+   
 
     public function submitReview(Request $request, Order $order)
     {

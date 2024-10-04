@@ -13,7 +13,7 @@
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
-    "APP_URL": "https://brewbox.com.my",
+    "APP_URL": "https://regalvalet.com.my",
     "APP_KEY": "base64:8d+2mUziUvUBysIxrdmb3T3coxin+5yYx4F+6SD/Z2c=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -27,8 +27,8 @@
     "DB_CONNECTION": "mysql",
     "DB_HOST": "127.0.0.1",
     "DB_PORT": "3306",
-    "DB_DATABASE": "brewbox_wa",
-    "DB_USERNAME": "brewbox_admin",
+    "DB_DATABASE": "tian_test",
+    "DB_USERNAME": "tian_test",
     "DB_PASSWORD": "12345678"
   }
 }

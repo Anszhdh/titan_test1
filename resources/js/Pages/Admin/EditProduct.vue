@@ -10,12 +10,13 @@ const form = useForm({
   name: props.value.product.name,
   description: props.value.product.description,
   base_price: props.value.product.base_price,
+  dealer_price: props.value.product.dealer_price,
   price: props.value.product.price,
   category_id: props.value.product.category ? props.value.product.category.id : null,
   category_name: props.value.product.category ? props.value.product.category.name : '',
-  flavor: props.value.product.flavor ? props.value.product.flavor : '',
-  roast_level: props.value.product.roast_level ? props.value.product.roast_level : '',
-  brewing_method: props.value.product.brewing_method ? props.value.product.brewing_method : '',
+  // flavor: props.value.product.flavor ? props.value.product.flavor : '',
+  // roast_level: props.value.product.roast_level ? props.value.product.roast_level : '',
+  // brewing_method: props.value.product.brewing_method ? props.value.product.brewing_method : '',
   image_url: props.value.product.image_url,
   sku: props.value.product.sku,
   quantity: props.value.product.quantity,
@@ -69,6 +70,10 @@ const updateProduct = () => {
               <input v-model="form.base_price" type="number" step="0.01" id="base_price" class="mt-1 p-2 w-full border rounded-md" />
             </div>
             <div class="mb-4">
+              <label for="dealer_price" class="block text-sm font-medium text-gray-700">Base Price</label>
+              <input v-model="form.dealer_price" type="number" step="0.01" id="dealer_price" class="mt-1 p-2 w-full border rounded-md" />
+            </div>
+            <div class="mb-4">
               <label for="price" class="block text-sm font-medium text-gray-700">Sale Price</label>
               <input v-model="form.price" type="number" step="0.01" id="price" class="mt-1 p-2 w-full border rounded-md" />
             </div>
@@ -83,7 +88,7 @@ const updateProduct = () => {
                     <p>{{ `${form.category_name}` }}</p>
                 </div>
             </div>
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Flavor</label>
                 <div class="mt-1 p-2 w-full border rounded-md">
                     <p>{{ `${form.flavor}` }}</p>
@@ -100,7 +105,7 @@ const updateProduct = () => {
                 <div class="mt-1 p-2 w-full border rounded-md">
                     <p>{{ `${form.brewing_method}` }}</p>
                 </div>
-            </div>
+            </div> -->
         </div>
   
           <!-- Inventory -->
@@ -143,7 +148,7 @@ const updateProduct = () => {
   
           <!-- Save Button -->
           <div class="md:col-span-2 p-6 bg-white shadow-md rounded-md flex justify-end">
-            <button @click="updateProduct" class="px-4 py-2 bg-yellow-950/80 text-white rounded-md">Update</button>
+            <button @click="updateProduct" class="px-4 py-2 bg-orange-600 text-white rounded-md">Update</button>
           </div>
         </div>
       </div>

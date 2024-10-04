@@ -17,14 +17,15 @@ class Product extends Model
         'description',
         'base_price',
         'price',
+        'dealer_price',
         'category_id',
         'image',
         'sku',
         'quantity',
         'variation',
-        'flavor',
-        'roast_level',
-        'brewing_method',
+        // 'flavor',
+        // 'roast_level',
+        // 'brewing_method',
         'pre_ground',
         'decaf',
         // Add other fillable fields here
@@ -49,7 +50,7 @@ class Product extends Model
     {
         return asset('storage/product/' . $this->attributes['image']);
     }
-
+    
     public function reviews()
     {
         return $this->hasMany(Review::class);

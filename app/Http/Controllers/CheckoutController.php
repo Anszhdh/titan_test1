@@ -130,7 +130,6 @@ class CheckoutController extends Controller
     
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Payment processing failed: ' . $e->getMessage());
             return redirect()->route('checkout.summary')->withErrors('Failed to process payment. Please try again.');
         }
     }

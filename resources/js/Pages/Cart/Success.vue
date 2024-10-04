@@ -6,7 +6,7 @@
       <h1 class="text-2xl font-bold text-center mt-10">Payment Successful!</h1>
       <p class="text-center mt-4">Thank you for your purchase. Your order is being processed.</p>
       <div class="text-center mt-6">
-          <router-link to="/products" class="bg-yellow-950 text-white py-2 px-4 rounded">Happy  Shopping</router-link>
+          <!-- <router-link to="/products" class="bg-yellow-950 text-white py-2 px-4 rounded">Happy  Shopping</router-link> -->
       </div>
   </div>
  </AuthenticatedLayout>

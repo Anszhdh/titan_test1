@@ -10,7 +10,8 @@ const categories = props.value.categories || [];
 const form = useForm({
     name: '',
     description: '',
-    base_price: '',
+    base_price:'',
+    dealer_price: '',
     price: '',
     category_id: '',
     image: null,
@@ -18,9 +19,9 @@ const form = useForm({
     sku: '',
     quantity: '',
     variations: [],
-    flavor: '',
-    roast_level: '',
-    brewing_method: '',
+    // flavor: '',
+    // roast_level: '',
+    // brewing_method: '',
     pre_ground: '',
     decaf: '',
 });
@@ -34,9 +35,13 @@ const removeVariation = (index) => {
 };
 
 const handleImageUpload = (event) => {
-    form.image = event.target.files[0];
-    form.image_url = URL.createObjectURL(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+        form.image = file;  // Store the file for upload
+        form.image_url = URL.createObjectURL(file);  // Create a preview URL for the uploaded file
+    }
 };
+
 
 const saveProduct = () => {
 
@@ -95,6 +100,10 @@ const saveProduct = () => {
             <input v-model="form.base_price" type="number" step="0.01" id="base_price" class="mt-1 p-2 w-full border rounded-md" />
           </div>
           <div class="mb-4">
+            <label for="dealer_price" class="block text-sm font-medium text-gray-700">Dealer Price</label>
+            <input v-model="form.dealer_price" type="number" step="0.01" id="dealer_price" class="mt-1 p-2 w-full border rounded-md" />
+          </div>
+          <div class="mb-4">
             <label for="price" class="block text-sm font-medium text-gray-700">Sale Price</label>
             <input v-model="form.price" type="number" step="0.01" id="price" class="mt-1 p-2 w-full border rounded-md" />
           </div>
@@ -111,7 +120,7 @@ const saveProduct = () => {
                         </option>
                     </select>
                 </div>
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label for="flavor" class="block text-sm font-medium text-gray-700">Flavor:</label>
                     <select v-model="form.flavor" id="flavor" name="flavor" class="mt-1 p-2 w-full border rounded-md">
                         <option value="Fruity">Fruity</option>
@@ -140,9 +149,9 @@ const saveProduct = () => {
                         <option value="Aeropress">Aeropress</option>
                         <option value="Cold Brew Maker">Cold Brew Maker</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="mb-4">
-                  <label class="block text-sm font-medium text-gray-700">Pre-Ground:</label>
+                  <label class="block text-sm font-medium text-gray-700">Adjustable:</label>
                   <div>
                       <input type="radio" v-model="form.pre_ground" id="pre_ground_yes" :value="true" /> 
                       <label for="pre_ground_yes" class="mr-3">Yes</label>
@@ -151,7 +160,7 @@ const saveProduct = () => {
                   </div>
               </div>
               <div class="mb-4">
-                  <label class="text-sm font-medium text-gray-700">Decaf:</label>
+                  <label class="text-sm font-medium text-gray-700">Warranty:</label>
                   <div>
                       <input type="radio" v-model="form.decaf" id="decaf_yes" :value="true" /> 
                       <label for="decaf_yes" class="mr-3">Yes</label>
@@ -197,12 +206,12 @@ const saveProduct = () => {
             </div>
             <button @click="removeVariation(index)" class="px-4 py-2 bg-red-600 text-white rounded-md">Remove</button>
           </div>
-          <button @click="addVariation" class="px-4 py-2 bg-blue-600 text-white rounded-md">Add Variation</button>
+          <button @click="addVariation" class="px-4 py-2 bg-orange-600 text-white rounded-md">Add Variation</button>
         </div>
 
         <!-- Save Button -->
         <div class="md:col-span-2 p-6 bg-white shadow-md rounded-md flex justify-end">
-          <button @click="saveProduct" class="px-4 py-2 bg-yellow-950/80 text-white rounded-md">Save</button>
+          <button @click="saveProduct" class="px-4 py-2 bg-black text-white rounded-md">Save</button>
         </div>
       </div>
     </div>

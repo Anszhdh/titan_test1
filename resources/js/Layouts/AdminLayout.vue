@@ -14,18 +14,18 @@ const currentRoute = ref(url);
 </script>
 
 <template>
-    <div class="flex h-screen bg-yellow-950/50">
+    <div class="flex h-screen bg-black">
         <!-- Sidebar -->
         <aside :class="sidebarOpen ? 'block' : 'hidden lg:block'" class="bg-white w-64 h-full shadow-md lg:block">
             <div class="flex items-center mb-6">
                 <div class="p-3">
                     <img id="logo" class="h-12 w-auto text-white lg:h-14 lg:text-[#FF2D20] cursor-pointer" src="/icon.png" alt="Logo" />
                 </div>
-                <a href="/" class="text-black text-2xl font-semibold uppercase hover:text-gray-300 ml-2">BrewBox</a>
+                <a href="/" class="text-black text-2xl font-semibold uppercase hover:text-gray-300 ml-2"></a>
             </div>
             <nav>
                 <Link :href="route('dashboard')" class="block py-2.5 px-4 rounded transition duration-200"
-                      :class="{'bg-yellow-950/10 text-yellow-900': currentRoute.value === route('dashboard').url, 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute.value !== route('dashboard').url}">
+                      :class="{'bg-orange-600/80 text-black': currentRoute.value === route('dashboard').url, 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute.value !== route('dashboard').url}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </Link>
                 <!-- <a :href="route('notifications')" 
@@ -34,23 +34,28 @@ const currentRoute = ref(url);
                     <i class="fas fa-bell"></i> Notifications
                 </a> -->
                 <a :href="route('order-centre')" 
-                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('order-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('order-centre')}"
+                   :class="{'bg-orange-600/80 text-black': currentRoute === route('order-centre'), 'hover:bg-orange-600/40 hover:text-gray-700': currentRoute !== route('order-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-shopping-cart"></i> Order Centre
                 </a>
                <a :href="route('product-centre')" 
-                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('product-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('product-centre')}"
+                   :class="{'bg-orange-600/80 text-black': currentRoute === route('product-centre'), 'hover:bg-orange-600/40 hover:text-gray-700': currentRoute !== route('product-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-box-open"></i> Product Centre
                 </a>
                 
-               <a :href="route('subscription-centre')" 
-                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
+               <!-- <a :href="route('subscription-centre')" 
+                   :class="{'bg-orange-600/80 text-yellow-900': currentRoute === route('subscription-centre'), 'hover:bg-orange-600/40 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> Subscription Centre
+                </a>  -->
+                <a :href="route('admin.dealer.management')" 
+                   :class="{'bg-orange-600/80 text-black': currentRoute === route('admin.dealer.management'), 'hover:bg-orange-600/40 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
+                   class="block py-2.5 px-4 rounded transition duration-200">
+                    <i class="fas fa-calendar-check"></i> Dealer Management
                 </a> 
                 <a :href="route('admin.users.index')" 
-                   :class="{'bg-yellow-950/10 text-yellow-900': currentRoute === route('subscription-centre'), 'hover:bg-yellow-950/10 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
+                   :class="{'bg-orange-600/80 text-black': currentRoute === route('subscription-centre'), 'hover:bg-orange-600/40 hover:text-gray-700': currentRoute !== route('subscription-centre')}"
                    class="block py-2.5 px-4 rounded transition duration-200">
                     <i class="fas fa-calendar-check"></i> User Management
                 </a> 
@@ -76,7 +81,7 @@ const currentRoute = ref(url);
                 </a>
 
                 <div class="flex items-center">
-                    <img src="/storage/admin.jpg" alt="Admin Profile" class="w-10 h-10 rounded-full mr-3">
+                    <img src="/admin.png" alt="Admin Profile" class="w-10 h-10 rounded-full mr-3">
                     <div>
                         <div class="text-white-800 font-medium">{{ $page.props.auth.user.name }}</div>
                         <div class="text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
@@ -100,7 +105,7 @@ const currentRoute = ref(url);
 
         <!-- Content Area -->
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="flex justify-between items-center bg-[#614d3b] py-4 px-6">
+            <header class="flex justify-between items-center bg-black py-4 px-6">
                 <div class="flex items-center">
                     <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 focus:outline-none lg:hidden">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">

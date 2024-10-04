@@ -51,7 +51,7 @@ const processCheckout = () => {
                         <label for="payment_file" class="block text-gray-700 mb-2">Upload Payment Proof:</label>
                         <input type="file" id="payment_file" name="payment_file" @change="handleFileUpload" class="form-input mt-1 w-40px mx-auto" />
                     </div>
-                    <button type="submit" class="bg-yellow-950 text-white py-2 px-4 rounded-xl mt-6 hover:bg-yellow-950/50 block mx-auto">
+                    <button type="submit" class="bg-black text-white py-2 px-4 rounded-xl mt-6 hover:bg-black block mx-auto">
                         Complete Payment
                     </button>
                 </form>

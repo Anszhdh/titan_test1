@@ -52,9 +52,9 @@
               <td class="border-b px-4 py-2">
                 <!-- Check if the product has been reviewed -->
                   <button
-              v-if="!hasReviewed(order.id, item.product.id)"
+              v-if="!hasReviewed(order.id, item.product.id) && order.status === 'Confirmed'"
               @click="openReviewModal(order.id, item.product.id)"
-              class="bg-yellow-950 text-sm hover:bg-yellow-950/80 text-white font-bold px-2 rounded-xl focus:outline-none focus:shadow-outline"
+              class="bg-black text-sm hover:bg-black text-white font-bold px-2 rounded-xl focus:outline-none focus:shadow-outline"
             >
               Review Product
             </button>
@@ -64,10 +64,12 @@
           </tbody>
               </table>
               <div class="mt-4">
-                <div>
+              <div>
                   <p v-if="order.shipping"><strong>Shipping Status:</strong> Shipped</p>
                   <p v-else-if="order.status === 'Cancelled'"><strong>Shipping Status:</strong> Cancelled</p>
                   <p v-else><strong>Shipping Status:</strong> Pending</p>
+
+                  <!-- Display courier and tracking number if shipping exists -->
                   <p v-if="order.shipping"><strong>Courier:</strong> {{ order.shipping.shipping_type }}</p>
                   <p v-if="order.shipping"><strong>Tracking Number:</strong> {{ order.shipping.tracking_number }}</p>
                 </div>
@@ -106,7 +108,7 @@
           <textarea v-model="reviewForm.review" id="review" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>
         <div class="text-right">
-          <button type="submit" class="bg-yellow-950 hover:bg-yellow-950/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button type="submit" class="bg-black hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Submit Review
           </button>
         </div>

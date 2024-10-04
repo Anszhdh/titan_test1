@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
@@ -66,7 +67,13 @@ class CartController extends Controller
 
     public function count()
     {
-        $count = Auth::user()->carts()->count(); // Assuming the relationship is defined on the User model
-        return response()->json(['count' => $count]);
+        if (Auth::check()) {
+            $count = Auth::user()->carts()->count(); // Check if a user is authenticated
+            return response()->json(['count' => $count]);
+        } else {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
     }
+    
+    
 }

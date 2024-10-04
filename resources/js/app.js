@@ -7,7 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 // import { InertiaProgress } from '@inertiajs/progress';   
 
-const appName = import.meta.env.VITE_APP_NAME || 'Brewbox';
+const appName = import.meta.env.VITE_APP_NAME || 'Regal Valet';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

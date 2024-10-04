@@ -117,7 +117,7 @@ function proceedToPayment() {
           </div>
         </div>
         <div class="mt-8 ">
-          <button @click="proceedToPayment" class="bg-yellow-950  hover:text-white hover:bg-yellow-950/80 text-white py-2 px-4 rounded-xl mt-8">Proceed to Payment</button>
+          <button @click="proceedToPayment" class="bg-black hover:text-white hover:bg-black text-white py-2 px-4 rounded-xl mt-8">Proceed to Payment</button>
         </div>
       </div>
       <div v-else>

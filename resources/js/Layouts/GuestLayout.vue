@@ -10,52 +10,53 @@ const isLoggedIn = !!props?.auth?.user;
 
 </script>
 
+
 <template>
-    <div class="bg-orange-100/10 ">
-                     <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
+    <div class="bg-black">
+                     <div class="relative w-full max-w-2xl px-6 lg:max-w-3xl">
                         <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
-                            <div class="lg:flex lg:items-center lg:col-span-3">
+                            <div class="lg:flex lg:items-center lg:col-span-5">
                                 <a href="/" class="flex items-center ml-16">
                                     <img
                                     id="logo"
                                     class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20] cursor-pointer"
-                                    src="icon.png"
+                                    src="/icon.png"
                                     alt="Logo"
                                     />
-                                    <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2>
                                 </a>
                                 </div>
                                 <div class="flex lg:col-2 items-center">
                                 
                                     <Link
                                             :href="isLoggedIn ? route('products.index') : route('login')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600  focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Shop
                                     </Link>
-                                    <Link
+                                    <!-- <Link
                                             :href="isLoggedIn ? route('subscription.main') : route('login')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Subscription
-                                        </Link>
-                                    <Link
-                                            :href="route('discover')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                        </Link> -->
+                                        <Link
+                                        v-if="userRole !== 2"
+                                        :href="route('discover')"
+                                        class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
-                                            Discover
+                                        Dealer
                                         </Link>
                                     
                                     <Link
                                             :href="route('about')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600  focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             About
                                     </Link>
                                 
                                     <Link
                                               :href="isLoggedIn ? route('contact') : route('login')"
-                                            class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Contact
                                         </Link>
@@ -76,7 +77,7 @@ const isLoggedIn = !!props?.auth?.user;
                                     </a> -->
                                     <Link
                                             :href="route('login')"
-                                            class=" ml-12 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class=" ml-12 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Login
                                         </Link>
@@ -84,7 +85,7 @@ const isLoggedIn = !!props?.auth?.user;
                                         <Link
                                             
                                             :href="route('register')"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Register
                                         </Link>

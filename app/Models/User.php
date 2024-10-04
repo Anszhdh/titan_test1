@@ -62,12 +62,25 @@ class User extends Authenticatable
     }
     public function carts()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasMany(Cart::class); // Ensure Cart model is correctly referenced
     }
-
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
     }
+    public function businessInformation()
+    {
+        return $this->hasOne(BusinessInformation::class);
+    }
 
+
+    public function getRecentUsers()
+{
+    $recentUsers = User::where('role', 0) // Customers
+        ->orWhere('role', 2) // Dealers
+        ->where('created_at', '>=', now()->subDays(7)) // Last 7 days
+        ->get();
+
+    return response()->json($recentUsers);
+}
 }

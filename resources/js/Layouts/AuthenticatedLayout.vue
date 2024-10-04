@@ -31,10 +31,10 @@ onMounted(() => {
 <template>
     <div>
         <div class="min-h-screen bg-orange-100/5">
-            <nav class="bg-orange-100/5 border-b border-gray-100">
+            <nav class="bg-black border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                        <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-6">
+                <div class="relative w-full max-w-2xl px-6 lg:max-w-4xl">
+                        <header class="grid grid-cols-4 items-center gap-2 py-10 lg:grid-cols-4">
                             <div class="lg:flex lg:items-center lg:col-span-3">
                                 <a href="/" class="flex items-center ml-20">
                                     <img
@@ -43,7 +43,6 @@ onMounted(() => {
                                     src="/icon.png"
                                     alt="Logo"
                                     />
-                                    <h2 class="text-black text-lg font-serif ml-1 lg:ml-1">BrewBox</h2>
                                 </a>
                                 </div>
                             
@@ -51,39 +50,40 @@ onMounted(() => {
                                 
                                     <Link
                                             :href="route('products.index')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Shop
                                         </Link>
-                                    <Link
+                                    <!-- <Link
                                             :href="route('subscription.main')"
                                             class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Subscription
-                                        </Link>
-                                    <Link
-                                            :href="route('discover')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                        </Link> -->
+                                        <Link
+                                        v-if="userRole !== 2"
+                                        :href="route('discover')"
+                                        class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
-                                            Discover
+                                        Dealer
                                         </Link>
                                     
                                     <Link
                                             :href="route('about')"
-                                            class="rounded-md px-3 py-2 mr-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             About
                                     </Link>
                                 
                                     <Link
                                             :href="route('contact')"
-                                            class="rounded-md px-3 py-2 mr-2 text-yellow-950 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
+                                            class="rounded-md px-3 py-2 mr-2 text-white ring-1 ring-transparent transition hover:text-gray-600 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-yellow-950 dark:hover:text-yellow-700/80 dark:focus-visible:ring-white"
                                         >
                                             Contact
                                         </Link>
-                                        <div class="flex items-center ml-28 mt-2" title="Notifications">
+                                        <div class="flex items-center ml-40 mt-2" title="Notifications">
                                             <div class="space-x-4">
-                                                <NotificationIcon iconColor="text-yellow-950/60" />
+                                                <NotificationIcon iconColor="text-orange-600" />
                                             </div>
                                             <div class="relative ml-4 mb-1 flex items-center"> <!-- Ensure the container is a flexbox -->
                                                 <a href="/cart ">
@@ -108,7 +108,7 @@ onMounted(() => {
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-orange-100/5 hover:text-orange-950/50 focus:outline-none transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-orange-600 hover:text-gray-600 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
@@ -131,7 +131,7 @@ onMounted(() => {
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                                         <DropdownLink :href="route('user.orders')">Orders</DropdownLink>
-                                        <DropdownLink :href="route('user.subscriptions')">Subscriptions</DropdownLink>
+                                        <!-- <DropdownLink :href="route('user.subscriptions')">Subscriptions</DropdownLink> -->
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>

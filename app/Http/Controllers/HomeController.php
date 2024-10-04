@@ -46,6 +46,8 @@ class HomeController extends Controller
         $authenticated = auth()->check();
         return Inertia::render('Discover', [
             'isLoggedIn' => $authenticated,
+            'dealerRegisterUrl' => route('register.dealer'),
         ]);
+        
     }
 }

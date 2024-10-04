@@ -104,7 +104,7 @@ const submit = () => {
                 </div>
 
                 <div class="col-span-2 mt-4 flex items-center justify-center ">
-                    <PrimaryButton class="bg-orange-950 hover:bg-yellow-900/70" 
+                    <PrimaryButton class="bg-orange-600 hover:bg-orange-600/50" 
                     :class="{ 'opacity-25': form.processing }" :disabled="form.processing " >
                     Register
                     </PrimaryButton>

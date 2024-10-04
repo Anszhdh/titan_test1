@@ -11,48 +11,50 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Fetch products for customers
-    public function index()
-    {
-        $authenticated = auth()->check();
-        $products = Product::all()->map(function ($product) {
-            $product->image = asset('storage/product/' . $product->image);
-            return $product;
-        });
-
-        return Inertia::render('Products/Index', [
-            'products' => $products,
-            'authenticated' => $authenticated,
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-        ]);
-    }
-    public function show($id)
-    {
-        $product = Product::with('reviews.user')->findOrFail($id);
+ // Fetch products for customers
+public function index()
+{
+    $authenticated = auth()->check();
+    $products = Product::all()->map(function ($product) {
         $product->image = asset('storage/product/' . $product->image);
+        return $product;
+    });
+
+    return Inertia::render('Products/Index', [
+        'products' => $products,
+        'authenticated' => $authenticated,
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'userRole' => $authenticated ? auth()->user()->role : null, // Pass user role
+    ]);
+}
+
+public function show($id)
+{
+    $product = Product::with('reviews.user')->findOrFail($id);
+    $product->image = asset('storage/product/' . $product->image);
     
-        return Inertia::render('Products/Show', [
-            'product' => $product,
-        ]);
-    }
+    // Ensure reviews is an array
+    $product->reviews = $product->reviews ?? [];
+
+    return Inertia::render('Products/Show', [
+        'product' => $product,
+    ]);
+}
+
     
-    // Fetch products and categories for admin
     public function adminIndex()
     {
-        $products = Product::with('category')->get()->map(function ($product) {
-            $product->image_url = $product->image_url;  // Ensure you use the correct accessor here
-            return $product;
-        });
-
+        $products = Product::with('category')->get();  // Fetch products with category
+    
         $categories = ProductCategory::all();  // Fetch all categories
-
+    
         return Inertia::render('Admin/ProductCentre', [
             'products' => $products,
             'categories' => $categories,  // Pass categories to the view
         ]);
     }
-
+    
     
 
     // Store a new product
@@ -66,10 +68,13 @@ class ProductController extends Controller
         $data = $request->validated();
     
         if ($request->hasFile('image')) {
-            // Store the image in the specified directory
-            $imagePath = $request->file('image')->store('product', 'public'); // 'product' is the directory name
+            // Store the image in the 'product' directory under public storage
+            $imagePath = $request->file('image')->store('product', 'public');
+        
+            // Save only the filename to the database
             $data['image'] = basename($imagePath);
         }
+        
     
         $product = Product::create($data);
     
@@ -107,16 +112,17 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'base_price' => 'required|numeric',
+            'dealer_price' => 'required|numeric',
             'price' => 'nullable|numeric',
             'category_id' => 'required|exists:product_categories,id',
             'image' => 'nullable|image|max:2048',
             'sku' => 'nullable|string|max:50',
             'quantity' => 'required|integer|min:1',
-            'flavor' => 'required|string',
-            'roast_level' => 'required|string',
-            'brewing_method' => 'required|string',
-            'pre_ground' => 'required|boolean',
-            'decaf' => 'required|boolean',
+            // 'flavor' => 'required|string',
+            // 'roast_level' => 'required|string',
+            // 'brewing_method' => 'required|string',
+            // 'pre_ground' => 'required|boolean',
+            // 'decaf' => 'required|boolean',
             // Add more validation rules as needed
         ]);
 

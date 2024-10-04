@@ -33,7 +33,7 @@ const deleteProduct = (id) => {
         <div class="max-w-8xl mx-auto">
           <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Product Centre</h1>
-            <button @click="redirectToAddProduct" class="px-4 py-2 bg-yellow-950/80 text-white rounded-md">Add Product</button>
+            <button @click="redirectToAddProduct" class="px-4 py-2 bg-black text-white rounded-md">Add Product</button>
           </div>
           
           <div class="mb-6">

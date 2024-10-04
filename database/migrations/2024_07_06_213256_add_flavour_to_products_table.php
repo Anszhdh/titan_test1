@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('flavor')->nullable();
-            $table->string('roast_level')->nullable();
-            $table->string('brewing_method')->nullable();
+            // $table->string('flavor')->nullable();
+            // $table->string('roast_level')->nullable();
+            // $table->string('brewing_method')->nullable();
             $table->boolean('pre_ground')->nullable();
             $table->boolean('decaf')->nullable();
             //
